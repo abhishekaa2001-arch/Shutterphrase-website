@@ -11,34 +11,52 @@
          * 1. Get your Google Drive File link or ID.
          * 2. Ensure the sharing is set to "Anyone with the link can view".
          * 3. Paste the links or IDs inside the quotes below.
+         * * IMPORTANT: This code needs INDIVIDUAL image links. 
+         * It cannot automatically "look inside" a folder link.
          */
         
-        // You can paste the WHOLE URL here or just the ID (e.g., "1abc123...")
-        const SHOWREEL_VIDEO_ID = "https://drive.google.com/file/d/1gYhjAm7YX4pxv51eGxUt_WjRRBakgNfA/view?usp=drive_link"; 
+        // Paste your Showreel Link or ID here
+        const SHOWREEL_VIDEO_ID = "https://drive.google.com/file/d/1Xmu3M0J1H1VnoMm2FnZ-wKdMgRH7xof2/view?usp=drive_link"; 
 
         const GALLERY_CONFIG = {
-            portraits: ["ID_1", "ID_2", "ID_3"], // Paste IDs or full Drive links
-            product: ["ID_1", "ID_2"],
-            creative: ["ID_1", "ID_2"],
-            sports: ["ID_1", "ID_2"],
-            festivals: ["ID_1", "ID_2"]
+            portraits: ["ID_1", "ID_2", "ID_3"], // Individual Image IDs/Links
+            product: ["ID_1", "ID_2"],           // Individual Image IDs/Links
+            creative: ["ID_1", "ID_2"],          // Individual Image IDs/Links
+            sports: ["ID_1", "ID_2"],            // Individual Image IDs/Links
+            festivals: ["ID_1", "ID_2"]          // Individual Image IDs/Links
         };
 
         /**
          * SMART CLEANER LOGIC
-         * This prevents errors if you accidentally paste the whole URL
+         * Automatically extracts the ID from any Google Drive link format
          */
         function cleanId(input) {
             if (!input || input.includes("YOUR_") || input.includes("_ID")) return null;
-            // If it's a URL, extract the part between /d/ and /view
-            const match = input.match(/\/d\/(.+?)\//) || input.match(/id=(.+?)(&|$)/);
-            return match ? match[1] : input.trim();
+            
+            // Regex to find ID in /d/ format, /folders/ format, or id= format
+            const regex = [
+                /\/d\/([a-zA-Z0-9_-]{25,})/,
+                /\/folders\/([a-zA-Z0-9_-]{25,})/,
+                /id=([a-zA-Z0-9_-]{25,})/
+            ];
+
+            for (let r of regex) {
+                const match = input.match(r);
+                if (match) return match[1];
+            }
+            
+            return input.trim();
         }
 
+        /**
+         * HIGH-RELIABILITY IMAGE FETCHING
+         * Uses the Google Content CDN which bypasses the "virus scan" blocks on Vercel
+         */
         function getDriveImage(id, size = 1600) {
             const safeId = cleanId(id);
             if (!safeId) return '';
-            return `https://drive.google.com/thumbnail?id=${safeId}&sz=w${size}`;
+            // This is the most robust way to serve Drive images to external sites
+            return `https://lh3.googleusercontent.com/d/${safeId}=s${size}`;
         }
     </script>
 
@@ -64,19 +82,16 @@
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
         body { background-color: var(--bg-dark); color: var(--text-main); font-family: 'Inter', sans-serif; line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
 
-        /* Ambient Sunset Glow */
         .ambient-glow { position: fixed; width: 70vw; height: 70vw; background: var(--sunset-grad); filter: blur(140px); opacity: 0.1; z-index: -1; border-radius: 50%; pointer-events: none; }
         .glow-top { top: -20%; right: -15%; }
         .glow-bottom { bottom: -20%; left: -15%; }
 
-        /* Header */
         nav { position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 30px var(--spacing); z-index: 1000; background: linear-gradient(to bottom, rgba(7,7,7,0.9), transparent); backdrop-filter: blur(10px); }
         .logo { font-family: 'Cormorant Garamond', serif; font-size: 26px; letter-spacing: 3px; text-decoration: none; color: white; text-transform: uppercase; }
         .logo span { background: var(--sunset-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 300; }
         .nav-links a { color: var(--text-main); text-decoration: none; font-size: 11px; text-transform: uppercase; letter-spacing: 4px; margin-left: 45px; transition: 0.4s; opacity: 0.6; }
         .nav-links a:hover { opacity: 1; color: #FF8C42; }
 
-        /* Sections */
         section { padding: 120px var(--spacing); }
         .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; }
         .hero-label { font-size: 11px; text-transform: uppercase; letter-spacing: 10px; color: var(--gold-muted); margin-bottom: 25px; display: block; }
@@ -86,11 +101,9 @@
         .cta-btn { display: inline-flex; align-items: center; padding: 22px 55px; border: 1px solid rgba(255,255,255,0.15); color: white; text-decoration: none; font-size: 12px; letter-spacing: 4px; text-transform: uppercase; transition: 0.5s; background: rgba(255,255,255,0.02); backdrop-filter: blur(5px); }
         .cta-btn:hover { border-color: #FF8C42; padding-right: 75px; background: rgba(255, 140, 66, 0.03); }
 
-        /* Showreel */
         .showreel-wrapper { width: 100%; max-width: 1400px; margin: 40px auto; aspect-ratio: 16 / 9; background: #000; border: 1px solid rgba(255,255,255,0.05); overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.8); }
         .showreel-wrapper iframe { width: 100%; height: 100%; border: none; }
 
-        /* Grid */
         .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 450px; gap: 30px; }
         .portfolio-item { position: relative; overflow: hidden; background-color: #111; cursor: pointer; }
         .item-lg { grid-column: span 2; }
@@ -100,7 +113,6 @@
         .item-overlay { position: absolute; bottom: 0; left: 0; width: 100%; padding: 40px; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); opacity: 0; transform: translateY(20px); transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1); }
         .portfolio-item:hover .item-overlay { opacity: 1; transform: translateY(0); }
 
-        /* Lightbox Carousel */
         #lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 5, 5, 0.98); z-index: 2000; display: none; flex-direction: column; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.5s ease; user-select: none; }
         #lightbox.active { display: flex; opacity: 1; }
         .lb-image-container { position: relative; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; padding: 60px; }
@@ -257,12 +269,4 @@
             }, 150);
         }
 
-        document.getElementById('lbNext').onclick = (e) => { e.stopPropagation(); currentIndex = (currentIndex + 1) % activeGallery.length; updateLightbox(); };
-        document.getElementById('lbPrev').onclick = (e) => { e.stopPropagation(); currentIndex = (currentIndex - 1 + activeGallery.length) % activeGallery.length; updateLightbox(); };
-        lightbox.querySelector('.lb-close').onclick = () => { lightbox.classList.remove('active'); setTimeout(() => lightbox.style.display = 'none', 500); };
-        lightbox.onclick = (e) => { if (e.target === lightbox || e.target.classList.contains('lb-image-container')) lightbox.querySelector('.lb-close').click(); };
-
-        lucide.createIcons();
-    </script>
-</body>
-</html>
+        document.getElementById('lbNext').onclick = (e) => { e
