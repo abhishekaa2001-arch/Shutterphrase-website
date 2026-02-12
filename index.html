@@ -7,35 +7,26 @@
     
     <script>
         /**
-         * SHUTTERPHRASE GALLERY CONFIGURATION
-         * These IDs have been extracted from your provided Google Drive folders.
-         * The first ID in each list acts as the "Cover" image.
+         * --- SHUTTERPHRASE CONFIGURATION ZONE ---
+         * 1. Get your Google Drive File ID.
+         * 2. Ensure the file sharing is "Anyone with the link".
+         * 3. Paste the IDs into the relevant sections below.
          */
         
-        // Your Showreel Video ID
-        const SHOWREEL_VIDEO_ID = "https://drive.google.com/file/d/1Xmu3M0J1H1VnoMm2FnZ-wKdMgRH7xof2/view?usp=drive_link"; // Extracted from Showreel Folder
+        const SHOWREEL_VIDEO_ID = "YOUR_VIDEO_ID"; // Paste Showreel ID here
 
         const GALLERY_CONFIG = {
-            portraits: [
-                "1uaWc8cjAC-oQsoZQu92nLE5kFGeNQKQZ", // Cover
-                "1etEDIun6GumjvEOkQFi-pNQd8VlPTHlz"
-            ],
-            product: [
-                "https://drive.google.com/file/d/1wzDtv35e5A89_eYSKA4mmwKtWE3sWv1N/view?usp=drive_link" , "https://drive.google.com/file/d/1ArFVKoGRQiiS94EDgEW4AkQO93K1MGTL/view?usp=drive_link" // Add more IDs from your Product folder here
-            ],
-            creative: [
-                "16YaZ_yIEpVgpkq_gfBcnE_yVQgV01N6v" // Add more IDs from your Creative/Editorial folder here
-            ],
-            sports: [
-                "1TBrCW7SKPzvPSfhUT5uxXpPOM6hVjioK" // Add more IDs from your Sports folder here
-            ],
-            festivals: [
-                "1OOz3zj-4BAI_BVjN5FUAd-3Xy7T1wMEk" // Add more IDs from your Festivals folder here
-            ]
+            portraits: ["https://drive.google.com/file/d/1rNlB2Q2jHlUUaGgHsaYaXv37LGj4YQbt/view?usp=drive_link", "https://drive.google.com/file/d/14VjUYVjbusBC71w17REfJo_524W0Lg2L/view?usp=drive_link", "https://drive.google.com/file/d/13AlaRjqCb9Tg4lWSuhdXruifAOrljE0f/view?usp=drive_link"], // Portraits Folder
+            product: ["ID_1", "ID_2"],           // Product Folder
+            creative: ["ID_1", "ID_2"],          // Creative/Editorial Folder
+            sports: ["ID_1", "ID_2"],            // Sports Folder
+            festivals: ["ID_1", "ID_2"]          // Festivals Folder
         };
     </script>
 
+    <!-- Prevents Adobe/Drive from blocking the images in the browser -->
     <meta name="referrer" content="no-referrer">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inter:wght@100;300;400&display=swap" rel="stylesheet">
@@ -55,16 +46,19 @@
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
         body { background-color: var(--bg-dark); color: var(--text-main); font-family: 'Inter', sans-serif; line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
 
+        /* Ambient Sunset Glow */
         .ambient-glow { position: fixed; width: 70vw; height: 70vw; background: var(--sunset-grad); filter: blur(140px); opacity: 0.1; z-index: -1; border-radius: 50%; pointer-events: none; }
         .glow-top { top: -20%; right: -15%; }
         .glow-bottom { bottom: -20%; left: -15%; }
 
+        /* Header */
         nav { position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 30px var(--spacing); z-index: 1000; background: linear-gradient(to bottom, rgba(7,7,7,0.9), transparent); backdrop-filter: blur(10px); }
         .logo { font-family: 'Cormorant Garamond', serif; font-size: 26px; letter-spacing: 3px; text-decoration: none; color: white; text-transform: uppercase; }
         .logo span { background: var(--sunset-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 300; }
         .nav-links a { color: var(--text-main); text-decoration: none; font-size: 11px; text-transform: uppercase; letter-spacing: 4px; margin-left: 45px; transition: 0.4s; opacity: 0.6; }
         .nav-links a:hover { opacity: 1; color: #FF8C42; }
 
+        /* Sections */
         section { padding: 120px var(--spacing); }
         .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; }
         .hero-label { font-size: 11px; text-transform: uppercase; letter-spacing: 10px; color: var(--gold-muted); margin-bottom: 25px; display: block; }
@@ -74,9 +68,11 @@
         .cta-btn { display: inline-flex; align-items: center; padding: 22px 55px; border: 1px solid rgba(255,255,255,0.15); color: white; text-decoration: none; font-size: 12px; letter-spacing: 4px; text-transform: uppercase; transition: 0.5s; background: rgba(255,255,255,0.02); backdrop-filter: blur(5px); }
         .cta-btn:hover { border-color: #FF8C42; padding-right: 75px; background: rgba(255, 140, 66, 0.03); }
 
-        .showreel-wrapper { width: 100%; max-width: 1400px; margin: 0 auto; aspect-ratio: 16 / 9; background: #000; border: 1px solid rgba(255,255,255,0.05); overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.8); }
+        /* Showreel */
+        .showreel-wrapper { width: 100%; max-width: 1400px; margin: 40px auto; aspect-ratio: 16 / 9; background: #000; border: 1px solid rgba(255,255,255,0.05); overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.8); }
         .showreel-wrapper iframe { width: 100%; height: 100%; border: none; }
 
+        /* Grid */
         .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 450px; gap: 30px; }
         .portfolio-item { position: relative; overflow: hidden; background-color: #111; cursor: pointer; }
         .item-lg { grid-column: span 2; }
@@ -86,7 +82,8 @@
         .item-overlay { position: absolute; bottom: 0; left: 0; width: 100%; padding: 40px; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); opacity: 0; transform: translateY(20px); transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1); }
         .portfolio-item:hover .item-overlay { opacity: 1; transform: translateY(0); }
 
-        #lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 5, 5, 0.98); z-index: 2000; display: none; flex-direction: column; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.5s ease; }
+        /* Lightbox Carousel */
+        #lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 5, 5, 0.98); z-index: 2000; display: none; flex-direction: column; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.5s ease; user-select: none; }
         #lightbox.active { display: flex; opacity: 1; }
         .lb-image-container { position: relative; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; padding: 60px; }
         .lb-image { max-width: 100%; max-height: 100%; object-fit: contain; box-shadow: 0 0 50px rgba(0,0,0,0.5); transition: opacity 0.3s ease; }
@@ -105,6 +102,7 @@
             .nav-links { display: none; }
             .portfolio-grid { grid-template-columns: 1fr; grid-auto-rows: 400px; }
             .item-lg, .item-tall { grid-column: span 1; grid-row: span 1; }
+            .lb-nav { padding: 0 10px; }
         }
     </style>
 </head>
@@ -129,6 +127,10 @@
     </section>
 
     <section id="showreel">
+        <div class="section-header">
+            <h2>The Showreel</h2>
+            <div class="section-divider"></div>
+        </div>
         <div class="showreel-wrapper">
             <iframe id="mainShowreel" src="" allow="autoplay" allowfullscreen></iframe>
         </div>
@@ -140,7 +142,7 @@
             <div class="section-divider"></div>
         </div>
         <div class="portfolio-grid" id="mainGrid">
-            <!-- Grid items injected by JS -->
+            <!-- Grid generated by Javascript -->
         </div>
     </section>
 
@@ -168,10 +170,13 @@
     </footer>
 
     <script>
-        // Init Showreel
-        document.getElementById('mainShowreel').src = `https://drive.google.com/file/d/${SHOWREEL_VIDEO_ID}/preview`;
+        // Set the Showreel
+        const reelFrame = document.getElementById('mainShowreel');
+        if (SHOWREEL_VIDEO_ID && SHOWREEL_VIDEO_ID !== "YOUR_VIDEO_ID") {
+            reelFrame.src = `https://drive.google.com/file/d/${SHOWREEL_VIDEO_ID}/preview`;
+        }
 
-        // Updated Categories for ShutterPhrase
+        // Define your categories and metadata
         const categories = [
             { key: 'portraits', label: 'Portraits', sub: 'The Character Study', class: 'item-lg' },
             { key: 'product', label: 'Commercial', sub: 'Still Life Narrative', class: '' },
@@ -180,10 +185,11 @@
             { key: 'festivals', label: 'Festivals', sub: 'Cultural Stories', class: '' }
         ];
 
+        // Grid Builder
         const grid = document.getElementById('mainGrid');
         categories.forEach(cat => {
             const ids = GALLERY_CONFIG[cat.key];
-            const coverId = ids && ids.length > 0 ? ids[0] : '';
+            const coverId = (ids && ids.length > 0 && !ids[0].includes("_ID")) ? ids[0] : '';
             
             const item = document.createElement('div');
             item.className = `portfolio-item ${cat.class}`;
@@ -198,6 +204,7 @@
             grid.appendChild(item);
         });
 
+        // Lightbox Logic
         const lightbox = document.getElementById('lightbox');
         const lbImage = lightbox.querySelector('.lb-image');
         const lbCounter = document.getElementById('lbCounter');
@@ -205,8 +212,8 @@
         let currentIndex = 0;
 
         function openGallery(ids) {
-            activeGallery = ids || [];
-            if (activeGallery.length === 0) return;
+            if (!ids || ids.length === 0 || ids[0].includes("_ID")) return;
+            activeGallery = ids;
             currentIndex = 0;
             showLightbox();
         }
@@ -233,7 +240,8 @@
         document.getElementById('lbNext').onclick = (e) => { e.stopPropagation(); currentIndex = (currentIndex + 1) % activeGallery.length; updateLightbox(); };
         document.getElementById('lbPrev').onclick = (e) => { e.stopPropagation(); currentIndex = (currentIndex - 1 + activeGallery.length) % activeGallery.length; updateLightbox(); };
         lightbox.querySelector('.lb-close').onclick = () => { lightbox.classList.remove('active'); setTimeout(() => lightbox.style.display = 'none', 500); };
-        
+        lightbox.onclick = (e) => { if (e.target === lightbox || e.target.classList.contains('lb-image-container')) lightbox.querySelector('.lb-close').click(); };
+
         lucide.createIcons();
     </script>
 </body>
