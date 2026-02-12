@@ -8,31 +8,41 @@
     <script>
         /**
          * --- SHUTTERPHRASE CONFIGURATION ZONE ---
-         * 1. Get your Google Drive File ID.
-         * 2. Ensure the file sharing is "Anyone with the link".
-         * 3. Paste the IDs into the relevant sections below.
+         * 1. Get your Google Drive File link or ID.
+         * 2. Ensure the sharing is set to "Anyone with the link can view".
+         * 3. Paste the links or IDs inside the quotes below.
          */
         
-        const SHOWREEL_VIDEO_ID = "https://drive.google.com/file/d/1gYhjAm7YX4pxv51eGxUt_WjRRBakgNfA/view?usp=drive_link"; // Paste Showreel ID here
+        // You can paste the WHOLE URL here or just the ID (e.g., "1abc123...")
+        const SHOWREEL_VIDEO_ID = "https://drive.google.com/file/d/1gYhjAm7YX4pxv51eGxUt_WjRRBakgNfA/view?usp=drive_link"; 
 
         const GALLERY_CONFIG = {
-            portraits: ["ID_1", "ID_2", "ID_3"], // Portraits Folder
-            product: ["ID_1", "ID_2"],           // Product Folder
-            creative: ["ID_1", "ID_2"],          // Creative/Editorial Folder
-            sports: ["ID_1", "ID_2"],            // Sports Folder
-            festivals: ["ID_1", "ID_2"]          // Festivals Folder
+            portraits: ["ID_1", "ID_2", "ID_3"], // Paste IDs or full Drive links
+            product: ["ID_1", "ID_2"],
+            creative: ["ID_1", "ID_2"],
+            sports: ["ID_1", "ID_2"],
+            festivals: ["ID_1", "ID_2"]
         };
 
-        // This helper function uses the "Thumbnail API" which is much more reliable for Vercel/Production
+        /**
+         * SMART CLEANER LOGIC
+         * This prevents errors if you accidentally paste the whole URL
+         */
+        function cleanId(input) {
+            if (!input || input.includes("YOUR_") || input.includes("_ID")) return null;
+            // If it's a URL, extract the part between /d/ and /view
+            const match = input.match(/\/d\/(.+?)\//) || input.match(/id=(.+?)(&|$)/);
+            return match ? match[1] : input.trim();
+        }
+
         function getDriveImage(id, size = 1600) {
-            if (!id || id.includes("_ID")) return '';
-            // We use the thumbnail endpoint with a custom size parameter (sz=wXXXX)
-            // This bypasses the Google "virus scan" page that breaks most direct links
-            return `https://drive.google.com/thumbnail?id=${id}&sz=w${size}`;
+            const safeId = cleanId(id);
+            if (!safeId) return '';
+            return `https://drive.google.com/thumbnail?id=${safeId}&sz=w${size}`;
         }
     </script>
 
-    <!-- Prevents Adobe/Drive from blocking the images in the browser -->
+    <!-- Essential for bypassing Drive/Adobe hotlinking blocks -->
     <meta name="referrer" content="no-referrer">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -180,8 +190,9 @@
     <script>
         // Set the Showreel
         const reelFrame = document.getElementById('mainShowreel');
-        if (SHOWREEL_VIDEO_ID && SHOWREEL_VIDEO_ID !== "YOUR_VIDEO_ID") {
-            reelFrame.src = `https://drive.google.com/file/d/${SHOWREEL_VIDEO_ID}/preview`;
+        const cleanVideoId = cleanId(SHOWREEL_VIDEO_ID);
+        if (cleanVideoId) {
+            reelFrame.src = `https://drive.google.com/file/d/${cleanVideoId}/preview`;
         }
 
         // Define your categories and metadata
@@ -196,8 +207,9 @@
         // Grid Builder
         const grid = document.getElementById('mainGrid');
         categories.forEach(cat => {
-            const ids = GALLERY_CONFIG[cat.key];
-            const coverId = (ids && ids.length > 0 && !ids[0].includes("_ID")) ? ids[0] : '';
+            const rawIds = GALLERY_CONFIG[cat.key];
+            const cleanIds = rawIds.map(id => cleanId(id)).filter(id => id !== null);
+            const coverId = cleanIds.length > 0 ? cleanIds[0] : '';
             
             const item = document.createElement('div');
             item.className = `portfolio-item ${cat.class}`;
@@ -208,7 +220,7 @@
                     <h4 style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;">${cat.label}</h4>
                 </div>
             `;
-            item.onclick = () => openGallery(ids);
+            item.onclick = () => openGallery(cleanIds);
             grid.appendChild(item);
         });
 
@@ -220,7 +232,7 @@
         let currentIndex = 0;
 
         function openGallery(ids) {
-            if (!ids || ids.length === 0 || ids[0].includes("_ID")) return;
+            if (!ids || ids.length === 0) return;
             activeGallery = ids;
             currentIndex = 0;
             showLightbox();
