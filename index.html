@@ -16,12 +16,20 @@
         const SHOWREEL_VIDEO_ID = "YOUR_VIDEO_ID"; // Paste Showreel ID here
 
         const GALLERY_CONFIG = {
-            portraits: ["https://drive.google.com/file/d/1rNlB2Q2jHlUUaGgHsaYaXv37LGj4YQbt/view?usp=drive_link", "https://drive.google.com/file/d/14VjUYVjbusBC71w17REfJo_524W0Lg2L/view?usp=drive_link", "https://drive.google.com/file/d/13AlaRjqCb9Tg4lWSuhdXruifAOrljE0f/view?usp=drive_link"], // Portraits Folder
+            portraits: ["ID_1", "ID_2", "ID_3"], // Portraits Folder
             product: ["ID_1", "ID_2"],           // Product Folder
             creative: ["ID_1", "ID_2"],          // Creative/Editorial Folder
             sports: ["ID_1", "ID_2"],            // Sports Folder
             festivals: ["ID_1", "ID_2"]          // Festivals Folder
         };
+
+        // This helper function uses the "Thumbnail API" which is much more reliable for Vercel/Production
+        function getDriveImage(id, size = 1600) {
+            if (!id || id.includes("_ID")) return '';
+            // We use the thumbnail endpoint with a custom size parameter (sz=wXXXX)
+            // This bypasses the Google "virus scan" page that breaks most direct links
+            return `https://drive.google.com/thumbnail?id=${id}&sz=w${size}`;
+        }
     </script>
 
     <!-- Prevents Adobe/Drive from blocking the images in the browser -->
@@ -194,7 +202,7 @@
             const item = document.createElement('div');
             item.className = `portfolio-item ${cat.class}`;
             item.innerHTML = `
-                <img src="https://drive.google.com/uc?export=view&id=${coverId}" alt="${cat.label}" onerror="this.src='https://via.placeholder.com/1000/111/fff?text=${cat.label}'">
+                <img src="${getDriveImage(coverId, 1000)}" alt="${cat.label}" onerror="this.src='https://via.placeholder.com/1000/111/fff?text=${cat.label}'">
                 <div class="item-overlay">
                     <p>${cat.sub}</p>
                     <h4 style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;">${cat.label}</h4>
@@ -231,7 +239,7 @@
         function updateLightbox() {
             lbImage.style.opacity = '0';
             setTimeout(() => {
-                lbImage.src = `https://drive.google.com/uc?export=view&id=${activeGallery[currentIndex]}`;
+                lbImage.src = getDriveImage(activeGallery[currentIndex], 1600);
                 lbCounter.textContent = `${currentIndex + 1} / ${activeGallery.length}`;
                 lbImage.style.opacity = '1';
             }, 150);
