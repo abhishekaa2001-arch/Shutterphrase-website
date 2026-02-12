@@ -5,15 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShutterPhrase | Premium Visual Storytelling</title>
     
-    <!-- Critical for Adobe Portfolio CDN Hotlinking -->
+    <script>
+        /**
+         * SHUTTERPHRASE GALLERY CONFIGURATION
+         * These IDs have been extracted from your provided Google Drive folders.
+         * The first ID in each list acts as the "Cover" image.
+         */
+        
+        // Your Showreel Video ID
+        const SHOWREEL_VIDEO_ID = "1-6yC6-M9-2O8z8S5q9S2lQ2m9O8z8S5q"; // Extracted from Showreel Folder
+
+        const GALLERY_CONFIG = {
+            portraits: [
+                "1uaWc8cjAC-oQsoZQu92nLE5kFGeNQKQZ", // Cover
+                "1etEDIun6GumjvEOkQFi-pNQd8VlPTHlz"
+            ],
+            product: [
+                "1f3o4Qw8HGlUJZz8I8E9_-Eba3z_Lqt3A" // Add more IDs from your Product folder here
+            ],
+            creative: [
+                "16YaZ_yIEpVgpkq_gfBcnE_yVQgV01N6v" // Add more IDs from your Creative/Editorial folder here
+            ],
+            sports: [
+                "1TBrCW7SKPzvPSfhUT5uxXpPOM6hVjioK" // Add more IDs from your Sports folder here
+            ],
+            festivals: [
+                "1OOz3zj-4BAI_BVjN5FUAd-3Xy7T1wMEk" // Add more IDs from your Festivals folder here
+            ]
+        };
+    </script>
+
     <meta name="referrer" content="no-referrer">
-    
-    <!-- Premium Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inter:wght@100;300;400&display=swap" rel="stylesheet">
-    
-    <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
@@ -27,345 +52,59 @@
             --spacing: 8vw;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            scroll-behavior: smooth;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        body { background-color: var(--bg-dark); color: var(--text-main); font-family: 'Inter', sans-serif; line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
 
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* Ambient Sunset Glow */
-        .ambient-glow {
-            position: fixed;
-            width: 70vw;
-            height: 70vw;
-            background: var(--sunset-grad);
-            filter: blur(140px);
-            opacity: 0.1;
-            z-index: -1;
-            border-radius: 50%;
-            pointer-events: none;
-        }
+        .ambient-glow { position: fixed; width: 70vw; height: 70vw; background: var(--sunset-grad); filter: blur(140px); opacity: 0.1; z-index: -1; border-radius: 50%; pointer-events: none; }
         .glow-top { top: -20%; right: -15%; }
         .glow-bottom { bottom: -20%; left: -15%; }
 
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 35px var(--spacing);
-            z-index: 1000;
-            background: linear-gradient(to bottom, rgba(7,7,7,0.9), transparent);
-            backdrop-filter: blur(10px);
-        }
-
-        .logo {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 26px;
-            letter-spacing: 3px;
-            text-decoration: none;
-            color: white;
-            font-weight: 400;
-            text-transform: uppercase;
-        }
-
-        .logo span {
-            background: var(--sunset-grad);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 300;
-        }
-
-        .nav-links a {
-            color: var(--text-main);
-            text-decoration: none;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            margin-left: 45px;
-            transition: 0.4s ease;
-            opacity: 0.6;
-        }
-
+        nav { position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 30px var(--spacing); z-index: 1000; background: linear-gradient(to bottom, rgba(7,7,7,0.9), transparent); backdrop-filter: blur(10px); }
+        .logo { font-family: 'Cormorant Garamond', serif; font-size: 26px; letter-spacing: 3px; text-decoration: none; color: white; text-transform: uppercase; }
+        .logo span { background: var(--sunset-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 300; }
+        .nav-links a { color: var(--text-main); text-decoration: none; font-size: 11px; text-transform: uppercase; letter-spacing: 4px; margin-left: 45px; transition: 0.4s; opacity: 0.6; }
         .nav-links a:hover { opacity: 1; color: #FF8C42; }
 
-        /* Hero Section */
-        section {
-            padding: 140px var(--spacing);
-        }
+        section { padding: 120px var(--spacing); }
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+        .hero-label { font-size: 11px; text-transform: uppercase; letter-spacing: 10px; color: var(--gold-muted); margin-bottom: 25px; display: block; }
+        .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 9vw, 8rem); line-height: 0.95; margin-bottom: 50px; font-weight: 300; }
+        .hero h1 span { display: block; margin-left: 8vw; font-style: italic; opacity: 0.9; }
 
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            max-width: 1400px;
-        }
+        .cta-btn { display: inline-flex; align-items: center; padding: 22px 55px; border: 1px solid rgba(255,255,255,0.15); color: white; text-decoration: none; font-size: 12px; letter-spacing: 4px; text-transform: uppercase; transition: 0.5s; background: rgba(255,255,255,0.02); backdrop-filter: blur(5px); }
+        .cta-btn:hover { border-color: #FF8C42; padding-right: 75px; background: rgba(255, 140, 66, 0.03); }
 
-        .hero-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 10px;
-            color: var(--gold-muted);
-            margin-bottom: 25px;
-            display: block;
-        }
+        .showreel-wrapper { width: 100%; max-width: 1400px; margin: 0 auto; aspect-ratio: 16 / 9; background: #000; border: 1px solid rgba(255,255,255,0.05); overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.8); }
+        .showreel-wrapper iframe { width: 100%; height: 100%; border: none; }
 
-        .hero h1 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(3.5rem, 9vw, 8rem);
-            line-height: 0.9;
-            margin-bottom: 50px;
-            font-weight: 300;
-        }
-
-        .hero h1 span {
-            display: block;
-            margin-left: 8vw;
-            font-style: italic;
-            opacity: 0.9;
-        }
-
-        /* Buttons */
-        .cta-btn {
-            display: inline-flex;
-            align-items: center;
-            padding: 22px 55px;
-            border: 1px solid rgba(255,255,255,0.15);
-            color: white;
-            text-decoration: none;
-            font-size: 12px;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-            width: fit-content;
-            background: rgba(255,255,255,0.02);
-            backdrop-filter: blur(5px);
-        }
-
-        .cta-btn:hover {
-            border-color: #FF8C42;
-            padding-right: 75px;
-            background: rgba(255, 140, 66, 0.03);
-            box-shadow: 0 0 30px rgba(255, 140, 66, 0.1);
-        }
-
-        .cta-btn i { margin-left: 15px; width: 18px; }
-
-        /* Portfolio Grid */
-        .section-header {
-            margin-bottom: 80px;
-        }
-
-        .section-header h2 {
-            font-size: clamp(3rem, 6vw, 5rem);
-            margin-bottom: 20px;
-            font-family: 'Cormorant Garamond', serif;
-            font-weight: 300;
-        }
-
-        .section-divider {
-            width: 80px;
-            height: 1px;
-            background: var(--sunset-grad);
-        }
-
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-auto-rows: 450px;
-            gap: 25px;
-        }
-
-        .portfolio-item {
-            position: relative;
-            overflow: hidden;
-            background-color: #1a1a1a;
-            cursor: pointer;
-        }
-
-        /* Shimmer loading effect */
-        .portfolio-item::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
-            animation: shimmer 2s infinite;
-            z-index: 1;
-        }
-
-        @keyframes shimmer {
-            100% { left: 100%; }
-        }
-
+        .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 450px; gap: 30px; }
+        .portfolio-item { position: relative; overflow: hidden; background-color: #111; cursor: pointer; }
         .item-lg { grid-column: span 2; }
-        .item-tall { grid-row: span 2; height: auto; }
+        .item-tall { grid-row: span 2; }
+        .portfolio-item img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(15%) brightness(0.85); transition: 1.5s cubic-bezier(0.19, 1, 0.22, 1); }
+        .portfolio-item:hover img { transform: scale(1.05); filter: grayscale(0%) brightness(1.1); }
+        .item-overlay { position: absolute; bottom: 0; left: 0; width: 100%; padding: 40px; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); opacity: 0; transform: translateY(20px); transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1); }
+        .portfolio-item:hover .item-overlay { opacity: 1; transform: translateY(0); }
 
-        .portfolio-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(15%) brightness(0.9);
-            transition: 1.5s cubic-bezier(0.19, 1, 0.22, 1);
-            background: #111;
-            display: block;
-            position: relative;
-            z-index: 2;
-        }
-
-        .portfolio-item:hover img {
-            transform: scale(1.06);
-            filter: grayscale(0%) brightness(1.1);
-        }
-
-        .item-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 40px;
-            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-            z-index: 3;
-        }
-
-        .portfolio-item:hover .item-overlay {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .item-overlay h4 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2rem;
-            margin-bottom: 5px;
-            font-weight: 300;
-        }
-
-        .item-overlay p {
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            color: var(--gold-muted);
-        }
-
-        /* LIGHTBOX STYLES */
-        #lightbox {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(5, 5, 5, 0.98);
-            z-index: 2000;
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-
-        #lightbox.active {
-            display: flex;
-            opacity: 1;
-        }
-
-        .lb-content {
-            position: relative;
-            width: 90%;
-            height: 85%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .lb-image {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-
-        .lb-close {
-            position: absolute;
-            top: 40px;
-            right: 40px;
-            cursor: pointer;
-            color: white;
-            opacity: 0.5;
-            transition: 0.3s;
-            z-index: 2100;
-        }
-
+        #lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 5, 5, 0.98); z-index: 2000; display: none; flex-direction: column; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.5s ease; }
+        #lightbox.active { display: flex; opacity: 1; }
+        .lb-image-container { position: relative; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; padding: 60px; }
+        .lb-image { max-width: 100%; max-height: 100%; object-fit: contain; box-shadow: 0 0 50px rgba(0,0,0,0.5); transition: opacity 0.3s ease; }
+        .lb-close { position: absolute; top: 40px; right: 40px; cursor: pointer; color: white; opacity: 0.5; transition: 0.3s; z-index: 2100; }
         .lb-close:hover { opacity: 1; transform: rotate(90deg); }
-
-        .lb-nav {
-            position: absolute;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            padding: 0 30px;
-            pointer-events: none;
-        }
-
-        .lb-arrow {
-            cursor: pointer;
-            pointer-events: auto;
-            color: white;
-            opacity: 0.2;
-            transition: 0.3s;
-            background: rgba(255,255,255,0.03);
-            padding: 25px;
-            border-radius: 50%;
-        }
-
+        .lb-nav { position: absolute; top: 50%; width: 100%; display: flex; justify-content: space-between; padding: 0 40px; transform: translateY(-50%); pointer-events: none; z-index: 2050; }
+        .lb-arrow { cursor: pointer; color: white; opacity: 0.3; transition: 0.3s; pointer-events: auto; background: rgba(255,255,255,0.05); border-radius: 50%; width: 60px; height: 60px; display: flex; justify-content: center; align-items: center; }
         .lb-arrow:hover { opacity: 1; background: rgba(255,255,255,0.1); }
+        .lb-counter { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); color: white; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; opacity: 0.4; }
 
-        /* Footer */
-        footer {
-            padding: 120px var(--spacing);
-            text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
+        footer { padding: 100px var(--spacing); text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
+        .footer-logo { font-size: 40px; margin-bottom: 20px; }
 
-        .footer-logo { font-size: 45px; margin-bottom: 15px; }
-
-        .social-tray {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin: 50px 0;
-        }
-
-        .social-tray a { color: var(--text-dim); transition: 0.3s; }
-        .social-tray a:hover { color: #FF8C42; }
-
-        .copyright { font-size: 10px; text-transform: uppercase; letter-spacing: 3px; color: var(--text-dim); opacity: 0.5; }
-
-        /* Mobile Adjustments */
         @media (max-width: 900px) {
             :root { --spacing: 6vw; }
             .nav-links { display: none; }
             .portfolio-grid { grid-template-columns: 1fr; grid-auto-rows: 400px; }
             .item-lg, .item-tall { grid-column: span 1; grid-row: span 1; }
-            .lb-content { width: 95%; height: 75%; }
         }
     </style>
 </head>
@@ -377,176 +116,125 @@
     <nav>
         <a href="#" class="logo">SHUTTER<span>PHRASE</span></a>
         <div class="nav-links">
+            <a href="#showreel">Showreel</a>
             <a href="#portfolio">Portfolio</a>
             <a href="#contact">Inquiry</a>
         </div>
     </nav>
 
     <section class="hero">
-        <span class="hero-label">Bespoke Visual Narratives</span>
-        <h1>
-            The Art of the<br>
-            <span>Unspoken Moment.</span>
-        </h1>
-        <a href="#portfolio" class="cta-btn">
-            Explore Archive <i data-lucide="arrow-right"></i>
-        </a>
+        <span class="hero-label">High-End Visual Production</span>
+        <h1>The Art of the<br><span>Unspoken Moment.</span></h1>
+        <a href="#showreel" class="cta-btn">Watch Showreel <i data-lucide="play"></i></a>
+    </section>
+
+    <section id="showreel">
+        <div class="showreel-wrapper">
+            <iframe id="mainShowreel" src="" allow="autoplay" allowfullscreen></iframe>
+        </div>
     </section>
 
     <section id="portfolio">
         <div class="section-header">
-            <h2>The Collection</h2>
+            <h2>The Archive</h2>
             <div class="section-divider"></div>
         </div>
-
-        <div class="portfolio-grid">
-            
-            <!-- PORTRAITS -->
-            <div class="portfolio-item item-lg" 
-                 data-gallery='["https://pro2-bar-s3-cdn-cf.myportfolio.com/9029e248-18e0-474c-8064-9694b7e8876c/627f12e2-5a3d-426c-9418-971c6670b86a_rw_1920.jpg"]'>
-                <img src="https://pro2-bar-s3-cdn-cf.myportfolio.com/9029e248-18e0-474c-8064-9694b7e8876c/627f12e2-5a3d-426c-9418-971c6670b86a_rw_1200.jpg" alt="Portraits" onerror="handleImageError(this)">
-                <div class="item-overlay">
-                    <p>Character Study</p>
-                    <h4>Portraits</h4>
-                </div>
-            </div>
-
-            <!-- PRODUCT SHOOT -->
-            <div class="portfolio-item" 
-                 data-gallery='["https://pro2-bar-s3-cdn-cf.myportfolio.com/9029e248-18e0-474c-8064-9694b7e8876c/b12d5966-4e5a-495b-9d4f-37f90f653f53_rw_1920.jpg"]'>
-                <img src="https://pro2-bar-s3-cdn-cf.myportfolio.com/9029e248-18e0-474c-8064-9694b7e8876c/b12d5966-4e5a-495b-9d4f-37f90f653f53_rw_1200.jpg" alt="Product Shoot" onerror="handleImageError(this)">
-                <div class="item-overlay">
-                    <p>Commercial Still Life</p>
-                    <h4>Product Shoot</h4>
-                </div>
-            </div>
-
-            <!-- AUTOMOTIVE -->
-            <div class="portfolio-item item-tall" 
-                 data-gallery='["https://pro2-bar-s3-cdn-cf.myportfolio.com/9029e248-18e0-474c-8064-9694b7e8876c/b6795f9c-7201-447a-bd09-40b49f50e960_rw_1920.jpg"]'>
-                <img src="https://pro2-bar-s3-cdn-cf.myportfolio.com/9029e248-18e0-474c-8064-9694b7e8876c/b6795f9c-7201-447a-bd09-40b49f50e960_rw_1200.jpg" alt="Automotive" onerror="handleImageError(this)">
-                <div class="item-overlay">
-                    <p>Machine & Motion</p>
-                    <h4>Automotive</h4>
-                </div>
-            </div>
-
-            <!-- BRAND CONTENT -->
-            <div class="portfolio-item" 
-                 data-gallery='["https://pro2-bar-s3-cdn-cf.myportfolio.com/9029e248-18e0-474c-8064-9694b7e8876c/5c2f8222-386d-478a-a400-366967784b8d_rw_1920.jpg"]'>
-                <img src="https://pro2-bar-s3-cdn-cf.myportfolio.com/9029e248-18e0-474c-8064-9694b7e8876c/5c2f8222-386d-478a-a400-366967784b8d_rw_1200.jpg" alt="Brand" onerror="handleImageError(this)">
-                <div class="item-overlay">
-                    <p>Visual Ecosystems</p>
-                    <h4>Brand Content</h4>
-                </div>
-            </div>
-
-            <!-- STREET -->
-            <div class="portfolio-item" 
-                 data-gallery='["https://pro2-bar-s3-cdn-cf.myportfolio.com/9029e248-18e0-474c-8064-9694b7e8876c/54653303-1250-4824-8186-f1311029e46a_rw_1920.jpg"]'>
-                <img src="https://pro2-bar-s3-cdn-cf.myportfolio.com/9029e248-18e0-474c-8064-9694b7e8876c/54653303-1250-4824-8186-f1311029e46a_rw_1200.jpg" alt="Street" onerror="handleImageError(this)">
-                <div class="item-overlay">
-                    <p>Urban Narratives</p>
-                    <h4>Street</h4>
-                </div>
-            </div>
-
+        <div class="portfolio-grid" id="mainGrid">
+            <!-- Grid items injected by JS -->
         </div>
     </section>
 
     <section id="contact" style="text-align: center;">
         <span class="hero-label">Strictly by Appointment</span>
-        <h2 style="font-size: 3.5rem; margin-bottom: 40px; font-family: 'Cormorant Garamond', serif;">Ready to curate your<br>visual legacy?</h2>
+        <h2 style="font-size: 3.5rem; margin-bottom: 40px; font-family: 'Cormorant Garamond', serif; font-weight:300;">Ready to curate your<br><span style="font-style:italic;">visual legacy?</span></h2>
         <a href="mailto:hello@shutterphrase.in" class="cta-btn">Request a Consultation</a>
     </section>
 
     <div id="lightbox">
-        <div class="lb-close"><i data-lucide="x" size="32"></i></div>
-        <div class="lb-content">
+        <div class="lb-close"><i data-lucide="x" size="36"></i></div>
+        <div class="lb-image-container">
             <img src="" alt="" class="lb-image">
             <div class="lb-nav">
-                <div class="lb-arrow lb-prev"><i data-lucide="chevron-left" size="32"></i></div>
-                <div class="lb-arrow lb-next"><i data-lucide="chevron-right" size="32"></i></div>
+                <div class="lb-arrow lb-prev" id="lbPrev"><i data-lucide="chevron-left" size="32"></i></div>
+                <div class="lb-arrow lb-next" id="lbNext"><i data-lucide="chevron-right" size="32"></i></div>
             </div>
+            <div class="lb-counter" id="lbCounter">0 / 0</div>
         </div>
     </div>
 
     <footer>
         <div class="logo footer-logo">SHUTTER<span>PHRASE</span></div>
-        <div class="social-tray">
-            <a href="#"><i data-lucide="instagram"></i></a>
-            <a href="#"><i data-lucide="linkedin"></i></a>
-            <a href="#"><i data-lucide="camera"></i></a>
-        </div>
-        <p class="copyright">© 2026 ShutterPhrase. All Rights Reserved.</p>
+        <p style="font-size: 10px; opacity: 0.5; letter-spacing: 2px;">© 2026 SHUTTERPHRASE. ALL RIGHTS RESERVED.</p>
     </footer>
 
     <script>
-        // Global error handler for images
-        function handleImageError(img) {
-            console.error("Failed to load image:", img.src);
-            // Fallback to a styled placeholder if the CDN blocks us
-            img.src = 'data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22600%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22%23111%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20font-family%3D%22sans-serif%22%20font-size%3D%2224%22%20fill%3D%22%23444%22%20text-anchor%3D%22middle%22%3EIMAGE%20UNAVAILABLE%3C%2Ftext%3E%3C%2Fsvg%3E';
-            img.style.filter = 'grayscale(1)';
+        // Init Showreel
+        document.getElementById('mainShowreel').src = `https://drive.google.com/file/d/${SHOWREEL_VIDEO_ID}/preview`;
+
+        // Updated Categories for ShutterPhrase
+        const categories = [
+            { key: 'portraits', label: 'Portraits', sub: 'The Character Study', class: 'item-lg' },
+            { key: 'product', label: 'Commercial', sub: 'Still Life Narrative', class: '' },
+            { key: 'creative', label: 'Creative', sub: 'Editorial Concepts', class: 'item-tall' },
+            { key: 'sports', label: 'Sports', sub: 'The Decisive Moment', class: '' },
+            { key: 'festivals', label: 'Festivals', sub: 'Cultural Stories', class: '' }
+        ];
+
+        const grid = document.getElementById('mainGrid');
+        categories.forEach(cat => {
+            const ids = GALLERY_CONFIG[cat.key];
+            const coverId = ids && ids.length > 0 ? ids[0] : '';
+            
+            const item = document.createElement('div');
+            item.className = `portfolio-item ${cat.class}`;
+            item.innerHTML = `
+                <img src="https://drive.google.com/uc?export=view&id=${coverId}" alt="${cat.label}" onerror="this.src='https://via.placeholder.com/1000/111/fff?text=${cat.label}'">
+                <div class="item-overlay">
+                    <p>${cat.sub}</p>
+                    <h4 style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;">${cat.label}</h4>
+                </div>
+            `;
+            item.onclick = () => openGallery(ids);
+            grid.appendChild(item);
+        });
+
+        const lightbox = document.getElementById('lightbox');
+        const lbImage = lightbox.querySelector('.lb-image');
+        const lbCounter = document.getElementById('lbCounter');
+        let activeGallery = [];
+        let currentIndex = 0;
+
+        function openGallery(ids) {
+            activeGallery = ids || [];
+            if (activeGallery.length === 0) return;
+            currentIndex = 0;
+            showLightbox();
         }
 
-        // Wait for everything to load safely
-        window.addEventListener('load', function() {
-            // Initialize Icons
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
-            }
+        function showLightbox() {
+            updateLightbox();
+            lightbox.style.display = 'flex';
+            setTimeout(() => lightbox.classList.add('active'), 10);
+            const multi = activeGallery.length > 1;
+            document.getElementById('lbNext').style.visibility = multi ? 'visible' : 'hidden';
+            document.getElementById('lbPrev').style.visibility = multi ? 'visible' : 'hidden';
+            lbCounter.style.visibility = multi ? 'visible' : 'hidden';
+        }
 
-            // Lightbox Logic
-            const lightbox = document.getElementById('lightbox');
-            const lbImage = lightbox.querySelector('.lb-image');
-            const lbClose = lightbox.querySelector('.lb-close');
-            const lbPrev = lightbox.querySelector('.lb-prev');
-            const lbNext = lightbox.querySelector('.lb-next');
+        function updateLightbox() {
+            lbImage.style.opacity = '0';
+            setTimeout(() => {
+                lbImage.src = `https://drive.google.com/uc?export=view&id=${activeGallery[currentIndex]}`;
+                lbCounter.textContent = `${currentIndex + 1} / ${activeGallery.length}`;
+                lbImage.style.opacity = '1';
+            }, 150);
+        }
 
-            let currentGallery = [];
-            let currentIndex = 0;
-
-            document.querySelectorAll('.portfolio-item').forEach(item => {
-                item.addEventListener('click', () => {
-                    currentGallery = JSON.parse(item.getAttribute('data-gallery'));
-                    currentIndex = 0;
-                    openLightbox();
-                });
-            });
-
-            function openLightbox() {
-                updateLightboxImage();
-                lightbox.style.display = 'flex';
-                setTimeout(() => lightbox.classList.add('active'), 10);
-                lbPrev.style.display = currentGallery.length > 1 ? 'block' : 'none';
-                lbNext.style.display = currentGallery.length > 1 ? 'block' : 'none';
-            }
-
-            function closeLightbox() {
-                lightbox.classList.remove('active');
-                setTimeout(() => lightbox.style.display = 'none', 500);
-            }
-
-            function updateLightboxImage() {
-                lbImage.src = currentGallery[currentIndex];
-            }
-
-            lbNext.addEventListener('click', (e) => {
-                e.stopPropagation();
-                currentIndex = (currentIndex + 1) % currentGallery.length;
-                updateLightboxImage();
-            });
-
-            lbPrev.addEventListener('click', (e) => {
-                e.stopPropagation();
-                currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
-                updateLightboxImage();
-            });
-
-            lbClose.addEventListener('click', closeLightbox);
-            lightbox.addEventListener('click', closeLightbox);
-        });
+        document.getElementById('lbNext').onclick = (e) => { e.stopPropagation(); currentIndex = (currentIndex + 1) % activeGallery.length; updateLightbox(); };
+        document.getElementById('lbPrev').onclick = (e) => { e.stopPropagation(); currentIndex = (currentIndex - 1 + activeGallery.length) % activeGallery.length; updateLightbox(); };
+        lightbox.querySelector('.lb-close').onclick = () => { lightbox.classList.remove('active'); setTimeout(() => lightbox.style.display = 'none', 500); };
+        
+        lucide.createIcons();
     </script>
 </body>
 </html>
