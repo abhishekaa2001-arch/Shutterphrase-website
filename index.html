@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShutterPhrase | Premium Visual Storytelling</title>
     
+    <!-- Critical for Adobe Portfolio CDN Hotlinking -->
+    <meta name="referrer" content="no-referrer">
+    
     <!-- Premium Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -194,6 +197,23 @@
             cursor: pointer;
         }
 
+        /* Shimmer loading effect */
+        .portfolio-item::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            animation: shimmer 2s infinite;
+            z-index: 1;
+        }
+
+        @keyframes shimmer {
+            100% { left: 100%; }
+        }
+
         .item-lg { grid-column: span 2; }
         .item-tall { grid-row: span 2; height: auto; }
 
@@ -203,7 +223,10 @@
             object-fit: cover;
             filter: grayscale(15%) brightness(0.9);
             transition: 1.5s cubic-bezier(0.19, 1, 0.22, 1);
-            background: #111; /* Fallback color while loading */
+            background: #111;
+            display: block;
+            position: relative;
+            z-index: 2;
         }
 
         .portfolio-item:hover img {
@@ -221,6 +244,7 @@
             opacity: 0;
             transform: translateY(20px);
             transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            z-index: 3;
         }
 
         .portfolio-item:hover .item-overlay {
@@ -380,7 +404,7 @@
             <!-- PORTRAITS -->
             <div class="portfolio-item item-lg" 
                  data-gallery='["https://pro2-bar-s3-cdn-cf.myportfolio.com/9029e248-18e0-474c-8064-9694b7e8876c/627f12e2-5a3d-426c-9418-971c6670b86a_rw_1920.jpg"]'>
-                <img src="https://pro2-bar-s3-cdn-cf.myportfolio.com/9029e248-18e0-474c-8064-9694b7e8876c/627f12e2-5a3d-426c-9418-971c6670b86a_rw_1200.jpg" alt="Portraits" onerror="this.src='https://via.placeholder.com/800x600/111/fff?text=Portraits'">
+                <img src="https://pro2-bar-s3-cdn-cf.myportfolio.com/9029e248-18e0-474c-8064-9694b7e8876c/627f12e2-5a3d-426c-9418-971c6670b86a_rw_1200.jpg" alt="Portraits" onerror="handleImageError(this)">
                 <div class="item-overlay">
                     <p>Character Study</p>
                     <h4>Portraits</h4>
@@ -390,7 +414,7 @@
             <!-- PRODUCT SHOOT -->
             <div class="portfolio-item" 
                  data-gallery='["https://pro2-bar-s3-cdn-cf.myportfolio.com/9029e248-18e0-474c-8064-9694b7e8876c/b12d5966-4e5a-495b-9d4f-37f90f653f53_rw_1920.jpg"]'>
-                <img src="https://pro2-bar-s3-cdn-cf.myportfolio.com/9029e248-18e0-474c-8064-9694b7e8876c/b12d5966-4e5a-495b-9d4f-37f90f653f53_rw_1200.jpg" alt="Product Shoot" onerror="this.src='https://via.placeholder.com/600x800/111/fff?text=Product+Shoot'">
+                <img src="https://pro2-bar-s3-cdn-cf.myportfolio.com/9029e248-18e0-474c-8064-9694b7e8876c/b12d5966-4e5a-495b-9d4f-37f90f653f53_rw_1200.jpg" alt="Product Shoot" onerror="handleImageError(this)">
                 <div class="item-overlay">
                     <p>Commercial Still Life</p>
                     <h4>Product Shoot</h4>
@@ -400,7 +424,7 @@
             <!-- AUTOMOTIVE -->
             <div class="portfolio-item item-tall" 
                  data-gallery='["https://pro2-bar-s3-cdn-cf.myportfolio.com/9029e248-18e0-474c-8064-9694b7e8876c/b6795f9c-7201-447a-bd09-40b49f50e960_rw_1920.jpg"]'>
-                <img src="https://pro2-bar-s3-cdn-cf.myportfolio.com/9029e248-18e0-474c-8064-9694b7e8876c/b6795f9c-7201-447a-bd09-40b49f50e960_rw_1200.jpg" alt="Automotive" onerror="this.src='https://via.placeholder.com/600x1200/111/fff?text=Automotive'">
+                <img src="https://pro2-bar-s3-cdn-cf.myportfolio.com/9029e248-18e0-474c-8064-9694b7e8876c/b6795f9c-7201-447a-bd09-40b49f50e960_rw_1200.jpg" alt="Automotive" onerror="handleImageError(this)">
                 <div class="item-overlay">
                     <p>Machine & Motion</p>
                     <h4>Automotive</h4>
@@ -410,7 +434,7 @@
             <!-- BRAND CONTENT -->
             <div class="portfolio-item" 
                  data-gallery='["https://pro2-bar-s3-cdn-cf.myportfolio.com/9029e248-18e0-474c-8064-9694b7e8876c/5c2f8222-386d-478a-a400-366967784b8d_rw_1920.jpg"]'>
-                <img src="https://pro2-bar-s3-cdn-cf.myportfolio.com/9029e248-18e0-474c-8064-9694b7e8876c/5c2f8222-386d-478a-a400-366967784b8d_rw_1200.jpg" alt="Brand" onerror="this.src='https://via.placeholder.com/600x800/111/fff?text=Brand'">
+                <img src="https://pro2-bar-s3-cdn-cf.myportfolio.com/9029e248-18e0-474c-8064-9694b7e8876c/5c2f8222-386d-478a-a400-366967784b8d_rw_1200.jpg" alt="Brand" onerror="handleImageError(this)">
                 <div class="item-overlay">
                     <p>Visual Ecosystems</p>
                     <h4>Brand Content</h4>
@@ -420,7 +444,7 @@
             <!-- STREET -->
             <div class="portfolio-item" 
                  data-gallery='["https://pro2-bar-s3-cdn-cf.myportfolio.com/9029e248-18e0-474c-8064-9694b7e8876c/54653303-1250-4824-8186-f1311029e46a_rw_1920.jpg"]'>
-                <img src="https://pro2-bar-s3-cdn-cf.myportfolio.com/9029e248-18e0-474c-8064-9694b7e8876c/54653303-1250-4824-8186-f1311029e46a_rw_1200.jpg" alt="Street" onerror="this.src='https://via.placeholder.com/600x800/111/fff?text=Street'">
+                <img src="https://pro2-bar-s3-cdn-cf.myportfolio.com/9029e248-18e0-474c-8064-9694b7e8876c/54653303-1250-4824-8186-f1311029e46a_rw_1200.jpg" alt="Street" onerror="handleImageError(this)">
                 <div class="item-overlay">
                     <p>Urban Narratives</p>
                     <h4>Street</h4>
@@ -458,6 +482,14 @@
     </footer>
 
     <script>
+        // Global error handler for images
+        function handleImageError(img) {
+            console.error("Failed to load image:", img.src);
+            // Fallback to a styled placeholder if the CDN blocks us
+            img.src = 'data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22600%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22%23111%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20font-family%3D%22sans-serif%22%20font-size%3D%2224%22%20fill%3D%22%23444%22%20text-anchor%3D%22middle%22%3EIMAGE%20UNAVAILABLE%3C%2Ftext%3E%3C%2Fsvg%3E';
+            img.style.filter = 'grayscale(1)';
+        }
+
         // Wait for everything to load safely
         window.addEventListener('load', function() {
             // Initialize Icons
