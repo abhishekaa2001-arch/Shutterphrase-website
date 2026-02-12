@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShutterPhrase | Premium Visual Storytelling</title>
+    
+    <!-- Premium Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inter:wght@100;300;400&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --bg-dark: #070707;
+            --bg-card: #111111;
+            --sunset-grad: linear-gradient(135deg, #FF8C42 0%, #6B5B95 100%);
+            --gold-muted: #c5a059;
+            --text-main: #ffffff;
+            --text-dim: #999999;
+            --spacing: 8vw;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Ambient Sunset Glow */
+        .ambient-glow {
+            position: fixed;
+            width: 70vw;
+            height: 70vw;
+            background: var(--sunset-grad);
+            filter: blur(140px);
+            opacity: 0.1;
+            z-index: -1;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .glow-top { top: -20%; right: -15%; }
+        .glow-bottom { bottom: -20%; left: -15%; }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 35px var(--spacing);
+            z-index: 1000;
+            background: linear-gradient(to bottom, rgba(7,7,7,0.9), transparent);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 26px;
+            letter-spacing: 3px;
+            text-decoration: none;
+            color: white;
+            font-weight: 400;
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            background: var(--sunset-grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 300;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-left: 45px;
+            transition: 0.4s ease;
+            opacity: 0.6;
+        }
+
+        .nav-links a:hover { opacity: 1; color: #FF8C42; }
+
+        /* Hero Section */
+        section {
+            padding: 140px var(--spacing);
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-width: 1400px;
+        }
+
+        .hero-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            color: var(--gold-muted);
+            margin-bottom: 25px;
+            display: block;
+            animation: fadeIn 1.5s ease;
+        }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3.5rem, 9vw, 8rem);
+            line-height: 0.9;
+            margin-bottom: 50px;
+            font-weight: 300;
+        }
+
+        .hero h1 span {
+            display: block;
+            margin-left: 8vw;
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        /* Buttons */
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 22px 55px;
+            border: 1px solid rgba(255,255,255,0.15);
+            color: white;
+            text-decoration: none;
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            width: fit-content;
+            background: rgba(255,255,255,0.02);
+            backdrop-filter: blur(5px);
+        }
+
+        .cta-btn:hover {
+            border-color: #FF8C42;
+            padding-right: 75px;
+            background: rgba(255, 140, 66, 0.03);
+            box-shadow: 0 0 30px rgba(255, 140, 66, 0.1);
+        }
+
+        .cta-btn i { margin-left: 15px; width: 18px; }
+
+        /* Services Grid */
+        .section-header {
+            margin-bottom: 100px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(3rem, 6vw, 5rem);
+            margin-bottom: 20px;
+        }
+
+        .section-divider {
+            width: 80px;
+            height: 1px;
+            background: var(--sunset-grad);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: var(--bg-card);
+            padding: 70px 45px;
+            border: 1px solid rgba(255,255,255,0.03);
+            transition: 0.5s;
+            position: relative;
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px);
+            border-color: rgba(107, 91, 149, 0.3);
+        }
+
+        .service-card i {
+            color: #FF8C42;
+            margin-bottom: 35px;
+            opacity: 0.8;
+        }
+
+        .service-card h3 {
+            font-size: 2.4rem;
+            margin-bottom: 25px;
+        }
+
+        .service-card p {
+            color: var(--text-dim);
+            font-size: 15px;
+            font-weight: 300;
+            line-height: 1.8;
+        }
+
+        /* Portfolio Glimpse */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            grid-template-rows: 600px;
+            gap: 20px;
+        }
+
+        .portfolio-item {
+            position: relative;
+            overflow: hidden;
+            background-color: #1a1a1a;
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(30%) contrast(1.1);
+            transition: 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.05);
+            filter: grayscale(0%) contrast(1);
+        }
+
+        /* Footer */
+        footer {
+            padding: 120px var(--spacing);
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .footer-logo {
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .social-tray {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 50px 0;
+        }
+
+        .social-tray a {
+            color: var(--text-dim);
+            transition: 0.3s;
+        }
+
+        .social-tray a:hover {
+            color: #FF8C42;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--text-dim);
+            opacity: 0.5;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile */
+        @media (max-width: 900px) {
+            :root { --spacing: 6vw; }
+            .nav-links { display: none; }
+            .hero h1 { font-size: 4rem; }
+            .portfolio-grid { grid-template-columns: 1fr; grid-template-rows: 400px 400px; }
+            .section-header h2 { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-glow glow-top"></div>
+    <div class="ambient-glow glow-bottom"></div>
+
+    <nav>
+        <a href="#" class="logo">SHUTTER<span>PHRASE</span></a>
+        <div class="nav-links">
+            <a href="#services">Services</a>
+            <a href="#portfolio">Archive</a>
+            <a href="#contact">Inquiry</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <span class="hero-label">Exclusive Visual Storytelling</span>
+        <h1>
+            The Art of the<br>
+            <span>Unspoken Moment.</span>
+        </h1>
+        <a href="#portfolio" class="cta-btn">
+            View the Collection <i data-lucide="arrow-right"></i>
+        </a>
+    </section>
+
+    <section id="services">
+        <div class="section-header reveal">
+            <h2>The Suite</h2>
+            <div class="section-divider"></div>
+        </div>
+        
+        <div class="services-grid">
+            <div class="service-card reveal">
+                <i data-lucide="user-round" size="32"></i>
+                <h3>Character Study</h3>
+                <p>An intimate exploration of identity through light and shadow. Beyond the pose lies the soul—captured with editorial elegance.</p>
+            </div>
+
+            <div class="service-card reveal">
+                <i data-lucide="gem" size="32"></i>
+                <h3>Still Life Narrative</h3>
+                <p>We transform products into aspirations. High-fidelity visuals for brands that demand a sophisticated visual language.</p>
+            </div>
+
+            <div class="service-card reveal">
+                <i data-lucide="sparkles" size="32"></i>
+                <h3>Digital Archetype</h3>
+                <p>A curated content engine for visionaries. We provide a cohesive visual ecosystem designed to elevate your digital presence.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio">
+        <div class="section-header reveal">
+            <h2>Archive</h2>
+            <div class="section-divider"></div>
+        </div>
+        <div class="portfolio-grid reveal">
+            <div class="portfolio-item">
+                <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&q=80&w=1200" alt="Portrait">
+            </div>
+            <div class="portfolio-item">
+                <img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&q=80&w=800" alt="Abstract">
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" style="text-align: center;">
+        <div class="reveal">
+            <span class="hero-label">Strictly by Appointment</span>
+            <h2 style="font-size: 3.5rem; margin-bottom: 40px; font-family: 'Cormorant Garamond', serif;">Ready to curate your<br>visual legacy?</h2>
+            <a href="mailto:hello@shutterphrase.in" class="cta-btn">Request a Consultation</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="logo footer-logo">SHUTTER<span>PHRASE</span></div>
+        <div class="social-tray">
+            <a href="#"><i data-lucide="instagram"></i></a>
+            <a href="#"><i data-lucide="linkedin"></i></a>
+            <a href="#"><i data-lucide="camera"></i></a>
+        </div>
+        <p class="copyright">© 2026 ShutterPhrase. Curated in India. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Reveal on Scroll Effect
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
