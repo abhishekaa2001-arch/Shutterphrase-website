@@ -5,82 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ShutterPhrase | Premium Visual Storytelling</title>
 
-<script>
-const SHOWREEL_VIDEO_ID = "1Xmu3M0J1H1VnoMm2FnZ-wKdMgRH7xof2";
-
-const GALLERY_ITEMS = [
-    {
-        category: "Portraits",
-        title: "Eternal Grace",
-        cover: "14VjUYVjbusBC71w17REfJo_524W0Lg2L",
-        size: "item-lg",
-        images: [
-            "14VjUYVjbusBC71w17REfJo_524W0Lg2L",
-            "1SEr_A7WZ9lwjDVjGt7hvMaHIgPd-k1Fb",
-            "1F-VUrAV0rYdshimhc3VRtw84w1IdM3IC",
-            "1Y2Faudr3b2MYDSvxGJdHgePy_UV4RvRy",
-            "1ZxuytU2DSyimdnpRuR8cFK8PBQFbTQhL",
-            "1rXxDLoeQKZoAeGj-rBhXm6l3QsltCrxP"
-        ]
-    },
-    {
-        category: "Sports",
-        title: "The Decisive Moment",
-        cover: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32",
-        size: "",
-        images: [
-            "https://images.unsplash.com/photo-1516035069371-29a1b244cc32"
-        ]
-    },
-    {
-        category: "Product",
-        title: "The Craft",
-        cover: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e",
-        size: "",
-        images: [
-            "https://images.unsplash.com/photo-1542038784456-1ea8e935640e"
-        ]
-    },
-    {
-        category: "Creative / Editorial",
-        title: "Visual Experiments",
-        cover: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4",
-        size: "item-tall",
-        images: [
-            "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4"
-        ]
-    },
-    {
-        category: "Festivals",
-        title: "Cultural Pulse",
-        cover: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622",
-        size: "",
-        images: [
-            "https://images.unsplash.com/photo-1511795409834-ef04bbd61622"
-        ]
-    }
-];
-
-function getImageUrl(id) {
-    if (id.startsWith('http')) return id;
-    return `https://lh3.googleusercontent.com/d/${id}=s1600`;
-}
-
-function getVideoEmbedUrl(id) {
-    return `https://drive.google.com/file/d/${id}/preview`;
-}
-</script>
-
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond&family=Inter&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest"></script>
 
 <style>
-body { background:#070707; color:white; font-family:Inter; margin:0; }
+body {
+    background:#070707;
+    color:white;
+    font-family:Inter;
+    margin:0;
+}
 
 nav {
     padding:25px 8%;
-    display:flex;
-    justify-content:space-between;
 }
 
 .logo {
@@ -92,7 +29,7 @@ section {
     padding:120px 8%;
 }
 
-/* Fade animation */
+/* Fade */
 .fade-in {
     opacity:0;
     transform:translateY(20px);
@@ -104,20 +41,20 @@ section {
 }
 
 /* Showreel */
-.showreel-container {
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
-
 .showreel-frame {
-    width:320px;
+    width:260px;
     aspect-ratio:9/16;
-    border-radius:20px;
+    border-radius:16px;
     overflow:hidden;
-    box-shadow:0 40px 100px rgba(0,0,0,0.8);
+    box-shadow:0 30px 80px rgba(0,0,0,0.7);
     border:1px solid rgba(255,255,255,0.08);
     background:black;
+}
+
+.showreel-frame iframe {
+    width:100%;
+    height:100%;
+    border:none;
 }
 
 /* Portfolio */
@@ -178,6 +115,22 @@ section {
     max-width:90%;
     max-height:90%;
 }
+
+/* CTA */
+.cta-btn {
+    display:inline-block;
+    margin-top:30px;
+    padding:18px 40px;
+    border:1px solid rgba(255,255,255,0.2);
+    text-decoration:none;
+    color:white;
+    letter-spacing:2px;
+    font-size:12px;
+    transition:0.3s;
+}
+.cta-btn:hover {
+    border-color:white;
+}
 </style>
 </head>
 
@@ -188,15 +141,64 @@ section {
 </nav>
 
 <!-- SHOWREEL -->
-<section id="showreel" class="fade-in showreel-container">
-    <div class="showreel-frame">
-        <iframe id="mainShowreel" style="width:100%; height:100%; border:none;"></iframe>
+<section id="showreel" class="fade-in">
+
+    <div style="text-align:center; margin-bottom:60px;">
+        <h2 style="font-family:Cormorant Garamond; font-size:2.5rem;">Showreel</h2>
+        <p style="opacity:0.6;">A glimpse into motion, mood and narrative</p>
     </div>
+
+    <div style="display:flex; justify-content:center; gap:30px; flex-wrap:wrap;">
+
+        <div class="showreel-frame">
+            <iframe src="https://drive.google.com/file/d/1Xmu3M0J1H1VnoMm2FnZ-wKdMgRH7xof2/preview"></iframe>
+        </div>
+
+        <div class="showreel-frame">
+            <iframe src="https://drive.google.com/file/d/1Xmu3M0J1H1VnoMm2FnZ-wKdMgRH7xof2/preview"></iframe>
+        </div>
+
+        <div class="showreel-frame">
+            <iframe src="https://drive.google.com/file/d/1Xmu3M0J1H1VnoMm2FnZ-wKdMgRH7xof2/preview"></iframe>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ABOUT -->
+<section class="fade-in" style="text-align:center; max-width:800px; margin:auto;">
+
+    <h2 style="font-family:Cormorant Garamond; font-size:2.5rem; margin-bottom:30px;">
+        Not Just Photography.<br>Visual Strategy.
+    </h2>
+
+    <p style="opacity:0.7; line-height:1.8; margin-bottom:20px;">
+        We don’t just capture images — we build visual assets that elevate brand perception,
+        communicate intent, and create lasting impact.
+    </p>
+
+    <p style="opacity:0.7; line-height:1.8;">
+        Whether it's corporate storytelling, product campaigns, or cinematic portraits,
+        every frame is designed with purpose — to engage, influence and convert.
+    </p>
+
 </section>
 
 <!-- PORTFOLIO -->
 <section id="portfolio" class="fade-in">
     <div class="portfolio-grid" id="mainGrid"></div>
+</section>
+
+<!-- CONTACT -->
+<section class="fade-in" style="text-align:center;">
+    <h2 style="font-family:Cormorant Garamond; font-size:2.5rem;">
+        Let’s Build Something Impactful
+    </h2>
+
+    <a href="mailto:hello@shutterphrase.in" class="cta-btn">
+        REQUEST A CONSULTATION
+    </a>
 </section>
 
 <!-- LIGHTBOX -->
@@ -205,19 +207,58 @@ section {
 </div>
 
 <script>
+const GALLERY_ITEMS = [
+    {
+        category: "Portraits",
+        title: "Eternal Grace",
+        cover: "14VjUYVjbusBC71w17REfJo_524W0Lg2L",
+        size: "item-lg",
+        images: [
+            "14VjUYVjbusBC71w17REfJo_524W0Lg2L",
+            "1SEr_A7WZ9lwjDVjGt7hvMaHIgPd-k1Fb",
+            "1F-VUrAV0rYdshimhc3VRtw84w1IdM3IC",
+            "1Y2Faudr3b2MYDSvxGJdHgePy_UV4RvRy",
+            "1ZxuytU2DSyimdnpRuR8cFK8PBQFbTQhL",
+            "1rXxDLoeQKZoAeGj-rBhXm6l3QsltCrxP"
+        ]
+    },
+    {
+        category: "Sports",
+        title: "The Decisive Moment",
+        cover: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32",
+        size: "",
+        images: ["https://images.unsplash.com/photo-1516035069371-29a1b244cc32"]
+    },
+    {
+        category: "Product",
+        title: "The Craft",
+        cover: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e",
+        size: "",
+        images: ["https://images.unsplash.com/photo-1542038784456-1ea8e935640e"]
+    },
+    {
+        category: "Creative / Editorial",
+        title: "Visual Experiments",
+        cover: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4",
+        size: "item-tall",
+        images: ["https://images.unsplash.com/photo-1492691527719-9d1e07e534b4"]
+    },
+    {
+        category: "Festivals",
+        title: "Cultural Pulse",
+        cover: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622",
+        size: "",
+        images: ["https://images.unsplash.com/photo-1511795409834-ef04bbd61622"]
+    }
+];
+
+function getImageUrl(id){
+    if(id.startsWith("http")) return id;
+    return `https://lh3.googleusercontent.com/d/${id}=s1600`;
+}
+
 let currentImageIndex = 0;
 let activeGallery = [];
-
-window.onload = () => {
-    lucide.createIcons();
-    initShowreel();
-    renderPortfolio();
-    setupFadeIn();
-};
-
-function initShowreel(){
-    document.getElementById("mainShowreel").src = getVideoEmbedUrl(SHOWREEL_VIDEO_ID);
-}
 
 function renderPortfolio(){
     const grid = document.getElementById('mainGrid');
@@ -254,20 +295,20 @@ document.getElementById("lightbox").onclick = ()=>{
     document.getElementById("lightbox").classList.remove("active");
 };
 
-/* Fade-in observer */
-function setupFadeIn(){
-    const observer = new IntersectionObserver(entries=>{
-        entries.forEach(entry=>{
-            if(entry.isIntersecting){
-                entry.target.classList.add("visible");
-            }
-        });
+/* Fade */
+const observer = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+        if(entry.isIntersecting){
+            entry.target.classList.add("visible");
+        }
     });
+});
 
-    document.querySelectorAll('.fade-in').forEach(el=>{
-        observer.observe(el);
-    });
-}
+document.querySelectorAll('.fade-in').forEach(el=>{
+    observer.observe(el);
+});
+
+renderPortfolio();
 </script>
 
 </body>
