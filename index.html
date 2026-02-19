@@ -10,8 +10,17 @@
 <style>
 body { background:#070707; color:white; font-family:Inter; margin:0; }
 
-nav { padding:25px 8%; }
-.logo { font-family:Cormorant Garamond; letter-spacing:2px; }
+nav {
+    padding:25px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+nav a {
+    color:white;
+    text-decoration:none;
+}
 
 section { padding:120px 8%; }
 
@@ -34,15 +43,9 @@ section { padding:120px 8%; }
     overflow:hidden;
     box-shadow:0 30px 80px rgba(0,0,0,0.7);
     border:1px solid rgba(255,255,255,0.08);
-    background:black;
-}
-.showreel-frame iframe {
-    width:100%;
-    height:100%;
-    border:none;
 }
 
-/* PORTFOLIO GRID (FIXED SYSTEM) */
+/* Grid */
 .portfolio-grid {
     display:grid;
     grid-template-columns:repeat(3,1fr);
@@ -53,45 +56,23 @@ section { padding:120px 8%; }
 
 .portfolio-item {
     position:relative;
-    cursor:pointer;
     overflow:hidden;
-    min-height:100%;
+    cursor:pointer;
 }
 
 .portfolio-item img {
     width:100%;
     height:100%;
     object-fit:cover;
-    transition: transform 1.2s ease, filter 0.6s ease;
 }
 
-/* CROP CONTROL */
-.portraits img {
-    object-position: 50% 20%;
-}
-.product img {
-    object-position: center top;
-}
+/* Crop control */
+.portraits img { object-position:50% 20%; }
+.product img { object-position:center top; }
 
-/* Hover */
-.portfolio-item:hover img {
-    transform:scale(1.04);
-    filter:brightness(1.1);
-}
-
-/* GRID SIZES */
-.item-hero {
-    grid-column: span 2;
-    grid-row: span 3;
-}
-
-.item-tall {
-    grid-row: span 2;
-}
-
-.item-lg {
-    grid-column: span 2;
-}
+/* Layout */
+.item-hero { grid-column:span 2; grid-row:span 3; }
+.item-tall { grid-row:span 2; }
 
 /* Overlay */
 .item-overlay {
@@ -99,255 +80,144 @@ section { padding:120px 8%; }
     bottom:0;
     width:100%;
     padding:20px;
-    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    background:linear-gradient(to top, rgba(0,0,0,0.7), transparent);
 }
 
 .item-overlay h3 {
     font-family:Cormorant Garamond;
+    margin:5px 0;
 }
 
-/* Lightbox */
-#lightbox {
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:black;
-    display:none;
-    justify-content:center;
-    align-items:center;
+.price {
+    font-size:12px;
+    opacity:0.8;
+    margin-top:5px;
 }
-#lightbox.active { display:flex; }
-
-.lb-image {
-    max-width:90%;
-    max-height:90%;
-}
-
-.lb-btn {
-    position:absolute;
-    font-size:32px;
-    cursor:pointer;
-    opacity:0.6;
-}
-.lb-btn:hover { opacity:1; }
-
-#prevBtn { left:40px; }
-#nextBtn { right:40px; }
-#closeBtn { top:30px; right:40px; font-size:24px; }
 
 /* CTA */
 .cta-btn {
-    display:inline-block;
-    margin-top:30px;
-    padding:18px 40px;
+    padding:16px 30px;
     border:1px solid rgba(255,255,255,0.2);
     text-decoration:none;
     color:white;
-    letter-spacing:2px;
     font-size:12px;
+    letter-spacing:2px;
 }
 </style>
 </head>
 
 <body>
 
+<!-- NAV -->
 <nav>
-    <div class="logo">SHUTTERPHRASE</div>
+    <img src="https://lh3.googleusercontent.com/d/1oBEoO4rF3oUw0M4DH6Z7QKmWl-JivlFG=s200" style="height:28px;">
+
+    <div style="display:flex; gap:30px; font-size:12px; letter-spacing:2px; opacity:0.7;">
+        <a href="#portfolio">WORK</a>
+        <a href="#contact">CONTACT</a>
+        <a href="https://www.instagram.com/shutterphrase.in/" target="_blank">INSTAGRAM</a>
+    </div>
 </nav>
 
 <!-- SHOWREEL -->
 <section class="fade-in">
-    <div style="text-align:center; margin-bottom:60px;">
-        <h2 style="font-family:Cormorant Garamond; font-size:2.5rem;">Showreel</h2>
-        <p style="opacity:0.6;">A glimpse into motion, mood and narrative</p>
-    </div>
+<div style="display:flex; justify-content:center; gap:30px; flex-wrap:wrap;">
 
-    <div style="display:flex; justify-content:center; gap:30px; flex-wrap:wrap; align-items:center;">
+<div class="showreel-frame">
+<iframe src="https://drive.google.com/file/d/1gYhjAm7YX4pxv51eGxUt_WjRRBakgNfA/preview" width="100%" height="100%"></iframe>
+</div>
 
-        <div class="showreel-frame" style="transform:scale(0.9); opacity:0.8;">
-            <iframe src="https://drive.google.com/file/d/1gYhjAm7YX4pxv51eGxUt_WjRRBakgNfA/preview"></iframe>
-        </div>
+<div class="showreel-frame" style="transform:scale(1.08);">
+<iframe src="https://drive.google.com/file/d/1gy2hENhvnUE52Ox1FPGpgHZc2multqNr/preview"></iframe>
+</div>
 
-        <div class="showreel-frame" style="transform:scale(1.08);">
-            <iframe src="https://drive.google.com/file/d/1gy2hENhvnUE52Ox1FPGpgHZc2multqNr/preview"></iframe>
-        </div>
+<div class="showreel-frame">
+<iframe src="https://drive.google.com/file/d/1JHGmDjoeWSwHHhzdUM_SCqVbUQZJBYYX/preview"></iframe>
+</div>
 
-        <div class="showreel-frame" style="transform:scale(0.9); opacity:0.8;">
-            <iframe src="https://drive.google.com/file/d/1JHGmDjoeWSwHHhzdUM_SCqVbUQZJBYYX/preview"></iframe>
-        </div>
-
-    </div>
+</div>
 </section>
 
 <!-- PORTFOLIO -->
-<section class="fade-in">
-    <div class="portfolio-grid" id="mainGrid"></div>
+<section id="portfolio" class="fade-in">
+<div class="portfolio-grid" id="grid"></div>
 </section>
 
 <!-- CONTACT -->
-<section class="fade-in" style="text-align:center;">
-    <h2 style="font-family:Cormorant Garamond;">Let’s Build Something Impactful</h2>
-    <a href="mailto:hello@shutterphrase.in" class="cta-btn">REQUEST A CONSULTATION</a>
+<section id="contact" class="fade-in" style="text-align:center;">
+<h2 style="font-family:Cormorant Garamond;">Let’s Build Something Impactful</h2>
+
+<div style="margin-top:30px; display:flex; gap:20px; justify-content:center;">
+<a href="mailto:hello@shutterphrase.in" class="cta-btn">EMAIL</a>
+<a href="https://www.instagram.com/shutterphrase.in/" target="_blank" class="cta-btn">INSTAGRAM</a>
+</div>
 </section>
 
-<!-- LIGHTBOX -->
-<div id="lightbox">
-    <div id="closeBtn" class="lb-btn">✕</div>
-    <div id="prevBtn" class="lb-btn">‹</div>
-    <img id="lbImage" class="lb-image">
-    <div id="nextBtn" class="lb-btn">›</div>
-</div>
+<footer style="text-align:center; padding:40px; opacity:0.4; font-size:12px;">
+© 2026 SHUTTERPHRASE
+</footer>
 
 <script>
-const GALLERY_ITEMS = [
-
-    {
-        category: "Portraits",
-        title: "Eternal Grace",
-        cover: "1LabVyDvm0d5d7K6S-7ljM-YkNGZrqEvt",
-        size: "item-hero",
-        images: [
-            "1LabVyDvm0d5d7K6S-7ljM-YkNGZrqEvt",
-            "1i_yGBk20gfPnNmnkZi9Mtp4kOjzf2qIh",
-            "1r6cvRabydlH5r7gMCt_goJR_leDfrvh5"
-        ]
-    },
-
-    {
-        category: "Sports",
-        title: "The Decisive Moment",
-        cover: "14QOLFGoqcSiStCe5miofoOjkJED-INtT",
-        size: "",
-        images: [
-            "14QOLFGoqcSiStCe5miofoOjkJED-INtT",
-            "1Qca9zh6RFxlAm0oo-CgKu73lyrjOEE_U",
-            "1wRTXqWUrRWR-toD6rR_6cUHdYl1Fhztn"
-        ]
-    },
-
-    {
-        category: "Product",
-        title: "The Craft",
-        cover: "1wzDtv35e5A89_eYSKA4mmwKtWE3sWv1N",
-        size: "",
-        images: [
-            "1wzDtv35e5A89_eYSKA4mmwKtWE3sWv1N",
-            "1dSX70LpWAqSgKumPIGnfV145iHl_uYNa",
-            "1ArFVKoGRQiiS94EDgEW4AkQO93K1MGTL"
-        ]
-    },
-
-    {
-        category: "Creative / Editorial",
-        title: "Visual Experiments",
-        cover: "1_uVWOL_oX55K7z3zg2eki87iTuOZVeS-",
-        size: "item-tall",
-        images: [
-            "1_uVWOL_oX55K7z3zg2eki87iTuOZVeS-",
-            "1YxkbKGFWmOrKc-wCi58tyskGS8fycUyz",
-            "1q5eHu7LloOWGcfM18B7WHRm6B_97Dvj6",
-            "1JiSwCPtXMfHh6AfKqClGgeKdY5v-q7l_"
-        ]
-    },
-
-    {
-        category: "Festivals",
-        title: "Cultural Pulse",
-        cover: "1hZfC_qzPh2EHi6KCTabHnUVQ-XRR5zwW",
-        size: "",
-        images: [
-            "1hZfC_qzPh2EHi6KCTabHnUVQ-XRR5zwW",
-            "1lr660KxM3akw_YVaIlyNwjx9tVMhsJVj",
-            "1WDbk-0ZIy4qvl7IBkFcUHXaeDIIWpvkR",
-            "1-H4AgobyUYO6hB77-KWeK4UQcq_42GTY",
-            "1f99R_A_UhQi2j50m7aW3MTWaLjcA5Ojn"
-        ]
-    }
-
+const DATA = [
+{
+category:"Portraits",
+title:"Eternal Grace",
+price:"Portrait sessions begin at ₹8,000",
+cover:"1LabVyDvm0d5d7K6S-7ljM-YkNGZrqEvt",
+size:"item-hero",
+images:["1LabVyDvm0d5d7K6S-7ljM-YkNGZrqEvt","1i_yGBk20gfPnNmnkZi9Mtp4kOjzf2qIh","1r6cvRabydlH5r7gMCt_goJR_leDfrvh5"]
+},
+{
+category:"Sports",
+title:"The Decisive Moment",
+price:"Sports coverage begins at ₹12,000",
+cover:"14QOLFGoqcSiStCe5miofoOjkJED-INtT",
+images:["14QOLFGoqcSiStCe5miofoOjkJED-INtT","1Qca9zh6RFxlAm0oo-CgKu73lyrjOEE_U","1wRTXqWUrRWR-toD6rR_6cUHdYl1Fhztn"]
+},
+{
+category:"Product",
+title:"The Craft",
+price:"Product photography begins at ₹15,000",
+cover:"1wzDtv35e5A89_eYSKA4mmwKtWE3sWv1N",
+images:["1wzDtv35e5A89_eYSKA4mmwKtWE3sWv1N","1dSX70LpWAqSgKumPIGnfV145iHl_uYNa","1ArFVKoGRQiiS94EDgEW4AkQO93K1MGTL"]
+},
+{
+category:"Festivals",
+title:"Cultural Pulse",
+price:"Festival coverage begins at ₹18,000",
+cover:"1hZfC_qzPh2EHi6KCTabHnUVQ-XRR5zwW",
+images:["1hZfC_qzPh2EHi6KCTabHnUVQ-XRR5zwW","1lr660KxM3akw_YVaIlyNwjx9tVMhsJVj","1WDbk-0ZIy4qvl7IBkFcUHXaeDIIWpvkR"]
+},
+{
+category:"Editorial",
+title:"Visual Experiments",
+price:"Editorial shoots begin at ₹25,000",
+cover:"1_uVWOL_oX55K7z3zg2eki87iTuOZVeS-",
+size:"item-tall",
+images:["1_uVWOL_oX55K7z3zg2eki87iTuOZVeS-","1YxkbKGFWmOrKc-wCi58tyskGS8fycUyz"]
+}
 ];
 
-function getImageUrl(id){
-    return `https://lh3.googleusercontent.com/d/${id}=s1600`;
-}
+function img(id){ return `https://lh3.googleusercontent.com/d/${id}=s1600`; }
 
-let currentImageIndex = 0;
-let activeGallery = [];
+const grid=document.getElementById("grid");
 
-function renderPortfolio(){
-    const grid = document.getElementById('mainGrid');
+DATA.forEach((item,i)=>{
+let div=document.createElement("div");
+let cls=item.category.toLowerCase();
+div.className=`portfolio-item ${item.size||""} ${cls}`;
 
-    GALLERY_ITEMS.forEach((item,index)=>{
-        const div = document.createElement('div');
-        const categoryClass = item.category.toLowerCase().replace(/[^a-z]/g, '-');
+div.innerHTML=`
+<img src="${img(item.cover)}">
+<div class="item-overlay">
+<div style="font-size:12px; opacity:0.7">${item.category}</div>
+<h3>${item.title}</h3>
+<div class="price">${item.price}</div>
+</div>
+`;
 
-        div.className = `portfolio-item ${item.size} ${categoryClass}`;
-        div.onclick = ()=>openLightbox(index);
-
-        div.innerHTML = `
-            <img src="${getImageUrl(item.cover)}">
-            <div class="item-overlay">
-                <div style="opacity:0.7; font-size:12px; letter-spacing:2px;">
-                    ${item.category === "Portraits" ? "PRIMARY WORK" : item.category}
-                </div>
-                <h3>${item.title}</h3>
-            </div>
-        `;
-
-        grid.appendChild(div);
-    });
-}
-
-function openLightbox(index){
-    activeGallery = GALLERY_ITEMS[index].images;
-    currentImageIndex = 0;
-    updateLightbox();
-    document.getElementById("lightbox").classList.add("active");
-}
-
-function updateLightbox(){
-    document.getElementById("lbImage").src = getImageUrl(activeGallery[currentImageIndex]);
-}
-
-function nextImage(){
-    currentImageIndex = (currentImageIndex + 1) % activeGallery.length;
-    updateLightbox();
-}
-
-function prevImage(){
-    currentImageIndex = (currentImageIndex - 1 + activeGallery.length) % activeGallery.length;
-    updateLightbox();
-}
-
-document.getElementById("nextBtn").onclick = (e)=>{ e.stopPropagation(); nextImage(); };
-document.getElementById("prevBtn").onclick = (e)=>{ e.stopPropagation(); prevImage(); };
-document.getElementById("closeBtn").onclick = ()=>{ document.getElementById("lightbox").classList.remove("active"); };
-
-document.getElementById("lightbox").onclick = (e)=>{
-    if(e.target.id === "lightbox"){
-        document.getElementById("lightbox").classList.remove("active");
-    }
-};
-
-document.addEventListener("keydown",(e)=>{
-    if(!document.getElementById("lightbox").classList.contains("active")) return;
-    if(e.key === "ArrowRight") nextImage();
-    if(e.key === "ArrowLeft") prevImage();
-    if(e.key === "Escape") document.getElementById("lightbox").classList.remove("active");
+grid.appendChild(div);
 });
-
-/* Fade */
-const observer = new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-        if(entry.isIntersecting){
-            entry.target.classList.add("visible");
-        }
-    });
-});
-document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
-
-renderPortfolio();
 </script>
 
 </body>
