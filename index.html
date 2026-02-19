@@ -10,6 +10,7 @@
 <style>
 body { background:#070707; color:white; font-family:Inter; margin:0; }
 
+/* NAV */
 nav {
     padding:20px 6%;
     display:flex;
@@ -17,15 +18,22 @@ nav {
     align-items:center;
 }
 
-nav a { color:white; text-decoration:none; }
+nav a {
+    color:white;
+    text-decoration:none;
+    font-size:12px;
+    letter-spacing:1px;
+}
 
+/* SECTIONS */
 section { padding:80px 6%; }
 
-/* SHOWREEL */
+/* 🔥 SHOWREEL */
 .showreel-container {
     display:flex;
     justify-content:center;
-    gap:40px;
+    align-items:center;
+    gap:50px;
     flex-wrap:wrap;
 }
 
@@ -37,10 +45,15 @@ section { padding:80px 6%; }
     background:black;
 }
 
+.showreel-frame.featured {
+    transform:scale(1.05);
+}
+
 .showreel-frame video {
     width:100%;
     height:100%;
-    object-fit:contain; /* 🔥 FIXED */
+    object-fit:contain; /* no crop */
+    display:block;
 }
 
 /* GRID */
@@ -61,22 +74,34 @@ section { padding:80px 6%; }
     width:100%;
     height:100%;
     object-fit:cover;
-    transition: transform 1.6s cubic-bezier(0.19,1,0.22,1);
+    transition: transform 1.4s ease;
 }
 
+/* HOVER */
 .portfolio-item:hover img {
     transform:scale(1.05);
 }
 
+/* SIZES */
 .item-hero { grid-column:span 2; grid-row:span 3; }
 .item-tall { grid-row:span 2; }
 
+/* CROPS */
+.portraits img { object-position:50% 20%; }
+.product img { object-position:center top; }
+
+/* OVERLAY */
 .item-overlay {
     position:absolute;
     bottom:0;
     width:100%;
     padding:15px;
-    background:linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    background:linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+}
+
+.item-overlay h3 {
+    font-family:Cormorant Garamond;
+    margin:4px 0;
 }
 
 .price { font-size:12px; opacity:0.8; }
@@ -96,11 +121,14 @@ section { padding:80px 6%; }
 
 #lightbox.active { display:flex; }
 
-.lb-image { max-width:90%; max-height:90%; }
+.lb-image {
+    max-width:90%;
+    max-height:90%;
+}
 
 .lb-btn {
     position:absolute;
-    font-size:30px;
+    font-size:32px;
     cursor:pointer;
 }
 
@@ -108,10 +136,33 @@ section { padding:80px 6%; }
 #next { right:20px; }
 #close { top:20px; right:20px; }
 
+/* CTA */
+.cta-btn {
+    padding:14px 22px;
+    border:1px solid rgba(255,255,255,0.2);
+    text-decoration:none;
+    color:white;
+    font-size:12px;
+}
+
 /* MOBILE */
-@media (max-width:768px){
-    .portfolio-grid { grid-template-columns:1fr; }
-    .showreel-frame { width:90%; }
+@media (max-width: 768px) {
+
+    .portfolio-grid {
+        grid-template-columns:1fr;
+        grid-auto-rows:200px;
+    }
+
+    .item-hero,
+    .item-tall {
+        grid-column:span 1;
+        grid-row:span 1;
+    }
+
+    .showreel-frame {
+        width:100%;
+        max-width:280px;
+    }
 }
 </style>
 </head>
@@ -120,16 +171,16 @@ section { padding:80px 6%; }
 
 <!-- NAV -->
 <nav>
-<img src="https://lh3.googleusercontent.com/d/1oBEoO4rF3oUw0M4DH6Z7QKmWl-JivlFG=s200" style="height:26px;">
+<img src="https://lh3.googleusercontent.com/d/1oBEoO4rF3oUw0M4DH6Z7QKmWl-JivlFG=s200" style="height:28px;">
 
-<div style="display:flex; gap:20px; font-size:12px;">
+<div style="display:flex; gap:20px;">
 <a href="#portfolio">WORK</a>
 <a href="#contact">CONTACT</a>
 <a href="https://www.instagram.com/shutterphrase.in/" target="_blank">INSTAGRAM</a>
 </div>
 </nav>
 
-<!-- SHOWREEL -->
+<!-- 🔥 SHOWREEL -->
 <section>
 <div class="showreel-container">
 
@@ -139,7 +190,7 @@ section { padding:80px 6%; }
 </video>
 </div>
 
-<div class="showreel-frame">
+<div class="showreel-frame featured">
 <video autoplay muted loop playsinline>
 <source src="/videos/Reel2.mp4" type="video/mp4">
 </video>
@@ -163,7 +214,7 @@ section { padding:80px 6%; }
 <section id="contact" style="text-align:center;">
 <h2 style="font-family:Cormorant Garamond;">Let’s Build Something Impactful</h2>
 
-<div style="margin-top:20px; display:flex; gap:10px; justify-content:center;">
+<div style="margin-top:20px; display:flex; gap:15px; justify-content:center;">
 <a href="mailto:abhishek@shutterphrase.in" class="cta-btn">EMAIL</a>
 <a href="https://www.instagram.com/shutterphrase.in/" target="_blank" class="cta-btn">INSTAGRAM</a>
 </div>
@@ -197,6 +248,28 @@ title:"The Decisive Moment",
 price:"Sports coverage begins at ₹12,000",
 cover:"14QOLFGoqcSiStCe5miofoOjkJED-INtT",
 images:["14QOLFGoqcSiStCe5miofoOjkJED-INtT","1Qca9zh6RFxlAm0oo-CgKu73lyrjOEE_U","1wRTXqWUrRWR-toD6rR_6cUHdYl1Fhztn"]
+},
+{
+category:"Product",
+title:"The Craft",
+price:"Product photography begins at ₹15,000",
+cover:"1wzDtv35e5A89_eYSKA4mmwKtWE3sWv1N",
+images:["1wzDtv35e5A89_eYSKA4mmwKtWE3sWv1N","1dSX70LpWAqSgKumPIGnfV145iHl_uYNa","1ArFVKoGRQiiS94EDgEW4AkQO93K1MGTL"]
+},
+{
+category:"Festivals",
+title:"Cultural Pulse",
+price:"Festival coverage begins at ₹18,000",
+cover:"1hZfC_qzPh2EHi6KCTabHnUVQ-XRR5zwW",
+images:["1hZfC_qzPh2EHi6KCTabHnUVQ-XRR5zwW","1lr660KxM3akw_YVaIlyNwjx9tVMhsJVj","1WDbk-0ZIy4qvl7IBkFcUHXaeDIIWpvkR"]
+},
+{
+category:"Editorial",
+title:"Visual Experiments",
+price:"Editorial shoots begin at ₹25,000",
+cover:"1_uVWOL_oX55K7z3zg2eki87iTuOZVeS-",
+size:"item-tall",
+images:["1_uVWOL_oX55K7z3zg2eki87iTuOZVeS-","1YxkbKGFWmOrKc-wCi58tyskGS8fycUyz"]
 }
 ];
 
@@ -208,12 +281,12 @@ const grid=document.getElementById("grid");
 
 data.forEach(item=>{
 let div=document.createElement("div");
-div.className=`portfolio-item ${item.size||""}`;
+div.className=`portfolio-item ${item.size||""} ${item.category.toLowerCase()}`;
 
 div.innerHTML=`
 <img src="${img(item.cover)}">
 <div class="item-overlay">
-<div>${item.category}</div>
+<div style="font-size:11px; opacity:0.7">${item.category}</div>
 <h3>${item.title}</h3>
 <div class="price">${item.price}</div>
 </div>
@@ -244,6 +317,7 @@ document.getElementById("next").onclick=e=>{e.stopPropagation(); next();};
 document.getElementById("prev").onclick=e=>{e.stopPropagation(); prev();};
 document.getElementById("close").onclick=()=>document.getElementById("lightbox").classList.remove("active");
 
+/* KEYBOARD */
 document.addEventListener("keydown",(e)=>{
 if(!document.getElementById("lightbox").classList.contains("active")) return;
 if(e.key==="ArrowRight") next();
