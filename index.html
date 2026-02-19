@@ -21,13 +21,22 @@ nav a { color:white; text-decoration:none; }
 
 section { padding:100px 8%; }
 
-/* SHOWREEL */
+/* SHOWREEL FIXED */
 .showreel-frame {
     width:220px;
-    aspect-ratio:9/16;
+    height:390px; /* 🔥 FORCE vertical */
     border-radius:16px;
     overflow:hidden;
-    box-shadow:0 30px 80px rgba(0,0,0,0.7);
+    position:relative;
+}
+
+.showreel-frame iframe {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    border:none;
 }
 
 /* GRID */
@@ -49,13 +58,19 @@ section { padding:100px 8%; }
     width:100%;
     height:100%;
     object-fit:cover;
+    transition: transform 1.6s cubic-bezier(0.19,1,0.22,1);
 }
 
-/* SIZE SYSTEM */
+/* 🔥 CINEMATIC ZOOM RESTORED */
+.portfolio-item:hover img {
+    transform:scale(1.05);
+}
+
+/* SIZE */
 .item-hero { grid-column:span 2; grid-row:span 3; }
 .item-tall { grid-row:span 2; }
 
-/* CROP */
+/* CROPS */
 .portraits img { object-position:50% 20%; }
 .product img { object-position:center top; }
 
@@ -129,7 +144,7 @@ section { padding:100px 8%; }
 <div style="display:flex; justify-content:center; gap:25px; flex-wrap:wrap;">
 
 <div class="showreel-frame">
-<iframe src="https://drive.google.com/file/d/1gYhjAm7YX4pxv51eGxUt_WjRRBakgNfA/preview" width="100%" height="100%"></iframe>
+<iframe src="https://drive.google.com/file/d/1gYhjAm7YX4pxv51eGxUt_WjRRBakgNfA/preview"></iframe>
 </div>
 
 <div class="showreel-frame" style="transform:scale(1.08);">
@@ -217,11 +232,9 @@ return `https://lh3.googleusercontent.com/d/${id}=s1600`;
 
 const grid=document.getElementById("grid");
 
-data.forEach((item,i)=>{
+data.forEach(item=>{
 let div=document.createElement("div");
-let cls=item.category.toLowerCase();
-
-div.className=`portfolio-item ${item.size||""} ${cls}`;
+div.className=`portfolio-item ${item.size||""} ${item.category.toLowerCase()}`;
 
 div.innerHTML=`
 <img src="${img(item.cover)}">
@@ -233,7 +246,6 @@ div.innerHTML=`
 `;
 
 div.onclick=()=>openLightbox(item.images);
-
 grid.appendChild(div);
 });
 
@@ -257,7 +269,6 @@ function prev(){ current=(current-1+gallery.length)%gallery.length; update(); }
 document.getElementById("next").onclick=e=>{e.stopPropagation(); next();};
 document.getElementById("prev").onclick=e=>{e.stopPropagation(); prev();};
 document.getElementById("close").onclick=()=>document.getElementById("lightbox").classList.remove("active");
-
 </script>
 
 </body>
