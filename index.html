@@ -8,33 +8,62 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond&family=Inter&display=swap" rel="stylesheet">
 
 <style>
-body { background:#070707; color:white; font-family:Inter; margin:0; }
 
+/* RESET */
+* { box-sizing:border-box; margin:0; padding:0; }
+body { background:#070707; color:white; font-family:Inter, sans-serif; }
+
+/* TYPOGRAPHY */
+h2 { font-family:"Cormorant Garamond", serif; font-size:clamp(1.8rem,4vw,2.5rem); }
+p { line-height:1.5; }
+
+/* LAYOUT */
+section { padding:80px 5%; }
+
+/* NAV */
 nav {
-    padding:25px 8%;
+    padding:20px 5%;
     display:flex;
     justify-content:space-between;
     align-items:center;
 }
 
-nav a { color:white; text-decoration:none; }
+nav img { height:28px; }
 
-section { padding:100px 8%; }
+nav div {
+    display:flex;
+    gap:20px;
+    font-size:0.8rem;
+}
+
+nav a {
+    color:white;
+    text-decoration:none;
+    opacity:0.7;
+    padding:10px;
+    min-height:44px;
+    display:flex;
+    align-items:center;
+}
 
 /* SHOWREEL */
+.showreel-wrapper {
+    display:flex;
+    justify-content:center;
+    gap:40px;
+    flex-wrap:wrap;
+    margin-top:30px;
+}
+
 .showreel-frame {
-    width:280px;
+    width:min(90vw,280px);
     aspect-ratio:9/16;
     border-radius:16px;
     overflow:hidden;
     position:relative;
-    flex-shrink:0;
 }
 
 .showreel-frame iframe {
-    position:absolute;
-    top:0;
-    left:0;
     width:100%;
     height:100%;
     border:none;
@@ -43,38 +72,31 @@ section { padding:100px 8%; }
 /* GRID */
 .portfolio-grid {
     display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:24px;
-    grid-auto-rows:160px;
-    grid-auto-flow:dense;
+    grid-template-columns:1fr;
+    gap:20px;
 }
 
 .portfolio-item {
     position:relative;
     overflow:hidden;
     cursor:pointer;
+    min-height:220px;
 }
 
 .portfolio-item img {
     width:100%;
     height:100%;
     object-fit:cover;
-    transition: transform 1.6s cubic-bezier(0.19,1,0.22,1);
+    transition: transform 1.2s ease;
 }
 
-/* IMAGE PROTECTION */
-img {
-    user-select:none;
-    -webkit-user-drag:none;
+/* HOVER (only desktop) */
+@media (hover:hover){
+.portfolio-item:hover img { transform:scale(1.05); }
 }
 
-/* CINEMATIC ZOOM */
-.portfolio-item:hover img {
-    transform:scale(1.05);
-}
-
-/* SIZE */
-.item-hero { grid-column:span 2; grid-row:span 3; }
+/* SIZES */
+.item-hero { grid-row:span 2; }
 .item-tall { grid-row:span 2; }
 
 /* CROPS */
@@ -86,21 +108,32 @@ img {
     position:absolute;
     bottom:0;
     width:100%;
-    padding:20px;
+    padding:16px;
     background:linear-gradient(to top, rgba(0,0,0,0.7), transparent);
 }
 
-.item-overlay h3 { font-family:Cormorant Garamond; margin:5px 0; }
+.item-overlay h3 { font-family:"Cormorant Garamond"; }
 
-.price { font-size:12px; opacity:0.8; }
+.price { font-size:0.75rem; opacity:0.8; }
+
+/* CTA */
+.cta-btn {
+    padding:14px 20px;
+    border:1px solid rgba(255,255,255,0.2);
+    text-decoration:none;
+    color:white;
+    font-size:0.75rem;
+    letter-spacing:2px;
+    min-height:44px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
 
 /* LIGHTBOX */
 #lightbox {
     position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
+    inset:0;
     background:black;
     display:none;
     justify-content:center;
@@ -109,52 +142,41 @@ img {
 
 #lightbox.active { display:flex; }
 
-.lb-image { max-width:90%; max-height:90%; }
+.lb-image {
+    max-width:90%;
+    max-height:90%;
+}
 
 .lb-btn {
     position:absolute;
     font-size:30px;
-    cursor:pointer;
+    padding:15px;
+    min-width:48px;
+    min-height:48px;
 }
 
-#prev { left:30px; }
-#next { right:30px; }
-#close { top:20px; right:30px; }
+/* POSITIONS */
+#prev { left:10px; }
+#next { right:10px; }
+#close { top:10px; right:10px; }
 
-/* CTA */
-.cta-btn {
-    padding:14px 25px;
-    border:1px solid rgba(255,255,255,0.2);
-    text-decoration:none;
-    color:white;
-    font-size:12px;
-    letter-spacing:2px;
+/* TABLET */
+@media (min-width:480px){
+.portfolio-grid { grid-template-columns:repeat(2,1fr); }
 }
 
-/* MOBILE */
-@media (max-width: 900px) {
+/* DESKTOP */
+@media (min-width:768px){
+section { padding:100px 8%; }
 
-    section {
-        padding:80px 5%;
-    }
-
-    .portfolio-grid {
-        grid-template-columns:1fr;
-        grid-auto-rows:220px;
-    }
-
-    .item-hero,
-    .item-tall {
-        grid-column:span 1;
-        grid-row:span 1;
-    }
-
-    .showreel-frame {
-        width:100%;
-        max-width:300px;
-    }
-
+.portfolio-grid {
+    grid-template-columns:repeat(3,1fr);
+    grid-auto-rows:160px;
 }
+
+.item-hero { grid-column:span 2; grid-row:span 3; }
+}
+
 </style>
 </head>
 
@@ -162,9 +184,9 @@ img {
 
 <!-- NAV -->
 <nav>
-<img src="https://lh3.googleusercontent.com/d/1oBEoO4rF3oUw0M4DH6Z7QKmWl-JivlFG=s200" style="height:28px;">
+<img src="https://lh3.googleusercontent.com/d/1oBEoO4rF3oUw0M4DH6Z7QKmWl-JivlFG=s200" alt="ShutterPhrase Logo">
 
-<div style="display:flex; gap:25px; font-size:12px; opacity:0.7;">
+<div>
 <a href="#portfolio">WORK</a>
 <a href="#contact">CONTACT</a>
 <a href="https://www.instagram.com/shutterphrase.in/" target="_blank">INSTAGRAM</a>
@@ -173,13 +195,13 @@ img {
 
 <!-- SHOWREEL -->
 <section>
-<div style="display:flex; justify-content:center; gap:60px; flex-wrap:wrap; margin-top:40px;">
+<div class="showreel-wrapper">
 
 <div class="showreel-frame">
 <iframe src="https://drive.google.com/file/d/1gy2hENhvnUE52Ox1FPGpgHZc2multqNr/preview"></iframe>
 </div>
 
-<div class="showreel-frame" style="transform:scale(1.05);">
+<div class="showreel-frame">
 <iframe src="https://drive.google.com/file/d/1gYhjAm7YX4pxv51eGxUt_WjRRBakgNfA/preview"></iframe>
 </div>
 
@@ -197,23 +219,23 @@ img {
 
 <!-- CONTACT -->
 <section id="contact" style="text-align:center;">
-<h2 style="font-family:Cormorant Garamond;">Let’s Build Something Impactful</h2>
+<h2>Let’s Build Something Impactful</h2>
 
-<div style="margin-top:25px; display:flex; gap:15px; justify-content:center;">
+<div style="margin-top:25px; display:flex; gap:15px; justify-content:center; flex-wrap:wrap;">
 <a href="mailto:abhishek@shutterphrase.in" class="cta-btn">EMAIL</a>
 <a href="https://www.instagram.com/shutterphrase.in/" target="_blank" class="cta-btn">INSTAGRAM</a>
 </div>
 </section>
 
-<footer style="text-align:center; padding:40px; opacity:0.4;">
+<footer style="text-align:center; padding:30px; opacity:0.4;">
 © 2026 SHUTTERPHRASE
 </footer>
 
 <!-- LIGHTBOX -->
-<div id="lightbox">
+<div id="lightbox" role="dialog" aria-modal="true">
 <div id="close" class="lb-btn">✕</div>
 <div id="prev" class="lb-btn">‹</div>
-<img id="lbImg" class="lb-image">
+<img id="lbImg" class="lb-image" alt="Gallery Image">
 <div id="next" class="lb-btn">›</div>
 </div>
 
@@ -259,7 +281,7 @@ images:["1_uVWOL_oX55K7z3zg2eki87iTuOZVeS-","1YxkbKGFWmOrKc-wCi58tyskGS8fycUyz"]
 ];
 
 function img(id){
-return `https://lh3.googleusercontent.com/d/${id}=s1600`;
+return `https://lh3.googleusercontent.com/d/${id}=s1200`;
 }
 
 const grid=document.getElementById("grid");
@@ -269,9 +291,9 @@ let div=document.createElement("div");
 div.className=`portfolio-item ${item.size||""} ${item.category.toLowerCase()}`;
 
 div.innerHTML=`
-<img src="${img(item.cover)}" draggable="false" oncontextmenu="return false;">
+<img src="${img(item.cover)}" alt="${item.title}" loading="lazy">
 <div class="item-overlay">
-<div style="font-size:12px; opacity:0.7">${item.category}</div>
+<div style="font-size:0.7rem; opacity:0.7">${item.category}</div>
 <h3>${item.title}</h3>
 <div class="price">${item.price}</div>
 </div>
@@ -302,24 +324,15 @@ document.getElementById("next").onclick=e=>{e.stopPropagation(); next();};
 document.getElementById("prev").onclick=e=>{e.stopPropagation(); prev();};
 document.getElementById("close").onclick=()=>document.getElementById("lightbox").classList.remove("active");
 
-/* CLICK OUTSIDE CLOSE */
 document.getElementById("lightbox").onclick = (e) => {
-    if(e.target.id === "lightbox"){
-        document.getElementById("lightbox").classList.remove("active");
-    }
+if(e.target.id === "lightbox") document.getElementById("lightbox").classList.remove("active");
 };
 
-/* 🔥 KEYBOARD NAVIGATION */
 document.addEventListener("keydown", (e) => {
-
-    if (!document.getElementById("lightbox").classList.contains("active")) return;
-
-    if (e.key === "ArrowRight") next();
-    if (e.key === "ArrowLeft") prev();
-    if (e.key === "Escape") {
-        document.getElementById("lightbox").classList.remove("active");
-    }
-
+if (!document.getElementById("lightbox").classList.contains("active")) return;
+if (e.key === "ArrowRight") next();
+if (e.key === "ArrowLeft") prev();
+if (e.key === "Escape") document.getElementById("lightbox").classList.remove("active");
 });
 </script>
 
