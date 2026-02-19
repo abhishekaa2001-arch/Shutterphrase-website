@@ -1,339 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShutterPhrase | Premium Visual Storytelling</title>
-    
-    <script>
-        /**
-         * --- SHUTTERPHRASE CONFIGURATION ZONE ---
-         */
-        const SHOWREEL_VIDEO_ID = "1Xmu3M0J1H1VnoMm2FnZ-wKdMgRH7xof2"; 
-        
-        // Configuration for the gallery. 
-        // Using some sample high-quality images alongside your Drive ID for a complete look.
-        const GALLERY_ITEMS = [
-             { id: "14VjUYVjbusBC71w17REfJo_524W0Lg2L", title: "Eternal Grace I", category: "Portraits", size: "item-lg" },
-    { id: "1SEr_A7WZ9lwjDVjGt7hvMaHIgPd-k1Fb", title: "Eternal Grace II", category: "Portraits", size: "" },
-    { id: "1F-VUrAV0rYdshimhc3VRtw84w1IdM3IC", title: "Eternal Grace III", category: "Portraits", size: "item-tall" },
-    { id: "1Y2Faudr3b2MYDSvxGJdHgePy_UV4RvRy", title: "Eternal Grace IV", category: "Portraits", size: "" },
-    { id: "1ZxuytU2DSyimdnpRuR8cFK8PBQFbTQhL", title: "Eternal Grace V", category: "Portraits", size: "" },
-    { id: "1rXxDLoeQKZoAeGj-rBhXm6l3QsltCrxP", title: "Eternal Grace VI", category: "Portraits", size: "" },
-            { id: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4", title: "Urban Rhythm", category: "Creative", size: "" },
-            { id: "https://images.unsplash.com/photo-1554080353-a576cf803bda", title: "Silent Echo", category: "Portraits", size: "item-tall" },
-            { id: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e", title: "The Craft", category: "Product", size: "" },
-            { id: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32", title: "Motion Blur", category: "Sports", size: "item-lg" },
-            { id: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622", title: "Festival Soul", category: "Festivals", size: "" },
-            { id: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34", title: "Legacy", category: "Creative", size: "" }
-        ];
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShutterPhrase | Premium Visual Storytelling</title>
 
-        function cleanId(input) {
-            if (!input || input.includes("YOUR_") || input.includes("_ID")) return null;
-            if (!input.includes("http")) return input; // Already an ID
-            const regex = [
-                /\/d\/([a-zA-Z0-9_-]{25,})/,
-                /\/folders\/([a-zA-Z0-9_-]{25,})/,
-                /id=([a-zA-Z0-9_-]{25,})/
-            ];
-            for (let r of regex) {
-                const match = input.match(r);
-                if (match) return match[1];
-            }
-            return input.trim();
-        }
+<script>
+/* ================= CONFIG ================= */
 
-        function getImageUrl(id) {
-            if (id.startsWith('http')) return id; // Use direct URL if provided
-            const safeId = cleanId(id);
-            return safeId ? `https://lh3.googleusercontent.com/d/${safeId}=s1600` : '';
-        }
+const SHOWREEL_VIDEO_ID = "1Xmu3M0J1H1VnoMm2FnZ-wKdMgRH7xof2";
 
-        function getVideoEmbedUrl(id) {
-            const safeId = cleanId(id);
-            return safeId ? `https://drive.google.com/file/d/${safeId}/preview` : '';
-        }
-    </script>
+const GALLERY_ITEMS = [
 
-    <meta name="referrer" content="no-referrer">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inter:wght@100;300;400&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
-    
-    <style>
-        :root {
-            --bg-dark: #070707;
-            --bg-card: #111111;
-            --sunset-grad: linear-gradient(135deg, #FF8C42 0%, #6B5B95 100%);
-            --gold-muted: #c5a059;
-            --text-main: #ffffff;
-            --text-dim: #999999;
-            --spacing: 8vw;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
-        body { background-color: var(--bg-dark); color: var(--text-main); font-family: 'Inter', sans-serif; line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-        
-        /* Background Glows */
-        .ambient-glow { position: fixed; width: 70vw; height: 70vw; background: var(--sunset-grad); filter: blur(140px); opacity: 0.1; z-index: -1; border-radius: 50%; pointer-events: none; }
-        .glow-top { top: -20%; right: -15%; }
-        .glow-bottom { bottom: -20%; left: -15%; }
+    {
+        category: "Portraits",
+        title: "Eternal Grace",
+        cover: "14VjUYVjbusBC71w17REfJo_524W0Lg2L",
+        size: "item-lg",
+        images: [
+            "14VjUYVjbusBC71w17REfJo_524W0Lg2L",
+            "1SEr_A7WZ9lwjDVjGt7hvMaHIgPd-k1Fb",
+            "1F-VUrAV0rYdshimhc3VRtw84w1IdM3IC",
+            "1Y2Faudr3b2MYDSvxGJdHgePy_UV4RvRy",
+            "1ZxuytU2DSyimdnpRuR8cFK8PBQFbTQhL",
+            "1rXxDLoeQKZoAeGj-rBhXm6l3QsltCrxP"
+        ]
+    },
 
-        /* Navigation */
-        nav { position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 30px var(--spacing); z-index: 1000; background: linear-gradient(to bottom, rgba(7,7,7,0.9), transparent); backdrop-filter: blur(10px); }
-        .logo { font-family: 'Cormorant Garamond', serif; font-size: 26px; letter-spacing: 3px; text-decoration: none; color: white; text-transform: uppercase; }
-        .logo span { background: var(--sunset-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 300; }
-        .nav-links a { color: var(--text-main); text-decoration: none; font-size: 11px; text-transform: uppercase; letter-spacing: 4px; margin-left: 45px; transition: 0.4s; opacity: 0.6; }
-        .nav-links a:hover { opacity: 1; color: #FF8C42; }
+    {
+        category: "Sports",
+        title: "The Decisive Moment",
+        cover: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32",
+        size: "",
+        images: [
+            "https://images.unsplash.com/photo-1516035069371-29a1b244cc32"
+        ]
+    },
 
-        /* Sections */
-        section { padding: 120px var(--spacing); position: relative; }
-        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; }
-        .hero-label { font-size: 11px; text-transform: uppercase; letter-spacing: 10px; color: var(--gold-muted); margin-bottom: 25px; display: block; }
-        .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 9vw, 8rem); line-height: 0.95; margin-bottom: 50px; font-weight: 300; }
-        .hero h1 span { display: block; margin-left: 8vw; font-style: italic; opacity: 0.9; }
-        
-        .cta-btn { display: inline-flex; align-items: center; padding: 22px 55px; border: 1px solid rgba(255,255,255,0.15); color: white; text-decoration: none; font-size: 12px; letter-spacing: 4px; text-transform: uppercase; transition: 0.5s; background: rgba(255,255,255,0.02); backdrop-filter: blur(5px); cursor: pointer; border-radius: 2px; }
-        .cta-btn i { margin-left: 15px; transition: 0.3s; }
-        .cta-btn:hover { border-color: #FF8C42; padding-right: 75px; background: rgba(255, 140, 66, 0.03); color: #FF8C42; }
+    {
+        category: "Product",
+        title: "The Craft",
+        cover: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e",
+        size: "",
+        images: [
+            "https://images.unsplash.com/photo-1542038784456-1ea8e935640e"
+        ]
+    },
 
-        .section-header { margin-bottom: 60px; }
-        .section-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 300; letter-spacing: 2px; }
-        .section-divider { width: 60px; height: 1px; background: var(--sunset-grad); margin-top: 20px; }
+    {
+        category: "Creative / Editorial",
+        title: "Visual Experiments",
+        cover: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4",
+        size: "item-tall",
+        images: [
+            "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4"
+        ]
+    },
 
-        /* Showreel */
-        .showreel-wrapper { 
-            width: 100%; 
-            max-width: 1400px; 
-            margin: 40px auto; 
-            aspect-ratio: 16 / 9; 
-            background: #000; 
-            border: 1px solid rgba(255,255,255,0.05); 
-            overflow: hidden; 
-            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
-            position: relative;
-        }
-        .video-placeholder {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            color: var(--text-dim);
-            font-size: 12px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            z-index: 1;
-            background: #0a0a0a;
-        }
-        .showreel-wrapper iframe { 
-            position: absolute;
-            top: 0; left: 0;
-            z-index: 2;
-            width: 100%; 
-            height: 100%; 
-            border: none; 
-            opacity: 0;
-            transition: opacity 1s ease;
-        }
+    {
+        category: "Festivals",
+        title: "Cultural Pulse",
+        cover: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622",
+        size: "",
+        images: [
+            "https://images.unsplash.com/photo-1511795409834-ef04bbd61622"
+        ]
+    }
+];
 
-        /* Portfolio */
-        .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 450px; gap: 30px; }
-        .portfolio-item { position: relative; overflow: hidden; background-color: #111; cursor: pointer; }
-        .item-lg { grid-column: span 2; }
-        .item-tall { grid-row: span 2; }
-        .portfolio-item img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(15%) brightness(0.85); transition: 1.5s cubic-bezier(0.19, 1, 0.22, 1); }
-        .portfolio-item:hover img { transform: scale(1.05); filter: grayscale(0%) brightness(1.1); }
-        .item-overlay { position: absolute; bottom: 0; left: 0; width: 100%; padding: 40px; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); opacity: 0; transform: translateY(20px); transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1); }
-        .portfolio-item:hover .item-overlay { opacity: 1; transform: translateY(0); }
-        .item-category { font-size: 10px; text-transform: uppercase; letter-spacing: 3px; color: var(--gold-muted); margin-bottom: 5px; display: block; }
-        .item-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 300; }
+/* ================= HELPERS ================= */
 
-        /* Lightbox */
-        #lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 5, 5, 0.98); z-index: 2000; display: none; flex-direction: column; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.5s ease; user-select: none; }
-        #lightbox.active { display: flex; opacity: 1; }
-        .lb-image-container { position: relative; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; padding: 60px; }
-        .lb-image { max-width: 100%; max-height: 100%; object-fit: contain; box-shadow: 0 0 50px rgba(0,0,0,0.5); transition: opacity 0.3s ease; }
-        .lb-close { position: absolute; top: 40px; right: 40px; cursor: pointer; color: white; opacity: 0.5; transition: 0.3s; z-index: 2100; }
-        .lb-close:hover { opacity: 1; transform: rotate(90deg); }
-        .lb-nav { position: absolute; top: 50%; width: 100%; display: flex; justify-content: space-between; padding: 0 40px; transform: translateY(-50%); pointer-events: none; z-index: 2050; }
-        .lb-arrow { cursor: pointer; color: white; opacity: 0.3; transition: 0.3s; pointer-events: auto; background: rgba(255,255,255,0.05); border-radius: 50%; width: 60px; height: 60px; display: flex; justify-content: center; align-items: center; }
-        .lb-arrow:hover { opacity: 1; background: rgba(255,255,255,0.1); }
-        .lb-counter { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); color: white; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; opacity: 0.4; }
+function cleanId(input) {
+    if (!input) return null;
+    if (!input.includes("http")) return input;
 
-        footer { padding: 100px var(--spacing); text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
-        .footer-logo { font-size: 40px; margin-bottom: 20px; }
+    const match = input.match(/\/d\/([a-zA-Z0-9_-]{25,})/);
+    return match ? match[1] : input;
+}
 
-        @media (max-width: 900px) {
-            :root { --spacing: 6vw; }
-            .nav-links { display: none; }
-            .portfolio-grid { grid-template-columns: 1fr; grid-auto-rows: 400px; }
-            .item-lg, .item-tall { grid-column: span 1; grid-row: span 1; }
-            .lb-nav { padding: 0 10px; }
-            .hero h1 { font-size: 3.5rem; }
-        }
-    </style>
+function getImageUrl(id) {
+    if (id.startsWith('http')) return id;
+    return `https://lh3.googleusercontent.com/d/${id}=s1600`;
+}
+
+function getVideoEmbedUrl(id) {
+    return `https://drive.google.com/file/d/${id}/preview`;
+}
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond&family=Inter&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+body { background:#070707; color:white; font-family:Inter; margin:0; }
+nav { padding:20px; display:flex; justify-content:space-between; }
+.logo { font-family:Cormorant Garamond; }
+section { padding:100px 8%; }
+.portfolio-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:30px; }
+.portfolio-item { position:relative; cursor:pointer; }
+.portfolio-item img { width:100%; height:100%; object-fit:cover; }
+.item-lg { grid-column:span 2; }
+.item-tall { grid-row:span 2; }
+.item-overlay { position:absolute; bottom:0; padding:20px; }
+#lightbox { position:fixed; top:0; left:0; width:100%; height:100%; background:black; display:none; justify-content:center; align-items:center; }
+#lightbox.active { display:flex; }
+.lb-image { max-width:90%; max-height:90%; }
+</style>
 </head>
+
 <body>
-    <div class="ambient-glow glow-top"></div>
-    <div class="ambient-glow glow-bottom"></div>
 
-    <nav>
-        <a href="#" class="logo">SHUTTER<span>PHRASE</span></a>
-        <div class="nav-links">
-            <a href="#showreel">Showreel</a>
-            <a href="#portfolio">Portfolio</a>
-            <a href="#contact">Inquiry</a>
-        </div>
-    </nav>
+<nav>
+    <div class="logo">SHUTTERPHRASE</div>
+</nav>
 
-    <section class="hero">
-        <span class="hero-label">High-End Visual Production</span>
-        <h1>The Art of the<br><span>Unspoken Moment.</span></h1>
-        <a href="#showreel" class="cta-btn">Watch Showreel <i data-lucide="play"></i></a>
-    </section>
+<section id="showreel">
+    <iframe id="mainShowreel" width="100%" height="500"></iframe>
+</section>
 
-    <section id="showreel">
-        <div class="section-header">
-            <h2>The Showreel</h2>
-            <div class="section-divider"></div>
-        </div>
-        <div class="showreel-wrapper">
-            <div class="video-placeholder" id="videoPlaceholder">
-                <i data-lucide="clapperboard" size="48" style="margin-bottom: 20px; opacity: 0.2;"></i>
-                <span>Waiting for Cinematic Feed...</span>
+<section id="portfolio">
+    <div class="portfolio-grid" id="mainGrid"></div>
+</section>
+
+<div id="lightbox">
+    <img id="lbImage" class="lb-image">
+</div>
+
+<script>
+let currentImageIndex = 0;
+let activeGallery = [];
+
+window.onload = () => {
+    lucide.createIcons();
+    initShowreel();
+    renderPortfolio();
+};
+
+function initShowreel(){
+    document.getElementById("mainShowreel").src = getVideoEmbedUrl(SHOWREEL_VIDEO_ID);
+}
+
+function renderPortfolio(){
+    const grid = document.getElementById('mainGrid');
+
+    GALLERY_ITEMS.forEach((item,index)=>{
+        const div = document.createElement('div');
+        div.className = `portfolio-item ${item.size}`;
+        div.onclick = ()=>openLightbox(index);
+
+        div.innerHTML = `
+            <img src="${getImageUrl(item.cover)}">
+            <div class="item-overlay">
+                <div>${item.category}</div>
+                <h3>${item.title}</h3>
             </div>
-            <iframe id="mainShowreel" src="" allow="autoplay" allowfullscreen></iframe>
-        </div>
-    </section>
+        `;
 
-    <section id="portfolio">
-        <div class="section-header">
-            <h2>The Archive</h2>
-            <div class="section-divider"></div>
-        </div>
-        <div class="portfolio-grid" id="mainGrid">
-            <!-- Grid generated by Javascript -->
-        </div>
-    </section>
+        grid.appendChild(div);
+    });
+}
 
-    <section id="contact" style="text-align: center;">
-        <span class="hero-label">Strictly by Appointment</span>
-        <h2 style="font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 40px; font-family: 'Cormorant Garamond', serif; font-weight:300;">Ready to curate your<br><span style="font-style:italic;">visual legacy?</span></h2>
-        <a href="mailto:hello@shutterphrase.in" class="cta-btn">Request a Consultation</a>
-    </section>
+function openLightbox(index){
+    activeGallery = GALLERY_ITEMS[index].images;
+    currentImageIndex = 0;
+    updateLightbox();
+    document.getElementById("lightbox").classList.add("active");
+}
 
-    <div id="lightbox">
-        <div class="lb-close" id="lbClose"><i data-lucide="x" size="36"></i></div>
-        <div class="lb-image-container">
-            <img src="" alt="" class="lb-image" id="lbImage">
-            <div class="lb-nav">
-                <div class="lb-arrow lb-prev" id="lbPrev"><i data-lucide="chevron-left" size="32"></i></div>
-                <div class="lb-arrow lb-next" id="lbNext"><i data-lucide="chevron-right" size="32"></i></div>
-            </div>
-            <div class="lb-counter" id="lbCounter">0 / 0</div>
-        </div>
-    </div>
+function updateLightbox(){
+    document.getElementById("lbImage").src = getImageUrl(activeGallery[currentImageIndex]);
+}
 
-    <footer>
-        <div class="logo footer-logo">SHUTTER<span>PHRASE</span></div>
-        <p style="font-size: 10px; opacity: 0.5; letter-spacing: 2px;">© 2026 SHUTTERPHRASE. ALL RIGHTS RESERVED.</p>
-    </footer>
+document.getElementById("lightbox").onclick = ()=>{
+    document.getElementById("lightbox").classList.remove("active");
+};
+</script>
 
-    <script>
-        // State Management
-        let currentImageIndex = 0;
-        const lightbox = document.getElementById('lightbox');
-        const lbImage = document.getElementById('lbImage');
-        const lbCounter = document.getElementById('lbCounter');
-        
-        // Initialize App
-        window.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
-            initShowreel();
-            renderPortfolio();
-            setupLightbox();
-        });
-
-        function initShowreel() {
-            const iframe = document.getElementById('mainShowreel');
-            const placeholder = document.getElementById('videoPlaceholder');
-            const url = getVideoEmbedUrl(SHOWREEL_VIDEO_ID);
-            
-            if (url) {
-                iframe.src = url;
-                iframe.onload = () => {
-                    iframe.style.opacity = '1';
-                    placeholder.style.display = 'none';
-                };
-            }
-        }
-
-        function renderPortfolio() {
-            const grid = document.getElementById('mainGrid');
-            GALLERY_ITEMS.forEach((item, index) => {
-                const div = document.createElement('div');
-                div.className = `portfolio-item ${item.size}`;
-                div.onclick = () => openLightbox(index);
-                
-                div.innerHTML = `
-                    <img src="${getImageUrl(item.id)}" alt="${item.title}" loading="lazy">
-                    <div class="item-overlay">
-                        <span class="item-category">${item.category}</span>
-                        <h3 class="item-title">${item.title}</h3>
-                    </div>
-                `;
-                grid.appendChild(div);
-            });
-        }
-
-        function setupLightbox() {
-            document.getElementById('lbClose').onclick = closeLightbox;
-            document.getElementById('lbPrev').onclick = (e) => { e.stopPropagation(); prevImage(); };
-            document.getElementById('lbNext').onclick = (e) => { e.stopPropagation(); nextImage(); };
-            
-            // Close on background click
-            lightbox.onclick = (e) => { if(e.target === lightbox) closeLightbox(); };
-
-            // Keyboard navigation
-            document.addEventListener('keydown', (e) => {
-                if (!lightbox.classList.contains('active')) return;
-                if (e.key === 'Escape') closeLightbox();
-                if (e.key === 'ArrowRight') nextImage();
-                if (e.key === 'ArrowLeft') prevImage();
-            });
-        }
-
-        function openLightbox(index) {
-            currentImageIndex = index;
-            updateLightbox();
-            lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeLightbox() {
-            lightbox.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        function nextImage() {
-            currentImageIndex = (currentImageIndex + 1) % GALLERY_ITEMS.length;
-            updateLightbox();
-        }
-
-        function prevImage() {
-            currentImageIndex = (currentImageIndex - 1 + GALLERY_ITEMS.length) % GALLERY_ITEMS.length;
-            updateLightbox();
-        }
-
-        function updateLightbox() {
-            const item = GALLERY_ITEMS[currentImageIndex];
-            lbImage.style.opacity = '0';
-            
-            setTimeout(() => {
-                lbImage.src = getImageUrl(item.id);
-                lbCounter.innerText = `${currentImageIndex + 1} / ${GALLERY_ITEMS.length}`;
-                lbImage.onload = () => { lbImage.style.opacity = '1'; };
-            }, 200);
-        }
-    </script>
 </body>
 </html>
