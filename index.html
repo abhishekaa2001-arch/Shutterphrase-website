@@ -308,6 +308,19 @@ document.getElementById("lightbox").onclick = (e) => {
         document.getElementById("lightbox").classList.remove("active");
     }
 };
+
+/* 🔥 KEYBOARD NAVIGATION */
+document.addEventListener("keydown", (e) => {
+
+    if (!document.getElementById("lightbox").classList.contains("active")) return;
+
+    if (e.key === "ArrowRight") next();
+    if (e.key === "ArrowLeft") prev();
+    if (e.key === "Escape") {
+        document.getElementById("lightbox").classList.remove("active");
+    }
+
+});
 </script>
 
 </body>
