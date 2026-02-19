@@ -54,28 +54,30 @@ nav a {
     margin-top:30px;
 }
 
-/* 🔥 iOS SAFE SHOWREEL FIX */
+/* 🔥 FINAL iOS SAFE STRUCTURE */
 .showreel-frame {
     width:min(90vw,280px);
+    flex:0 0 auto;
+}
+
+.showreel-inner {
     position:relative;
+    width:100%;
+    padding-top:177.77%; /* 9:16 */
     border-radius:16px;
     overflow:hidden;
 }
 
-/* ratio fix */
-.showreel-frame::before {
-    content:"";
-    display:block;
-    padding-top:177.77%;
-}
-
-.showreel-frame iframe {
+.showreel-inner iframe {
     position:absolute;
     top:0;
     left:0;
     width:100%;
     height:100%;
     border:none;
+
+    /* 🔥 FORCE SAFARI RENDER */
+    transform:translateZ(0);
 }
 
 /* GRID */
@@ -208,15 +210,21 @@ section { padding:100px 8%; }
 <div class="showreel-wrapper">
 
 <div class="showreel-frame">
-<iframe src="https://drive.google.com/file/d/1gy2hENhvnUE52Ox1FPGpgHZc2multqNr/preview"></iframe>
+    <div class="showreel-inner">
+        <iframe src="https://drive.google.com/file/d/1gy2hENhvnUE52Ox1FPGpgHZc2multqNr/preview"></iframe>
+    </div>
 </div>
 
 <div class="showreel-frame">
-<iframe src="https://drive.google.com/file/d/1gYhjAm7YX4pxv51eGxUt_WjRRBakgNfA/preview"></iframe>
+    <div class="showreel-inner">
+        <iframe src="https://drive.google.com/file/d/1gYhjAm7YX4pxv51eGxUt_WjRRBakgNfA/preview"></iframe>
+    </div>
 </div>
 
 <div class="showreel-frame">
-<iframe src="https://drive.google.com/file/d/1JHGmDjoeWSwHHhzdUM_SCqVbUQZJBYYX/preview"></iframe>
+    <div class="showreel-inner">
+        <iframe src="https://drive.google.com/file/d/1JHGmDjoeWSwHHhzdUM_SCqVbUQZJBYYX/preview"></iframe>
+    </div>
 </div>
 
 </div>
@@ -242,10 +250,10 @@ section { padding:100px 8%; }
 </footer>
 
 <!-- LIGHTBOX -->
-<div id="lightbox" role="dialog" aria-modal="true">
+<div id="lightbox" role="dialog">
 <div id="close" class="lb-btn">✕</div>
 <div id="prev" class="lb-btn">‹</div>
-<img id="lbImg" class="lb-image" alt="Gallery Image">
+<img id="lbImg" class="lb-image">
 <div id="next" class="lb-btn">›</div>
 </div>
 
@@ -301,7 +309,7 @@ let div=document.createElement("div");
 div.className=`portfolio-item ${item.size||""} ${item.category.toLowerCase()}`;
 
 div.innerHTML=`
-<img src="${img(item.cover)}" alt="${item.title}" loading="lazy">
+<img src="${img(item.cover)}" loading="lazy">
 <div class="item-overlay">
 <div style="font-size:0.7rem; opacity:0.7">${item.category}</div>
 <h3>${item.title}</h3>
