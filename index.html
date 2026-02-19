@@ -64,6 +64,11 @@ section { padding:120px 8%; }
     transition: transform 1.2s ease, filter 0.6s ease;
 }
 
+/* CATEGORY-SPECIFIC CROPPING FIX */
+.product img {
+    object-position: center top;
+}
+
 .portfolio-item:hover img {
     transform:scale(1.04);
     filter:brightness(1.1);
@@ -274,7 +279,10 @@ function renderPortfolio(){
 
     GALLERY_ITEMS.forEach((item,index)=>{
         const div = document.createElement('div');
-        div.className = `portfolio-item ${item.size}`;
+
+        const categoryClass = item.category.toLowerCase().replace(/[^a-z]/g, '-');
+
+        div.className = `portfolio-item ${item.size} ${categoryClass}`;
         div.onclick = ()=>openLightbox(index);
 
         div.innerHTML = `
