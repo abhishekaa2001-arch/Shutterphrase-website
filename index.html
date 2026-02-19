@@ -6,12 +6,9 @@
 <title>ShutterPhrase | Premium Visual Storytelling</title>
 
 <script>
-/* ================= CONFIG ================= */
-
 const SHOWREEL_VIDEO_ID = "1Xmu3M0J1H1VnoMm2FnZ-wKdMgRH7xof2";
 
 const GALLERY_ITEMS = [
-
     {
         category: "Portraits",
         title: "Eternal Grace",
@@ -26,7 +23,6 @@ const GALLERY_ITEMS = [
             "1rXxDLoeQKZoAeGj-rBhXm6l3QsltCrxP"
         ]
     },
-
     {
         category: "Sports",
         title: "The Decisive Moment",
@@ -36,7 +32,6 @@ const GALLERY_ITEMS = [
             "https://images.unsplash.com/photo-1516035069371-29a1b244cc32"
         ]
     },
-
     {
         category: "Product",
         title: "The Craft",
@@ -46,7 +41,6 @@ const GALLERY_ITEMS = [
             "https://images.unsplash.com/photo-1542038784456-1ea8e935640e"
         ]
     },
-
     {
         category: "Creative / Editorial",
         title: "Visual Experiments",
@@ -56,7 +50,6 @@ const GALLERY_ITEMS = [
             "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4"
         ]
     },
-
     {
         category: "Festivals",
         title: "Cultural Pulse",
@@ -67,16 +60,6 @@ const GALLERY_ITEMS = [
         ]
     }
 ];
-
-/* ================= HELPERS ================= */
-
-function cleanId(input) {
-    if (!input) return null;
-    if (!input.includes("http")) return input;
-
-    const match = input.match(/\/d\/([a-zA-Z0-9_-]{25,})/);
-    return match ? match[1] : input;
-}
 
 function getImageUrl(id) {
     if (id.startsWith('http')) return id;
@@ -93,18 +76,108 @@ function getVideoEmbedUrl(id) {
 
 <style>
 body { background:#070707; color:white; font-family:Inter; margin:0; }
-nav { padding:20px; display:flex; justify-content:space-between; }
-.logo { font-family:Cormorant Garamond; }
-section { padding:100px 8%; }
-.portfolio-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:30px; }
-.portfolio-item { position:relative; cursor:pointer; }
-.portfolio-item img { width:100%; height:100%; object-fit:cover; }
+
+nav {
+    padding:25px 8%;
+    display:flex;
+    justify-content:space-between;
+}
+
+.logo {
+    font-family:Cormorant Garamond;
+    letter-spacing:2px;
+}
+
+section {
+    padding:120px 8%;
+}
+
+/* Fade animation */
+.fade-in {
+    opacity:0;
+    transform:translateY(20px);
+    transition:all 1s ease;
+}
+.fade-in.visible {
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* Showreel */
+.showreel-container {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.showreel-frame {
+    width:320px;
+    aspect-ratio:9/16;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 40px 100px rgba(0,0,0,0.8);
+    border:1px solid rgba(255,255,255,0.08);
+    background:black;
+}
+
+/* Portfolio */
+.portfolio-grid {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:30px;
+}
+
+.portfolio-item {
+    position:relative;
+    cursor:pointer;
+    overflow:hidden;
+}
+
+.portfolio-item img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition: transform 1.2s ease, filter 0.6s ease;
+}
+
+.portfolio-item:hover img {
+    transform:scale(1.04);
+    filter:brightness(1.1);
+}
+
 .item-lg { grid-column:span 2; }
 .item-tall { grid-row:span 2; }
-.item-overlay { position:absolute; bottom:0; padding:20px; }
-#lightbox { position:fixed; top:0; left:0; width:100%; height:100%; background:black; display:none; justify-content:center; align-items:center; }
+
+.item-overlay {
+    position:absolute;
+    bottom:0;
+    padding:30px;
+}
+
+.item-overlay h3 {
+    font-family:Cormorant Garamond;
+    letter-spacing:1px;
+}
+
+/* Lightbox */
+#lightbox {
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:black;
+    display:none;
+    justify-content:center;
+    align-items:center;
+}
+
 #lightbox.active { display:flex; }
-.lb-image { max-width:90%; max-height:90%; }
+
+.lb-image {
+    max-width:90%;
+    max-height:90%;
+}
 </style>
 </head>
 
@@ -114,14 +187,19 @@ section { padding:100px 8%; }
     <div class="logo">SHUTTERPHRASE</div>
 </nav>
 
-<section id="showreel">
-    <iframe id="mainShowreel" width="100%" height="500"></iframe>
+<!-- SHOWREEL -->
+<section id="showreel" class="fade-in showreel-container">
+    <div class="showreel-frame">
+        <iframe id="mainShowreel" style="width:100%; height:100%; border:none;"></iframe>
+    </div>
 </section>
 
-<section id="portfolio">
+<!-- PORTFOLIO -->
+<section id="portfolio" class="fade-in">
     <div class="portfolio-grid" id="mainGrid"></div>
 </section>
 
+<!-- LIGHTBOX -->
 <div id="lightbox">
     <img id="lbImage" class="lb-image">
 </div>
@@ -134,6 +212,7 @@ window.onload = () => {
     lucide.createIcons();
     initShowreel();
     renderPortfolio();
+    setupFadeIn();
 };
 
 function initShowreel(){
@@ -174,6 +253,21 @@ function updateLightbox(){
 document.getElementById("lightbox").onclick = ()=>{
     document.getElementById("lightbox").classList.remove("active");
 };
+
+/* Fade-in observer */
+function setupFadeIn(){
+    const observer = new IntersectionObserver(entries=>{
+        entries.forEach(entry=>{
+            if(entry.isIntersecting){
+                entry.target.classList.add("visible");
+            }
+        });
+    });
+
+    document.querySelectorAll('.fade-in').forEach(el=>{
+        observer.observe(el);
+    });
+}
 </script>
 
 </body>
