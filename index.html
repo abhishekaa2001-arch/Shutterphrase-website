@@ -6,28 +6,14 @@
 <title>ShutterPhrase | Premium Visual Storytelling</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond&family=Inter&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/lucide@latest"></script>
 
 <style>
-body {
-    background:#070707;
-    color:white;
-    font-family:Inter;
-    margin:0;
-}
+body { background:#070707; color:white; font-family:Inter; margin:0; }
 
-nav {
-    padding:25px 8%;
-}
+nav { padding:25px 8%; }
+.logo { font-family:Cormorant Garamond; letter-spacing:2px; }
 
-.logo {
-    font-family:Cormorant Garamond;
-    letter-spacing:2px;
-}
-
-section {
-    padding:120px 8%;
-}
+section { padding:120px 8%; }
 
 /* Fade */
 .fade-in {
@@ -50,7 +36,6 @@ section {
     border:1px solid rgba(255,255,255,0.08);
     background:black;
 }
-
 .showreel-frame iframe {
     width:100%;
     height:100%;
@@ -93,7 +78,6 @@ section {
 
 .item-overlay h3 {
     font-family:Cormorant Garamond;
-    letter-spacing:1px;
 }
 
 /* Lightbox */
@@ -116,6 +100,20 @@ section {
     max-height:90%;
 }
 
+/* Controls */
+.lb-btn {
+    position:absolute;
+    font-size:32px;
+    cursor:pointer;
+    opacity:0.6;
+    transition:0.3s;
+}
+.lb-btn:hover { opacity:1; }
+
+#prevBtn { left:40px; }
+#nextBtn { right:40px; }
+#closeBtn { top:30px; right:40px; font-size:24px; }
+
 /* CTA */
 .cta-btn {
     display:inline-block;
@@ -126,10 +124,6 @@ section {
     color:white;
     letter-spacing:2px;
     font-size:12px;
-    transition:0.3s;
-}
-.cta-btn:hover {
-    border-color:white;
 }
 </style>
 </head>
@@ -141,69 +135,54 @@ section {
 </nav>
 
 <!-- SHOWREEL -->
-<section id="showreel" class="fade-in">
-
+<section class="fade-in">
     <div style="text-align:center; margin-bottom:60px;">
         <h2 style="font-family:Cormorant Garamond; font-size:2.5rem;">Showreel</h2>
         <p style="opacity:0.6;">A glimpse into motion, mood and narrative</p>
     </div>
 
     <div style="display:flex; justify-content:center; gap:30px; flex-wrap:wrap;">
-
         <div class="showreel-frame">
             <iframe src="https://drive.google.com/file/d/1Xmu3M0J1H1VnoMm2FnZ-wKdMgRH7xof2/preview"></iframe>
         </div>
-
         <div class="showreel-frame">
             <iframe src="https://drive.google.com/file/d/1Xmu3M0J1H1VnoMm2FnZ-wKdMgRH7xof2/preview"></iframe>
         </div>
-
         <div class="showreel-frame">
             <iframe src="https://drive.google.com/file/d/1Xmu3M0J1H1VnoMm2FnZ-wKdMgRH7xof2/preview"></iframe>
         </div>
-
     </div>
-
 </section>
 
 <!-- ABOUT -->
 <section class="fade-in" style="text-align:center; max-width:800px; margin:auto;">
-
-    <h2 style="font-family:Cormorant Garamond; font-size:2.5rem; margin-bottom:30px;">
+    <h2 style="font-family:Cormorant Garamond; font-size:2.5rem;">
         Not Just Photography.<br>Visual Strategy.
     </h2>
 
-    <p style="opacity:0.7; line-height:1.8; margin-bottom:20px;">
+    <p style="opacity:0.7; line-height:1.8;">
         We don’t just capture images — we build visual assets that elevate brand perception,
         communicate intent, and create lasting impact.
     </p>
-
-    <p style="opacity:0.7; line-height:1.8;">
-        Whether it's corporate storytelling, product campaigns, or cinematic portraits,
-        every frame is designed with purpose — to engage, influence and convert.
-    </p>
-
 </section>
 
 <!-- PORTFOLIO -->
-<section id="portfolio" class="fade-in">
+<section class="fade-in">
     <div class="portfolio-grid" id="mainGrid"></div>
 </section>
 
 <!-- CONTACT -->
 <section class="fade-in" style="text-align:center;">
-    <h2 style="font-family:Cormorant Garamond; font-size:2.5rem;">
-        Let’s Build Something Impactful
-    </h2>
-
-    <a href="mailto:hello@shutterphrase.in" class="cta-btn">
-        REQUEST A CONSULTATION
-    </a>
+    <h2 style="font-family:Cormorant Garamond;">Let’s Build Something Impactful</h2>
+    <a href="mailto:hello@shutterphrase.in" class="cta-btn">REQUEST A CONSULTATION</a>
 </section>
 
 <!-- LIGHTBOX -->
 <div id="lightbox">
+    <div id="closeBtn" class="lb-btn">✕</div>
+    <div id="prevBtn" class="lb-btn">‹</div>
     <img id="lbImage" class="lb-image">
+    <div id="nextBtn" class="lb-btn">›</div>
 </div>
 
 <script>
@@ -221,34 +200,6 @@ const GALLERY_ITEMS = [
             "1ZxuytU2DSyimdnpRuR8cFK8PBQFbTQhL",
             "1rXxDLoeQKZoAeGj-rBhXm6l3QsltCrxP"
         ]
-    },
-    {
-        category: "Sports",
-        title: "The Decisive Moment",
-        cover: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32",
-        size: "",
-        images: ["https://images.unsplash.com/photo-1516035069371-29a1b244cc32"]
-    },
-    {
-        category: "Product",
-        title: "The Craft",
-        cover: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e",
-        size: "",
-        images: ["https://images.unsplash.com/photo-1542038784456-1ea8e935640e"]
-    },
-    {
-        category: "Creative / Editorial",
-        title: "Visual Experiments",
-        cover: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4",
-        size: "item-tall",
-        images: ["https://images.unsplash.com/photo-1492691527719-9d1e07e534b4"]
-    },
-    {
-        category: "Festivals",
-        title: "Cultural Pulse",
-        cover: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622",
-        size: "",
-        images: ["https://images.unsplash.com/photo-1511795409834-ef04bbd61622"]
     }
 ];
 
@@ -291,9 +242,43 @@ function updateLightbox(){
     document.getElementById("lbImage").src = getImageUrl(activeGallery[currentImageIndex]);
 }
 
-document.getElementById("lightbox").onclick = ()=>{
+function nextImage(){
+    currentImageIndex = (currentImageIndex + 1) % activeGallery.length;
+    updateLightbox();
+}
+
+function prevImage(){
+    currentImageIndex = (currentImageIndex - 1 + activeGallery.length) % activeGallery.length;
+    updateLightbox();
+}
+
+document.getElementById("nextBtn").onclick = (e)=>{
+    e.stopPropagation();
+    nextImage();
+};
+
+document.getElementById("prevBtn").onclick = (e)=>{
+    e.stopPropagation();
+    prevImage();
+};
+
+document.getElementById("closeBtn").onclick = ()=>{
     document.getElementById("lightbox").classList.remove("active");
 };
+
+document.getElementById("lightbox").onclick = (e)=>{
+    if(e.target.id === "lightbox"){
+        document.getElementById("lightbox").classList.remove("active");
+    }
+};
+
+document.addEventListener("keydown",(e)=>{
+    if(!document.getElementById("lightbox").classList.contains("active")) return;
+
+    if(e.key === "ArrowRight") nextImage();
+    if(e.key === "ArrowLeft") prevImage();
+    if(e.key === "Escape") document.getElementById("lightbox").classList.remove("active");
+});
 
 /* Fade */
 const observer = new IntersectionObserver(entries=>{
