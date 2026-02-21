@@ -3,7 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<title>ShutterPhrase</title>
+
+<!-- ================= LOCAL SEO OPTIMIZATION ================= -->
+<title>Premium Photographer in Mumbai, Pune & Alibaug | ShutterPhrase</title>
+<meta name="description" content="ShutterPhrase provides high-end editorial, portrait, sports, and commercial photography across Mumbai, Pune, Lonavala, Nashik, and Alibaug. Book your premium session today.">
+<meta name="keywords" content="Photographer Mumbai, Wedding Photographer Pune, Editorial Photography Maharashtra, Alibaug photoshoots, Lonavala pre-wedding">
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
@@ -41,6 +45,16 @@ body {
     overflow-x: hidden;
 }
 
+/* Visually hidden H1 for SEO without ruining the design */
+.sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
 section { 
     padding: var(--pad-y) var(--pad-x); 
     max-width: 1800px;
@@ -52,6 +66,70 @@ h2 {
     font-size: clamp(2rem, 5vw, 3.5rem);
     letter-spacing: .5px;
     line-height: 1.1;
+}
+
+/* ================= CUSTOM CURSOR (SPRING BUBBLE) ================= */
+#cursor { display: none; } /* Hidden by default for mobile */
+
+@media (pointer: fine) {
+    /* Hide default cursor completely */
+    body, a, button, .portfolio-item, iframe { cursor: none !important; }
+    
+    #cursor {
+        position: fixed;
+        top: 0; left: 0;
+        width: 24px; height: 24px;
+        background: rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 50%;
+        pointer-events: none; /* Crucial so it doesn't block clicks */
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        transition: width 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), 
+                    height 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), 
+                    background 0.4s, border-color 0.4s;
+    }
+
+    #cursor::after {
+        content: "VIEW";
+        font-family: Inter, sans-serif;
+        font-size: 10px;
+        letter-spacing: 2px;
+        color: #000;
+        opacity: 0;
+        transition: opacity 0.3s;
+        font-weight: 600;
+    }
+
+    /* Hover States for the Bubble */
+    #cursor.hover-card {
+        width: 75px; height: 75px;
+        background: rgba(255, 255, 255, 0.95);
+        border-color: transparent;
+    }
+    #cursor.hover-card::after { opacity: 1; }
+
+    #cursor.hover-btn {
+        width: 60px; height: 60px;
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.8);
+    }
+}
+
+/* ================= SCROLL REVEAL CLASSES ================= */
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1), 
+                transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* ================= NAV ================= */
@@ -67,33 +145,14 @@ nav {
 }
 
 @media (min-width: 768px) {
-    nav {
-        flex-direction: row;
-        justify-content: space-between;
-        padding: 35px var(--pad-x);
-    }
+    nav { flex-direction: row; justify-content: space-between; padding: 35px var(--pad-x); }
 }
 
-nav img { 
-    height: 24px; 
-    opacity: .9; 
-    transition: 0.3s;
-}
+nav img { height: 24px; opacity: .9; transition: 0.3s; }
+@media (min-width: 768px) { nav img { height: 28px; } }
 
-@media (min-width: 768px) {
-    nav img { height: 28px; }
-}
-
-nav div { 
-    display: flex; 
-    gap: 25px; 
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-@media (min-width: 768px) {
-    nav div { gap: 35px; }
-}
+nav div { display: flex; gap: 25px; flex-wrap: wrap; justify-content: center; }
+@media (min-width: 768px) { nav div { gap: 35px; } }
 
 nav a {
     color: white;
@@ -105,23 +164,16 @@ nav a {
     transition: .3s;
     display: flex;
     align-items: center;
-    padding: 8px 0; /* Touch target size */
+    padding: 8px 0;
 }
-
 nav a:hover { opacity: 1; }
 
 /* ================= SHOWREEL ================= */
 .swipe-hint {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.6);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: -15px; /* Pull the wrapper closer */
-    margin-top: -20px;
-    gap: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase; letter-spacing: 2px;
+    margin-bottom: -15px; margin-top: -20px; gap: 8px;
     animation: pulse 2s infinite;
 }
 
@@ -130,89 +182,41 @@ nav a:hover { opacity: 1; }
     50% { opacity: 1; transform: translateX(3px); }
 }
 
-@media (min-width: 768px) {
-    .swipe-hint { display: none; } /* Hide on desktop */
-}
+@media (min-width: 768px) { .swipe-hint { display: none; } }
 
 .showreel-wrapper {
-    display: flex;
-    gap: 20px;
-    margin-top: 40px;
-    
-    /* Mobile Horizontal Scroll */
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    padding-bottom: 30px; /* Space for scrollbar/shadows */
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; /* Firefox */
+    display: flex; gap: 20px; margin-top: 40px;
+    overflow-x: auto; scroll-snap-type: x mandatory;
+    padding-bottom: 30px; -webkit-overflow-scrolling: touch; scrollbar-width: none;
 }
-.showreel-wrapper::-webkit-scrollbar { display: none; /* Chrome/Safari */ }
+.showreel-wrapper::-webkit-scrollbar { display: none; }
 
 @media (min-width: 768px) {
-    .showreel-wrapper {
-        justify-content: center;
-        gap: 40px;
-        flex-wrap: wrap;
-        overflow-x: visible;
-        margin-top: 60px;
-        padding-bottom: 0;
-    }
+    .showreel-wrapper { justify-content: center; gap: 40px; flex-wrap: wrap; overflow-x: visible; margin-top: 60px; padding-bottom: 0; }
 }
+@media (min-width: 1024px) { .showreel-wrapper { gap: 70px; } }
 
-@media (min-width: 1024px) {
-    .showreel-wrapper { gap: 70px; }
-}
-
-.showreel-frame {
-    width: min(75vw, 260px); 
-    flex: 0 0 auto;
-    scroll-snap-align: center;
-}
+.showreel-frame { width: min(75vw, 260px); flex: 0 0 auto; scroll-snap-align: center; }
 
 .showreel-inner {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 3 / 4; /* The visual crop of the container */
-    border-radius: 24px;
-    overflow: hidden;
+    position: relative; width: 100%; aspect-ratio: 3 / 4;
+    border-radius: 24px; overflow: hidden;
     box-shadow: 0 20px 50px rgba(0,0,0,.6);
-    transition: transform .6s ease;
-    background: #111;
-    /* iOS Safari fix to ensure iframe obeys the rounded corners */
+    transition: transform .6s ease; background: #111;
     -webkit-mask-image: -webkit-radial-gradient(white, black); 
 }
 
-@media (min-width: 768px) {
-    .showreel-inner { box-shadow: 0 35px 90px rgba(0,0,0,.7); }
-}
-
-@media(hover: hover) {
-    .showreel-inner:hover { transform: translateY(-12px); }
-}
+@media (min-width: 768px) { .showreel-inner { box-shadow: 0 35px 90px rgba(0,0,0,.7); } }
+@media(hover: hover) { .showreel-inner:hover { transform: translateY(-12px); } }
 
 .showreel-inner iframe {
-    position: absolute;
-    top: 50%; 
-    left: 50%;
-    
-    /* Force the iframe itself to be exactly 9:16 using a calculated percentage. 
-       133.4% of a 3:4 container equals exactly a 9:16 vertical ratio! 
-       This completely avoids the buggy 'aspect-ratio' property on iOS Safari */
-    width: 100%;
-    height: 133.4%; 
-    
-    border: none;
-    /* Center it to crop the overflowing top and bottom cleanly */
+    position: absolute; top: 50%; left: 50%;
+    width: 100%; height: 133.4%; border: none;
     transform: translate(-50%, -50%); 
 }
 
 /* ================= PORTFOLIO ================= */
-.portfolio-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--grid-gap);
-    margin-top: 40px;
-}
+.portfolio-grid { display: grid; grid-template-columns: 1fr; gap: var(--grid-gap); margin-top: 40px; }
 
 /* CARD */
 .portfolio-item {
@@ -220,78 +224,54 @@ nav a:hover { opacity: 1; }
     overflow: hidden;
     border-radius: 20px;
     background: #0a0a0a;
-    cursor: pointer;
     border: 1px solid rgba(255,255,255,.08);
     box-shadow: 0 20px 50px rgba(0,0,0,.5);
     transition: transform .6s ease, box-shadow .6s ease;
-    
-    /* Default mobile aspect ratio to keep it elegant */
     aspect-ratio: 4/5;
 }
 
-@media (min-width: 768px) {
-    .portfolio-item { border-radius: 24px; }
+@media (min-width: 768px) { .portfolio-item { border-radius: 24px; } }
+@media(hover: hover) {
+    .portfolio-item:hover { transform: translateY(-8px); box-shadow: 0 40px 110px rgba(0,0,0,.8); }
 }
 
-@media(hover: hover) {
-    .portfolio-item:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 40px 110px rgba(0,0,0,.8);
-    }
+/* PARALLAX WRAPPER */
+.portfolio-item .img-wrapper {
+    position: absolute;
+    top: -15%; left: 0;
+    width: 100%; height: 130%; /* Extra height to allow parallax movement */
+    /* No transition here so the JS scroll is perfectly locked to the mousewheel */
 }
 
 .portfolio-item img {
-    width: 100%;
-    height: 100%;
+    width: 100%; height: 100%;
     object-fit: cover;
     transition: transform 1.4s ease, filter 1.4s ease;
 }
 
 @media(hover: hover) {
-    .portfolio-item:hover img {
-        transform: scale(1.05);
-        filter: brightness(1.05);
-    }
+    .portfolio-item:hover img { transform: scale(1.05); filter: brightness(1.05); }
 }
 
-/* ================= MOBILE SCROLL EFFECTS ================= */
-/* Simulates the desktop hover effects when elements enter the center of a touch screen */
+/* MOBILE SCROLL HOVER EFFECTS */
 @media (hover: none) {
-    .showreel-inner.in-view { 
-        transform: translateY(-12px); 
-    }
-    .portfolio-item.in-view {
-        transform: translateY(-8px);
-        box-shadow: 0 40px 110px rgba(0,0,0,.8);
-    }
-    .portfolio-item.in-view img {
-        transform: scale(1.05);
-        filter: brightness(1.05);
-    }
+    .showreel-inner.in-view { transform: translateY(-12px); }
+    .portfolio-item.in-view { transform: translateY(-8px); box-shadow: 0 40px 110px rgba(0,0,0,.8); }
+    .portfolio-item.in-view img { transform: scale(1.05); filter: brightness(1.05); }
 }
 
-/* TABLET GRID (2 Columns) */
+/* TABLET GRID */
 @media (min-width: 768px) and (max-width: 1023px) {
-    .portfolio-grid {
-        grid-template-columns: repeat(2, 1fr);
-        grid-auto-rows: 350px;
-    }
+    .portfolio-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 350px; }
     .portfolio-item { aspect-ratio: unset; }
-    
-    .item-hero { grid-column: 1 / span 2; grid-row: 1 / span 2; } /* Large top image */
-    .item-tall { grid-row: span 2; } /* Tall image */
+    .item-hero { grid-column: 1 / span 2; grid-row: 1 / span 2; }
+    .item-tall { grid-row: span 2; }
 }
 
-/* DESKTOP GRID (6 Columns Bento) */
+/* DESKTOP GRID */
 @media (min-width: 1024px) {
-    .portfolio-grid {
-        grid-template-columns: repeat(6, 1fr);
-        grid-auto-rows: minmax(220px, auto); /* Allows flexibility based on content */
-        gap: var(--grid-gap);
-    }
-    
+    .portfolio-grid { grid-template-columns: repeat(6, 1fr); grid-auto-rows: minmax(220px, auto); gap: var(--grid-gap); }
     .portfolio-item { aspect-ratio: unset; min-height: 280px; }
-
     .item-hero { grid-column: 1 / span 4; grid-row: 1 / span 3; }
     .sports { grid-column: 5 / span 2; grid-row: 1 / span 2; }
     .item-tall { grid-column: 5 / span 2; grid-row: 3 / span 3; }
@@ -301,146 +281,72 @@ nav a:hover { opacity: 1; }
 
 /* CROPS */
 .portraits img { object-position: 50% 20%; }
-.product img {
-    object-fit: contain;
-    padding: 15px;
-    padding-bottom: 90px;
-    background: #0a0a0a;
-}
-@media (min-width: 768px) {
-    .product img { padding: 20px; padding-bottom: 110px; }
-}
+.product img { object-fit: contain; padding: 15px; padding-bottom: 90px; background: #0a0a0a; }
+@media (min-width: 768px) { .product img { padding: 20px; padding-bottom: 110px; } }
 
 /* OVERLAY */
 .item-overlay {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    padding: 24px;
+    position: absolute; bottom: 0; width: 100%; padding: 24px;
     background: linear-gradient(to top, rgba(0,0,0,.95) 10%, rgba(0,0,0,.6) 60%, transparent);
 }
+@media (min-width: 768px) { .item-overlay { padding: 32px; } }
+.item-overlay h3 { font-family: "Cormorant Garamond", serif; font-size: clamp(1.3rem, 2.5vw, 1.6rem); margin-top: 6px; line-height: 1.2; }
+.price { margin-top: 8px; letter-spacing: 1px; font-size: .8rem; opacity: .85; line-height: 1.4; }
 
-@media (min-width: 768px) {
-    .item-overlay { padding: 32px; }
-}
-
-.item-overlay h3 {
-    font-family: "Cormorant Garamond", serif;
-    font-size: clamp(1.3rem, 2.5vw, 1.6rem);
-    margin-top: 6px;
-    line-height: 1.2;
-}
-
-.price {
-    margin-top: 8px;
-    letter-spacing: 1px;
-    font-size: .8rem;
-    opacity: .85;
-    line-height: 1.4;
-}
-
-/* ================= CTA ================= */
+/* ================= MAGNETIC CTA ================= */
 .cta-btn {
-    padding: 16px 28px;
-    border-radius: 50px;
-    border: 1px solid rgba(255,255,255,.2);
-    text-decoration: none;
-    color: white;
-    font-size: .7rem;
-    letter-spacing: 2px;
-    transition: .3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 50px; /* Better touch target */
-    width: 100%;
+    padding: 16px 28px; border-radius: 50px; border: 1px solid rgba(255,255,255,.2);
+    text-decoration: none; color: white; font-size: .7rem; letter-spacing: 2px;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 50px; width: 100%;
+    /* Default transition for snapping back */
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.3s, color 0.3s;
 }
-
-@media (min-width: 480px) {
-    .cta-btn { width: auto; padding: 18px 32px; }
-}
-
+@media (min-width: 480px) { .cta-btn { width: auto; padding: 18px 32px; } }
 .cta-btn:hover { background: white; color: black; }
 
 /* ================= LIGHTBOX ================= */
 #lightbox {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,.98);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    z-index: 1000;
-    padding: 10px;
+    position: fixed; inset: 0; background: rgba(0,0,0,.98); display: none;
+    justify-content: center; align-items: center; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    z-index: 1000; padding: 10px;
 }
-
 #lightbox.active { display: flex; }
 
 .lb-image {
-    max-width: 100%;
-    max-height: 85vh;
-    border-radius: 12px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.8);
-    object-fit: contain;
-    user-select: none; /* Prevents text selection on swipe */
-    -webkit-user-select: none;
+    max-width: 100%; max-height: 85vh; border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.8); object-fit: contain; user-select: none; -webkit-user-select: none;
 }
-
-@media (min-width: 768px) {
-    .lb-image { max-width: 90%; max-height: 90vh; border-radius: 18px; }
-}
+@media (min-width: 768px) { .lb-image { max-width: 90%; max-height: 90vh; border-radius: 18px; } }
 
 .lb-btn {
-    position: absolute;
-    font-size: 30px;
-    padding: 10px;
-    min-width: 50px;
-    min-height: 50px;
-    cursor: pointer;
-    opacity: .7;
-    transition: .3s;
-    color: white;
-    background: transparent;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1001;
+    position: absolute; font-size: 30px; padding: 10px; min-width: 50px; min-height: 50px;
+    opacity: .7; transition: .3s; color: white; background: transparent; border: none;
+    display: flex; align-items: center; justify-content: center; z-index: 1001;
 }
-
-@media (min-width: 768px) {
-    .lb-btn { font-size: 40px; padding: 18px; opacity: .6; }
-}
-
+@media (min-width: 768px) { .lb-btn { font-size: 40px; padding: 18px; opacity: .6; } }
 .lb-btn:hover { opacity: 1; transform: scale(1.1); }
 
-/* Adjusted positions for mobile touch accessibility */
 #prev { left: 5px; top: 50%; transform: translateY(-50%); }
 #next { right: 5px; top: 50%; transform: translateY(-50%); }
 #close { top: 15px; right: 15px; font-size: 40px; background: rgba(0,0,0,0.3); border-radius: 50%; width: 45px; height: 45px; }
-
 @media (min-width: 768px) {
-    #prev { left: 30px; transform: none; }
-    #next { right: 30px; transform: none; }
+    #prev { left: 30px; transform: none; } #next { right: 30px; transform: none; }
     #close { top: 30px; right: 30px; font-size: 50px; background: transparent; }
 }
 
-footer {
-    text-align: center;
-    padding: 40px 20px 60px 20px;
-    opacity: .4;
-    letter-spacing: 2px;
-    font-size: .75rem;
-}
+footer { text-align: center; padding: 40px 20px 60px 20px; opacity: .4; letter-spacing: 2px; font-size: .75rem; }
 </style>
 </head>
 
 <body>
 
+<!-- Custom Cursor Bubble -->
+<div id="cursor"></div>
+
 <nav>
     <img src="https://lh3.googleusercontent.com/d/1oBEoO4rF3oUw0M4DH6Z7QKmWl-JivlFG=s200" alt="ShutterPhrase Logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'150\' height=\'28\'><text x=\'0\' y=\'20\' fill=\'white\' font-family=\'Cormorant Garamond\' font-size=\'24\'>SHUTTERPHRASE</text></svg>'">
+    <h1 class="sr-only">Premium Photographer in Mumbai, Pune, Lonavala & Alibaug</h1>
     <div>
         <a href="#portfolio">WORK</a>
         <a href="#contact">CONTACT</a>
@@ -449,21 +355,21 @@ footer {
 </nav>
 
 <section>
-    <div class="swipe-hint">Swipe to explore <span>&rarr;</span></div>
-    <div class="showreel-wrapper">
+    <div class="swipe-hint reveal">Swipe to explore <span>&rarr;</span></div>
+    <div class="showreel-wrapper reveal">
         <div class="showreel-frame">
             <div class="showreel-inner">
-                <iframe src="https://drive.google.com/file/d/1gy2hENhvnUE52Ox1FPGpgHZc2multqNr/preview" loading="lazy"></iframe>
+                <iframe src="https://drive.google.com/file/d/1gy2hENhvnUE52Ox1FPGpgHZc2multqNr/preview" loading="lazy" title="Video Portfolio Reel 1"></iframe>
             </div>
         </div>
         <div class="showreel-frame">
             <div class="showreel-inner">
-                <iframe src="https://drive.google.com/file/d/1gYhjAm7YX4pxv51eGxUt_WjRRBakgNfA/preview" loading="lazy"></iframe>
+                <iframe src="https://drive.google.com/file/d/1gYhjAm7YX4pxv51eGxUt_WjRRBakgNfA/preview" loading="lazy" title="Video Portfolio Reel 2"></iframe>
             </div>
         </div>
         <div class="showreel-frame">
             <div class="showreel-inner">
-                <iframe src="https://drive.google.com/file/d/1JHGmDjoeWSwHHhzdUM_SCqVbUQZJBYYX/preview" loading="lazy"></iframe>
+                <iframe src="https://drive.google.com/file/d/1JHGmDjoeWSwHHhzdUM_SCqVbUQZJBYYX/preview" loading="lazy" title="Video Portfolio Reel 3"></iframe>
             </div>
         </div>
     </div>
@@ -473,7 +379,7 @@ footer {
     <div class="portfolio-grid" id="grid"></div>
 </section>
 
-<section id="contact" style="text-align:center;">
+<section id="contact" style="text-align:center;" class="reveal">
     <h2>Let’s Build Something Impactful</h2>
     <div style="margin-top:35px; display:flex; gap:15px; justify-content:center; flex-wrap:wrap;">
         <a href="mailto:abhishek@shutterphrase.in" class="cta-btn">EMAIL</a>
@@ -489,59 +395,46 @@ footer {
 <div id="lightbox">
     <button class="lb-btn" id="close" aria-label="Close Lightbox">&times;</button>
     <button class="lb-btn" id="prev" aria-label="Previous Image">&#10094;</button>
-    <img id="lbImg" class="lb-image" src="" alt="Lightbox Image">
+    <img id="lbImg" class="lb-image" src="" alt="Expanded Portfolio Image">
     <button class="lb-btn" id="next" aria-label="Next Image">&#10095;</button>
 </div>
 
-<!-- Dynamic Grid & Lightbox Logic -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Helper function to build direct google drive links
-    function img(id){
-        return `https://lh3.googleusercontent.com/d/${id}=s1200`;
-    }
+    function img(id){ return `https://lh3.googleusercontent.com/d/${id}=s1200`; }
+    const cursor = document.getElementById('cursor');
     
-    // Original Content Data
+    // Updated Content Data with targeted SEO Alt attributes
     const data = [
         {
-            category: "Portraits",
-            title: "Eternal Grace",
-            price: "Portrait sessions begin at ₹8,000",
-            cover: "1LabVyDvm0d5d7K6S-7ljM-YkNGZrqEvt",
-            gridClass: "item-hero portraits",
+            category: "Portraits", title: "Eternal Grace", price: "Portrait sessions begin at ₹8,000",
+            cover: "1LabVyDvm0d5d7K6S-7ljM-YkNGZrqEvt", gridClass: "item-hero portraits",
+            alt: "High-end editorial and pre-wedding portrait photography in Mumbai and Lonavala",
             images: ["1LabVyDvm0d5d7K6S-7ljM-YkNGZrqEvt","1i_yGBk20gfPnNmnkZi9Mtp4kOjzf2qIh","1r6cvRabydlH5r7gMCt_goJR_leDfrvh5"]
         },
         {
-            category: "Sports",
-            title: "The Decisive Moment",
-            price: "Sports coverage begins at ₹12,000",
-            cover: "14QOLFGoqcSiStCe5miofoOjkJED-INtT",
-            gridClass: "sports",
+            category: "Sports", title: "The Decisive Moment", price: "Sports coverage begins at ₹12,000",
+            cover: "14QOLFGoqcSiStCe5miofoOjkJED-INtT", gridClass: "sports",
+            alt: "Action sports and fitness photography coverage in Pune",
             images: ["14QOLFGoqcSiStCe5miofoOjkJED-INtT","1Qca9zh6RFxlAm0oo-CgKu73lyrjOEE_U","1wRTXqWUrRWR-toD6rR_6cUHdYl1Fhztn"]
         },
         {
-            category: "Product",
-            title: "The Craft",
-            price: "Product photography begins at ₹15,000",
-            cover: "1wzDtv35e5A89_eYSKA4mmwKtWE3sWv1N",
-            gridClass: "product",
+            category: "Product", title: "The Craft", price: "Product photography begins at ₹15,000",
+            cover: "1wzDtv35e5A89_eYSKA4mmwKtWE3sWv1N", gridClass: "product",
+            alt: "Premium commercial and product photography studio in Maharashtra",
             images: ["1wzDtv35e5A89_eYSKA4mmwKtWE3sWv1N","1dSX70LpWAqSgKumPIGnfV145iHl_uYNa","1ArFVKoGRQiiS94EDgEW4AkQO93K1MGTL"]
         },
         {
-            category: "Festivals",
-            title: "Cultural Pulse",
-            price: "Festival coverage begins at ₹18,000",
-            cover: "1hZfC_qzPh2EHi6KCTabHnUVQ-XRR5zwW",
-            gridClass: "festivals",
+            category: "Festivals", title: "Cultural Pulse", price: "Festival coverage begins at ₹18,000",
+            cover: "1hZfC_qzPh2EHi6KCTabHnUVQ-XRR5zwW", gridClass: "festivals",
+            alt: "Vibrant cultural festival and event photography in Nashik and Alibaug",
             images: ["1hZfC_qzPh2EHi6KCTabHnUVQ-XRR5zwW","1lr660KxM3akw_YVaIlyNwjx9tVMhsJVj","1WDbk-0ZIy4qvl7IBkFcUHXaeDIIWpvkR"]
         },
         {
-            category: "Editorial",
-            title: "Visual Experiments",
-            price: "Editorial shoots begin at ₹25,000",
-            cover: "1_uVWOL_oX55K7z3zg2eki87iTuOZVeS-",
-            gridClass: "item-tall",
+            category: "Editorial", title: "Visual Experiments", price: "Editorial shoots begin at ₹25,000",
+            cover: "1_uVWOL_oX55K7z3zg2eki87iTuOZVeS-", gridClass: "item-tall",
+            alt: "Creative editorial fashion photo shoot on location in Mumbai",
             images: ["1_uVWOL_oX55K7z3zg2eki87iTuOZVeS-","1YxkbKGFWmOrKc-wCi58tyskGS8fycUyz"]
         }
     ];
@@ -550,13 +443,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const lightbox = document.getElementById("lightbox");
     const lbImg = document.getElementById("lbImg");
 
-    // 1. Populate the Grid dynamically
+    // 1. POPULATE GRID (WITH PARALLAX WRAPPERS)
     data.forEach(item => {
         let div = document.createElement("div");
-        div.className = `portfolio-item ${item.gridClass}`.trim();
+        div.className = `portfolio-item reveal ${item.gridClass}`.trim();
         
         div.innerHTML = `
-            <img src="${img(item.cover)}" alt="${item.title}" loading="lazy">
+            <div class="img-wrapper">
+                <img src="${img(item.cover)}" alt="${item.alt}" loading="lazy">
+            </div>
             <div class="item-overlay">
                 <p class="price" style="text-transform:uppercase; font-size: 0.75rem;">${item.category}</p>
                 <h3>${item.title}</h3>
@@ -565,49 +460,115 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         div.onclick = () => openLightbox(item.images);
+        
+        // Custom Cursor triggers for Desktop
+        if (window.matchMedia("(pointer: fine)").matches) {
+            div.addEventListener('mouseenter', () => cursor.classList.add('hover-card'));
+            div.addEventListener('mouseleave', () => cursor.classList.remove('hover-card'));
+        }
+
         grid.appendChild(div);
     });
 
-    // 2. Multi-image Lightbox Functionality
-    let current = 0;
-    let gallery = [];
+    // 2. SCROLL REVEAL OBSERVER
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target); // Only animate once
+            }
+        });
+    }, { rootMargin: '0px 0px -50px 0px', threshold: 0.1 });
 
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // 3. DESKTOP PARALLAX EFFECT
+    if (window.matchMedia("(min-width: 1024px)").matches) {
+        const parallaxWrappers = document.querySelectorAll('.img-wrapper');
+        window.addEventListener('scroll', () => {
+            requestAnimationFrame(() => {
+                parallaxWrappers.forEach(wrapper => {
+                    const rect = wrapper.parentElement.getBoundingClientRect();
+                    // Calculate how far the card is from the center of the screen
+                    const scrollPercent = (rect.top / window.innerHeight) - 0.5;
+                    // Move the wrapper vertically opposite to scroll
+                    wrapper.style.transform = `translateY(${scrollPercent * 15}%)`;
+                });
+            });
+        }, {passive: true});
+    }
+
+    // 4. MAGNETIC BUTTONS (Desktop only)
+    if (window.matchMedia("(pointer: fine)").matches) {
+        document.querySelectorAll('.cta-btn').forEach(btn => {
+            btn.addEventListener('mousemove', e => {
+                // Remove CSS transition for instant tracking
+                btn.style.transition = 'none'; 
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                // Pull the button towards the mouse (0.2 is the magnetic strength)
+                btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+            });
+            btn.addEventListener('mouseleave', () => {
+                // Restore CSS transition for smooth snap back
+                btn.style.transition = 'transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.3s, color 0.3s';
+                btn.style.transform = '';
+            });
+            
+            // Cursor triggers
+            btn.addEventListener('mouseenter', () => cursor.classList.add('hover-btn'));
+            btn.addEventListener('mouseleave', () => cursor.classList.remove('hover-btn'));
+        });
+        
+        // Add cursor trigger for Nav links
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('mouseenter', () => cursor.classList.add('hover-btn'));
+            link.addEventListener('mouseleave', () => cursor.classList.remove('hover-btn'));
+        });
+    }
+
+    // 5. CUSTOM CURSOR PHYSICS (Spring Animation)
+    if (window.matchMedia("(pointer: fine)").matches) {
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let cursorX = mouseX;
+        let cursorY = mouseY;
+        
+        window.addEventListener('mousemove', e => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateCursor() {
+            // Spring physics formula
+            let dx = mouseX - cursorX;
+            let dy = mouseY - cursorY;
+            cursorX += dx * 0.15; // The 0.15 controls how "heavy/springy" the bubble is
+            cursorY += dy * 0.15;
+            
+            cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+    }
+
+    // 6. LIGHTBOX LOGIC
+    let current = 0; let gallery = [];
     function openLightbox(arr) {
-        gallery = arr;
-        current = 0;
-        update();
+        gallery = arr; current = 0; update();
         lightbox.classList.add("active");
         document.body.style.overflow = 'hidden'; 
     }
+    function update() { lbImg.src = img(gallery[current]); }
+    function next() { current = (current + 1) % gallery.length; update(); }
+    function prev() { current = (current - 1 + gallery.length) % gallery.length; update(); }
+    function closeLightbox() { lightbox.classList.remove("active"); document.body.style.overflow = ''; lbImg.src = ''; }
 
-    function update() {
-        lbImg.src = img(gallery[current]);
-    }
-
-    function next() { 
-        current = (current + 1) % gallery.length; 
-        update(); 
-    }
-    
-    function prev() { 
-        current = (current - 1 + gallery.length) % gallery.length; 
-        update(); 
-    }
-
-    function closeLightbox() {
-        lightbox.classList.remove("active");
-        document.body.style.overflow = ''; 
-        lbImg.src = ''; 
-    }
-
-    // 3. Desktop/Click Event Listeners
     document.getElementById("next").onclick = e => { e.stopPropagation(); next(); };
     document.getElementById("prev").onclick = e => { e.stopPropagation(); prev(); };
     document.getElementById("close").onclick = closeLightbox;
-
-    lightbox.onclick = (e) => {
-        if(e.target.id === "lightbox") closeLightbox();
-    };
+    lightbox.onclick = (e) => { if(e.target.id === "lightbox") closeLightbox(); };
 
     document.addEventListener("keydown", (e) => {
         if (!lightbox.classList.contains("active")) return;
@@ -616,50 +577,24 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === "Escape") closeLightbox();
     });
 
-    // 4. Mobile Touch Swipe Functionality
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    lightbox.addEventListener('touchstart', e => {
-        touchStartX = e.changedTouches[0].screenX;
-    }, {passive: true});
-
+    // Mobile Swipe functionality for Lightbox
+    let touchStartX = 0; let touchEndX = 0;
+    lightbox.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
     lightbox.addEventListener('touchend', e => {
         touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
+        if (touchEndX < touchStartX - 50) next();
+        if (touchEndX > touchStartX + 50) prev();
     }, {passive: true});
 
-    function handleSwipe() {
-        const swipeThreshold = 50; 
-        if (touchEndX < touchStartX - swipeThreshold) {
-            next(); 
-        }
-        if (touchEndX > touchStartX + swipeThreshold) {
-            prev(); 
-        }
-    }
-
-    // 5. Mobile Scroll "Hover" Intersections
-    // Automatically applies hover effects when items scroll into the center of a touch screen
+    // Mobile Scroll "Hover" Intersections
     if (window.matchMedia("(hover: none)").matches) {
-        const observer = new IntersectionObserver((entries) => {
+        const hoverObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('in-view');
-                } else {
-                    entry.target.classList.remove('in-view');
-                }
+                if (entry.isIntersecting) entry.target.classList.add('in-view');
+                else entry.target.classList.remove('in-view');
             });
-        }, {
-            // Trigger when the element is within the middle 50% of the screen (both X and Y axis)
-            rootMargin: '-25% -25% -25% -25%',
-            threshold: 0
-        });
-
-        // Observe both the grid cards and the showreel frames
-        document.querySelectorAll('.portfolio-item, .showreel-inner').forEach(el => {
-            observer.observe(el);
-        });
+        }, { rootMargin: '-25% -25% -25% -25%', threshold: 0 });
+        document.querySelectorAll('.portfolio-item, .showreel-inner').forEach(el => hoverObserver.observe(el));
     }
 });
 </script>
