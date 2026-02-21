@@ -203,16 +203,41 @@ nav a:hover { opacity: 1; }
     border-radius: 24px; overflow: hidden;
     box-shadow: 0 20px 50px rgba(0,0,0,.6);
     transition: transform .6s ease; background: #111;
-    -webkit-mask-image: -webkit-radial-gradient(white, black); 
+    
+    /* Flexbox centering */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Safely forces rounded corners on iframes across all OS without breaking video playback */
+    clip-path: inset(0 round 24px);
+    -webkit-clip-path: inset(0 round 24px);
 }
 
 @media (min-width: 768px) { .showreel-inner { box-shadow: 0 35px 90px rgba(0,0,0,.7); } }
 @media(hover: hover) { .showreel-inner:hover { transform: translateY(-12px); } }
 
-.showreel-inner iframe {
-    position: absolute; top: 50%; left: 50%;
-    width: 100%; height: 133.4%; border: none;
-    transform: translate(-50%, -50%); 
+/* CSS HACK FOR IFRAME ASPECT RATIO */
+.iframe-ratio-hacker {
+    position: relative;
+    width: 100%;
+    flex: 0 0 auto; 
+}
+
+.iframe-ratio-hacker::before {
+    content: "";
+    display: block;
+    padding-top: 177.77%; 
+}
+
+.iframe-ratio-hacker iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    z-index: 1; /* Ensures the iframe sits above the hack block to receive clicks */
 }
 
 /* ================= PORTFOLIO ================= */
@@ -359,17 +384,23 @@ footer { text-align: center; padding: 40px 20px 60px 20px; opacity: .4; letter-s
     <div class="showreel-wrapper reveal">
         <div class="showreel-frame">
             <div class="showreel-inner">
-                <iframe src="https://drive.google.com/file/d/1gy2hENhvnUE52Ox1FPGpgHZc2multqNr/preview" loading="lazy" title="Video Portfolio Reel 1"></iframe>
+                <div class="iframe-ratio-hacker">
+                    <iframe src="https://drive.google.com/file/d/1gy2hENhvnUE52Ox1FPGpgHZc2multqNr/preview" title="Video Portfolio Reel 1" allowfullscreen></iframe>
+                </div>
             </div>
         </div>
         <div class="showreel-frame">
             <div class="showreel-inner">
-                <iframe src="https://drive.google.com/file/d/1gYhjAm7YX4pxv51eGxUt_WjRRBakgNfA/preview" loading="lazy" title="Video Portfolio Reel 2"></iframe>
+                <div class="iframe-ratio-hacker">
+                    <iframe src="https://drive.google.com/file/d/1gYhjAm7YX4pxv51eGxUt_WjRRBakgNfA/preview" title="Video Portfolio Reel 2" allowfullscreen></iframe>
+                </div>
             </div>
         </div>
         <div class="showreel-frame">
             <div class="showreel-inner">
-                <iframe src="https://drive.google.com/file/d/1JHGmDjoeWSwHHhzdUM_SCqVbUQZJBYYX/preview" loading="lazy" title="Video Portfolio Reel 3"></iframe>
+                <div class="iframe-ratio-hacker">
+                    <iframe src="https://drive.google.com/file/d/1JHGmDjoeWSwHHhzdUM_SCqVbUQZJBYYX/preview" title="Video Portfolio Reel 3" allowfullscreen></iframe>
+                </div>
             </div>
         </div>
     </div>
