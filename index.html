@@ -765,6 +765,27 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // Auto-Mute videos when exiting fullscreen (e.g. via Escape key)
+    const handleFullscreenExit = () => {
+        if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+            document.querySelectorAll('.showreel-inner').forEach(container => {
+                const video = container.querySelector('video');
+                if (video && !video.muted) {
+                    video.muted = true; // Mute the video
+                    const muteBtn = container.querySelector('.mute-btn');
+                    if (muteBtn) {
+                        // Reset the icon to show muted state
+                        muteBtn.querySelector('.icon-muted').style.display = 'block';
+                        muteBtn.querySelector('.icon-unmuted').style.display = 'none';
+                    }
+                }
+            });
+        }
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenExit);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenExit); // For Safari
 });
 </script>
 
