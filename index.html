@@ -9,10 +9,8 @@
 
 <style>
 
-/* RESET */
 *{box-sizing:border-box;margin:0;padding:0}
 
-/* BODY */
 body{
 background:#050505;
 color:#f5f5f5;
@@ -21,19 +19,17 @@ font-family:Inter,sans-serif;
 text-rendering:optimizeLegibility;
 }
 
-/* TYPOGRAPHY */
+section{padding:130px 10%}
+
 h2{
 font-family:"Cormorant Garamond",serif;
 font-size:clamp(2.2rem,4vw,3rem);
 letter-spacing:.5px;
 }
 
-/* LAYOUT */
-section{padding:120px 8%}
-
 /* NAV */
 nav{
-padding:30px 8%;
+padding:35px 10%;
 display:flex;
 justify-content:space-between;
 align-items:center;
@@ -41,7 +37,7 @@ align-items:center;
 
 nav img{height:28px;opacity:.9}
 
-nav div{display:flex;gap:30px}
+nav div{display:flex;gap:35px}
 
 nav a{
 color:white;
@@ -62,13 +58,13 @@ nav a:hover{opacity:1}
 .showreel-wrapper{
 display:flex;
 justify-content:center;
-gap:60px;
+gap:70px;
 flex-wrap:wrap;
 margin-top:60px;
 }
 
 .showreel-frame{
-width:min(90vw,300px);
+width:min(90vw,320px);
 flex:0 0 auto;
 }
 
@@ -76,14 +72,14 @@ flex:0 0 auto;
 position:relative;
 width:100%;
 padding-top:177.77%;
-border-radius:22px;
+border-radius:24px;
 overflow:hidden;
-box-shadow:0 30px 80px rgba(0,0,0,.65);
+box-shadow:0 35px 90px rgba(0,0,0,.7);
 transition:.6s ease;
 }
 
 @media(hover:hover){
-.showreel-inner:hover{transform:translateY(-10px)}
+.showreel-inner:hover{transform:translateY(-12px)}
 }
 
 .showreel-inner iframe{
@@ -94,38 +90,93 @@ border:none;
 transform:translateZ(0);
 }
 
-/* PORTFOLIO */
+/* ================= PORTFOLIO ================= */
+
 .portfolio-grid{
 display:grid;
 grid-template-columns:1fr;
-gap:28px;
+gap:50px;
+margin-top:60px;
 }
 
+/* CARD */
 .portfolio-item{
 position:relative;
 overflow:hidden;
-border-radius:20px;
+border-radius:24px;
 background:#0a0a0a;
 cursor:pointer;
-min-height:240px;
+min-height:280px;
+
+border:1px solid rgba(255,255,255,.08);
+box-shadow:0 30px 80px rgba(0,0,0,.65);
+
+transition:transform .4s ease, box-shadow .4s ease;
+}
+
+@media(hover:hover){
+.portfolio-item:hover{
+transform:translateY(-8px);
+box-shadow:0 40px 110px rgba(0,0,0,.8);
+}
 }
 
 .portfolio-item img{
-width:100%;height:100%;
+width:100%;
+height:100%;
 object-fit:cover;
 transition:1.4s ease;
 }
 
 @media(hover:hover){
 .portfolio-item:hover img{
-transform:scale(1.06);
+transform:scale(1.05);
 filter:brightness(1.05);
 }
 }
 
-.item-hero{grid-row:span 2}
-.item-tall{grid-row:span 2}
+/* CLEAN EDITORIAL DESKTOP GRID */
+@media(min-width:768px){
 
+.portfolio-grid{
+grid-template-columns:repeat(6,1fr);
+grid-auto-rows:220px;
+gap:60px;
+}
+
+/* Portrait Hero */
+.item-hero{
+grid-column:1 / span 4;
+grid-row:1 / span 3;
+}
+
+/* Sports */
+.sports{
+grid-column:5 / span 2;
+grid-row:1 / span 2;
+}
+
+/* Editorial Tall */
+.item-tall{
+grid-column:5 / span 2;
+grid-row:3 / span 3;
+}
+
+/* Product */
+.product{
+grid-column:1 / span 2;
+grid-row:4 / span 2;
+}
+
+/* Festivals */
+.festivals{
+grid-column:3 / span 2;
+grid-row:4 / span 2;
+}
+
+}
+
+/* CROPS */
 .portraits img{object-position:50% 20%}
 .product img{object-position:center top}
 
@@ -134,27 +185,27 @@ filter:brightness(1.05);
 position:absolute;
 bottom:0;
 width:100%;
-padding:28px;
-background:linear-gradient(to top,rgba(0,0,0,.9),transparent);
+padding:32px;
+background:linear-gradient(to top,rgba(0,0,0,.92),transparent);
 }
 
 .item-overlay h3{
 font-family:"Cormorant Garamond";
-font-size:1.4rem;
+font-size:1.5rem;
 margin-top:6px;
 }
 
 .price{
-margin-top:6px;
+margin-top:8px;
 letter-spacing:1px;
-font-size:.8rem;
+font-size:.85rem;
 opacity:.85;
 }
 
 /* CTA */
 .cta-btn{
-padding:16px 28px;
-border-radius:40px;
+padding:18px 32px;
+border-radius:50px;
 border:1px solid rgba(255,255,255,.2);
 text-decoration:none;
 color:white;
@@ -164,7 +215,7 @@ transition:.3s;
 display:flex;
 align-items:center;
 justify-content:center;
-min-height:44px;
+min-height:48px;
 }
 
 .cta-btn:hover{background:white;color:black}
@@ -173,11 +224,12 @@ min-height:44px;
 #lightbox{
 position:fixed;
 inset:0;
-background:rgba(0,0,0,.95);
+background:rgba(0,0,0,.96);
 display:none;
 justify-content:center;
 align-items:center;
-backdrop-filter:blur(10px);
+backdrop-filter:blur(12px);
+z-index: 1000;
 }
 
 #lightbox.active{display:flex}
@@ -185,46 +237,41 @@ backdrop-filter:blur(10px);
 .lb-image{
 max-width:90%;
 max-height:90%;
-border-radius:16px;
+border-radius:18px;
+box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+object-fit: contain;
 }
 
 .lb-btn{
 position:absolute;
-font-size:30px;
-padding:15px;
-min-width:48px;
-min-height:48px;
+font-size:40px;
+padding:18px;
+min-width:50px;
+min-height:50px;
 cursor:pointer;
 opacity:.6;
 transition:.3s;
+color: white;
+background: transparent;
+border: none;
+display: flex;
+align-items: center;
+justify-content: center;
+z-index: 1001;
 }
 
-.lb-btn:hover{opacity:1}
+.lb-btn:hover{opacity:1; transform: scale(1.1);}
 
-#prev{left:20px}
-#next{right:20px}
-#close{top:20px;right:20px}
-
-/* RESPONSIVE */
-@media(min-width:480px){
-.portfolio-grid{grid-template-columns:repeat(2,1fr)}
-}
-
-@media(min-width:768px){
-section{padding:140px 10%}
-.portfolio-grid{
-grid-template-columns:repeat(3,1fr);
-grid-auto-rows:180px;
-}
-.item-hero{grid-column:span 2;grid-row:span 3}
-}
+#prev{left:30px}
+#next{right:30px}
+#close{top:30px;right:30px; font-size: 50px;}
 
 footer{
 text-align:center;
-padding:40px;
+padding:50px;
 opacity:.4;
 letter-spacing:2px;
-font-size:.7rem;
+font-size:.75rem;
 }
 
 </style>
@@ -233,7 +280,7 @@ font-size:.7rem;
 <body>
 
 <nav>
-<img src="https://lh3.googleusercontent.com/d/1oBEoO4rF3oUw0M4DH6Z7QKmWl-JivlFG=s200" alt="ShutterPhrase Logo">
+<img src="https://lh3.googleusercontent.com/d/1oBEoO4rF3oUw0M4DH6Z7QKmWl-JivlFG=s200" alt="ShutterPhrase Logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'150\' height=\'28\'><text x=\'0\' y=\'20\' fill=\'white\' font-family=\'Cormorant Garamond\' font-size=\'24\'>SHUTTERPHRASE</text></svg>'">
 <div>
 <a href="#portfolio">WORK</a>
 <a href="#contact">CONTACT</a>
@@ -271,7 +318,6 @@ font-size:.7rem;
 
 <section id="contact" style="text-align:center;">
 <h2>Let’s Build Something Impactful</h2>
-
 <div style="margin-top:35px; display:flex; gap:20px; justify-content:center; flex-wrap:wrap;">
 <a href="mailto:abhishek@shutterphrase.in" class="cta-btn">EMAIL</a>
 <a href="https://www.instagram.com/shutterphrase.in/" target="_blank" class="cta-btn">INSTAGRAM</a>
@@ -282,107 +328,137 @@ font-size:.7rem;
 © 2026 SHUTTERPHRASE
 </footer>
 
-<!-- LIGHTBOX -->
-<div id="lightbox" role="dialog">
-<div id="close" class="lb-btn">✕</div>
-<div id="prev" class="lb-btn">‹</div>
-<img id="lbImg" class="lb-image">
-<div id="next" class="lb-btn">›</div>
+<!-- Lightbox HTML markup -->
+<div id="lightbox">
+    <button class="lb-btn" id="close">&times;</button>
+    <button class="lb-btn" id="prev">&#10094;</button>
+    <img id="lbImg" class="lb-image" src="" alt="Lightbox Image">
+    <button class="lb-btn" id="next">&#10095;</button>
 </div>
 
+<!-- Dynamic Grid & Lightbox Logic -->
 <script>
-const data = [
-{
-category:"Portraits",
-title:"Eternal Grace",
-price:"Portrait sessions begin at ₹8,000",
-cover:"1LabVyDvm0d5d7K6S-7ljM-YkNGZrqEvt",
-size:"item-hero",
-images:["1LabVyDvm0d5d7K6S-7ljM-YkNGZrqEvt","1i_yGBk20gfPnNmnkZi9Mtp4kOjzf2qIh","1r6cvRabydlH5r7gMCt_goJR_leDfrvh5"]
-},
-{
-category:"Sports",
-title:"The Decisive Moment",
-price:"Sports coverage begins at ₹12,000",
-cover:"14QOLFGoqcSiStCe5miofoOjkJED-INtT",
-images:["14QOLFGoqcSiStCe5miofoOjkJED-INtT","1Qca9zh6RFxlAm0oo-CgKu73lyrjOEE_U","1wRTXqWUrRWR-toD6rR_6cUHdYl1Fhztn"]
-},
-{
-category:"Product",
-title:"The Craft",
-price:"Product photography begins at ₹15,000",
-cover:"1wzDtv35e5A89_eYSKA4mmwKtWE3sWv1N",
-images:["1wzDtv35e5A89_eYSKA4mmwKtWE3sWv1N","1dSX70LpWAqSgKumPIGnfV145iHl_uYNa","1ArFVKoGRQiiS94EDgEW4AkQO93K1MGTL"]
-},
-{
-category:"Festivals",
-title:"Cultural Pulse",
-price:"Festival coverage begins at ₹18,000",
-cover:"1hZfC_qzPh2EHi6KCTabHnUVQ-XRR5zwW",
-images:["1hZfC_qzPh2EHi6KCTabHnUVQ-XRR5zwW","1lr660KxM3akw_YVaIlyNwjx9tVMhsJVj","1WDbk-0ZIy4qvl7IBkFcUHXaeDIIWpvkR"]
-},
-{
-category:"Editorial",
-title:"Visual Experiments",
-price:"Editorial shoots begin at ₹25,000",
-cover:"1_uVWOL_oX55K7z3zg2eki87iTuOZVeS-",
-size:"item-tall",
-images:["1_uVWOL_oX55K7z3zg2eki87iTuOZVeS-","1YxkbKGFWmOrKc-wCi58tyskGS8fycUyz"]
-}
-];
+document.addEventListener('DOMContentLoaded', () => {
 
-function img(id){
-return `https://lh3.googleusercontent.com/d/${id}=s1200`;
-}
+    // Helper function to build direct google drive links
+    function img(id){
+        return `https://lh3.googleusercontent.com/d/${id}=s1200`;
+    }
+    
+    // Original Content Data + Assigned Grid Classes for the layout
+    const data = [
+        {
+            category:"Portraits",
+            title:"Eternal Grace",
+            price:"Portrait sessions begin at ₹8,000",
+            cover:"1LabVyDvm0d5d7K6S-7ljM-YkNGZrqEvt",
+            gridClass:"item-hero portraits",
+            images:["1LabVyDvm0d5d7K6S-7ljM-YkNGZrqEvt","1i_yGBk20gfPnNmnkZi9Mtp4kOjzf2qIh","1r6cvRabydlH5r7gMCt_goJR_leDfrvh5"]
+        },
+        {
+            category:"Sports",
+            title:"The Decisive Moment",
+            price:"Sports coverage begins at ₹12,000",
+            cover:"14QOLFGoqcSiStCe5miofoOjkJED-INtT",
+            gridClass:"sports",
+            images:["14QOLFGoqcSiStCe5miofoOjkJED-INtT","1Qca9zh6RFxlAm0oo-CgKu73lyrjOEE_U","1wRTXqWUrRWR-toD6rR_6cUHdYl1Fhztn"]
+        },
+        {
+            category:"Product",
+            title:"The Craft",
+            price:"Product photography begins at ₹15,000",
+            cover:"1wzDtv35e5A89_eYSKA4mmwKtWE3sWv1N",
+            gridClass:"product",
+            images:["1wzDtv35e5A89_eYSKA4mmwKtWE3sWv1N","1dSX70LpWAqSgKumPIGnfV145iHl_uYNa","1ArFVKoGRQiiS94EDgEW4AkQO93K1MGTL"]
+        },
+        {
+            category:"Festivals",
+            title:"Cultural Pulse",
+            price:"Festival coverage begins at ₹18,000",
+            cover:"1hZfC_qzPh2EHi6KCTabHnUVQ-XRR5zwW",
+            gridClass:"festivals",
+            images:["1hZfC_qzPh2EHi6KCTabHnUVQ-XRR5zwW","1lr660KxM3akw_YVaIlyNwjx9tVMhsJVj","1WDbk-0ZIy4qvl7IBkFcUHXaeDIIWpvkR"]
+        },
+        {
+            category:"Editorial",
+            title:"Visual Experiments",
+            price:"Editorial shoots begin at ₹25,000",
+            cover:"1_uVWOL_oX55K7z3zg2eki87iTuOZVeS-",
+            gridClass:"item-tall",
+            images:["1_uVWOL_oX55K7z3zg2eki87iTuOZVeS-","1YxkbKGFWmOrKc-wCi58tyskGS8fycUyz"]
+        }
+    ];
 
-const grid=document.getElementById("grid");
+    const grid = document.getElementById("grid");
+    const lightbox = document.getElementById("lightbox");
+    const lbImg = document.getElementById("lbImg");
 
-data.forEach(item=>{
-let div=document.createElement("div");
-div.className=`portfolio-item ${item.size||""} ${item.category.toLowerCase()}`;
+    // 1. Populate the Grid dynamically
+    data.forEach(item => {
+        let div = document.createElement("div");
+        div.className = `portfolio-item ${item.gridClass}`.trim();
+        
+        div.innerHTML = `
+            <img src="${img(item.cover)}" alt="${item.title}" loading="lazy">
+            <div class="item-overlay">
+                <p class="price" style="text-transform:uppercase; font-size: 0.75rem;">${item.category}</p>
+                <h3>${item.title}</h3>
+                <p class="price">${item.price}</p>
+            </div>
+        `;
 
-div.innerHTML=`
-<img src="${img(item.cover)}" loading="lazy">
-<div class="item-overlay">
-<div style="font-size:0.7rem; opacity:0.7">${item.category}</div>
-<h3>${item.title}</h3>
-<div class="price">${item.price}</div>
-</div>
-`;
+        // Click opens the sub-gallery for this specific category
+        div.onclick = () => openLightbox(item.images);
+        grid.appendChild(div);
+    });
 
-div.onclick=()=>openLightbox(item.images);
-grid.appendChild(div);
-});
+    // 2. Multi-image Lightbox Functionality
+    let current = 0;
+    let gallery = [];
 
-let current=0, gallery=[];
+    function openLightbox(arr) {
+        gallery = arr;
+        current = 0;
+        update();
+        lightbox.classList.add("active");
+        document.body.style.overflow = 'hidden'; // Prevent scrolling
+    }
 
-function openLightbox(arr){
-gallery=arr;
-current=0;
-update();
-document.getElementById("lightbox").classList.add("active");
-}
+    function update() {
+        lbImg.src = img(gallery[current]);
+    }
 
-function update(){
-document.getElementById("lbImg").src=img(gallery[current]);
-}
+    function next() { 
+        current = (current + 1) % gallery.length; 
+        update(); 
+    }
+    
+    function prev() { 
+        current = (current - 1 + gallery.length) % gallery.length; 
+        update(); 
+    }
 
-function next(){ current=(current+1)%gallery.length; update(); }
-function prev(){ current=(current-1+gallery.length)%gallery.length; update(); }
+    function closeLightbox() {
+        lightbox.classList.remove("active");
+        document.body.style.overflow = ''; 
+        lbImg.src = ''; 
+    }
 
-document.getElementById("next").onclick=e=>{e.stopPropagation(); next();};
-document.getElementById("prev").onclick=e=>{e.stopPropagation(); prev();};
-document.getElementById("close").onclick=()=>document.getElementById("lightbox").classList.remove("active");
+    // 3. Event Listeners
+    document.getElementById("next").onclick = e => { e.stopPropagation(); next(); };
+    document.getElementById("prev").onclick = e => { e.stopPropagation(); prev(); };
+    document.getElementById("close").onclick = closeLightbox;
 
-document.getElementById("lightbox").onclick = (e) => {
-if(e.target.id === "lightbox") document.getElementById("lightbox").classList.remove("active");
-};
+    lightbox.onclick = (e) => {
+        if(e.target.id === "lightbox") closeLightbox();
+    };
 
-document.addEventListener("keydown", (e) => {
-if (!document.getElementById("lightbox").classList.contains("active")) return;
-if (e.key === "ArrowRight") next();
-if (e.key === "ArrowLeft") prev();
-if (e.key === "Escape") document.getElementById("lightbox").classList.remove("active");
+    document.addEventListener("keydown", (e) => {
+        if (!lightbox.classList.contains("active")) return;
+        if (e.key === "ArrowRight") next();
+        if (e.key === "ArrowLeft") prev();
+        if (e.key === "Escape") closeLightbox();
+    });
 });
 </script>
 
