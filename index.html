@@ -2,338 +2,445 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <title>ShutterPhrase</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
-
-*{box-sizing:border-box;margin:0;padding:0}
-
-body{
-background:#050505;
-color:#f5f5f5;
-font-family:Inter,sans-serif;
--webkit-font-smoothing:antialiased;
-text-rendering:optimizeLegibility;
+:root {
+    --pad-x: 6%;
+    --pad-y: 80px;
+    --grid-gap: 24px;
 }
 
-section{padding:130px 10%}
-
-h2{
-font-family:"Cormorant Garamond",serif;
-font-size:clamp(2.2rem,4vw,3rem);
-letter-spacing:.5px;
+@media (min-width: 768px) {
+    :root {
+        --pad-x: 8%;
+        --pad-y: 100px;
+        --grid-gap: 40px;
+    }
 }
 
-/* NAV */
-nav{
-padding:35px 10%;
-display:flex;
-justify-content:space-between;
-align-items:center;
+@media (min-width: 1024px) {
+    :root {
+        --pad-x: 10%;
+        --pad-y: 130px;
+        --grid-gap: 50px;
+    }
 }
 
-nav img{height:28px;opacity:.9}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-nav div{display:flex;gap:35px}
-
-nav a{
-color:white;
-text-decoration:none;
-font-size:.75rem;
-letter-spacing:2px;
-text-transform:uppercase;
-opacity:.7;
-transition:.3s;
-min-height:44px;
-display:flex;
-align-items:center;
+body {
+    background: #050505;
+    color: #f5f5f5;
+    font-family: Inter, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
 }
 
-nav a:hover{opacity:1}
-
-/* SHOWREEL */
-.showreel-wrapper{
-display:flex;
-justify-content:center;
-gap:70px;
-flex-wrap:wrap;
-margin-top:60px;
+section { 
+    padding: var(--pad-y) var(--pad-x); 
+    max-width: 1800px;
+    margin: 0 auto;
 }
 
-.showreel-frame{
-width:min(90vw,320px);
-flex:0 0 auto;
+h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    letter-spacing: .5px;
+    line-height: 1.1;
 }
 
-.showreel-inner{
-position:relative;
-width:100%;
-padding-top:177.77%;
-border-radius:24px;
-overflow:hidden;
-box-shadow:0 35px 90px rgba(0,0,0,.7);
-transition:.6s ease;
+/* ================= NAV ================= */
+nav {
+    padding: 25px var(--pad-x);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    max-width: 1800px;
+    margin: 0 auto;
 }
 
-@media(hover:hover){
-.showreel-inner:hover{transform:translateY(-12px)}
+@media (min-width: 768px) {
+    nav {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 35px var(--pad-x);
+    }
 }
 
-.showreel-inner iframe{
-position:absolute;
-top:0;left:0;
-width:100%;height:100%;
-border:none;
-transform:translateZ(0);
+nav img { 
+    height: 24px; 
+    opacity: .9; 
+    transition: 0.3s;
+}
+
+@media (min-width: 768px) {
+    nav img { height: 28px; }
+}
+
+nav div { 
+    display: flex; 
+    gap: 25px; 
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+@media (min-width: 768px) {
+    nav div { gap: 35px; }
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: .75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: .7;
+    transition: .3s;
+    display: flex;
+    align-items: center;
+    padding: 8px 0; /* Touch target size */
+}
+
+nav a:hover { opacity: 1; }
+
+/* ================= SHOWREEL ================= */
+.showreel-wrapper {
+    display: flex;
+    gap: 20px;
+    margin-top: 40px;
+    
+    /* Mobile Horizontal Scroll */
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 30px; /* Space for scrollbar/shadows */
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+}
+.showreel-wrapper::-webkit-scrollbar { display: none; /* Chrome/Safari */ }
+
+@media (min-width: 768px) {
+    .showreel-wrapper {
+        justify-content: center;
+        gap: 40px;
+        flex-wrap: wrap;
+        overflow-x: visible;
+        margin-top: 60px;
+        padding-bottom: 0;
+    }
+}
+
+@media (min-width: 1024px) {
+    .showreel-wrapper { gap: 70px; }
+}
+
+.showreel-frame {
+    width: min(85vw, 320px);
+    flex: 0 0 auto;
+    scroll-snap-align: center;
+}
+
+.showreel-inner {
+    position: relative;
+    width: 100%;
+    padding-top: 177.77%;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,.6);
+    transition: .6s ease;
+    background: #111;
+}
+
+@media (min-width: 768px) {
+    .showreel-inner { box-shadow: 0 35px 90px rgba(0,0,0,.7); }
+}
+
+@media(hover: hover) {
+    .showreel-inner:hover { transform: translateY(-12px); }
+}
+
+.showreel-inner iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+    transform: translateZ(0);
 }
 
 /* ================= PORTFOLIO ================= */
-
-.portfolio-grid{
-display:grid;
-grid-template-columns:1fr;
-gap:50px;
-margin-top:60px;
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--grid-gap);
+    margin-top: 40px;
 }
 
 /* CARD */
-.portfolio-item{
-position:relative;
-overflow:hidden;
-border-radius:24px;
-background:#0a0a0a;
-cursor:pointer;
-min-height:280px;
-
-border:1px solid rgba(255,255,255,.08);
-box-shadow:0 30px 80px rgba(0,0,0,.65);
-
-transition:transform .4s ease, box-shadow .4s ease;
+.portfolio-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #0a0a0a;
+    cursor: pointer;
+    border: 1px solid rgba(255,255,255,.08);
+    box-shadow: 0 20px 50px rgba(0,0,0,.5);
+    transition: transform .4s ease, box-shadow .4s ease;
+    
+    /* Default mobile aspect ratio to keep it elegant */
+    aspect-ratio: 4/5;
 }
 
-@media(hover:hover){
-.portfolio-item:hover{
-transform:translateY(-8px);
-box-shadow:0 40px 110px rgba(0,0,0,.8);
-}
+@media (min-width: 768px) {
+    .portfolio-item { border-radius: 24px; }
 }
 
-.portfolio-item img{
-width:100%;
-height:100%;
-object-fit:cover;
-transition:1.4s ease;
+@media(hover: hover) {
+    .portfolio-item:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 40px 110px rgba(0,0,0,.8);
+    }
 }
 
-@media(hover:hover){
-.portfolio-item:hover img{
-transform:scale(1.05);
-filter:brightness(1.05);
-}
-}
-
-/* CLEAN EDITORIAL DESKTOP GRID */
-@media(min-width:768px){
-
-.portfolio-grid{
-grid-template-columns:repeat(6,1fr);
-grid-auto-rows:220px;
-gap:60px;
+.portfolio-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 1.4s ease;
 }
 
-/* Portrait Hero */
-.item-hero{
-grid-column:1 / span 4;
-grid-row:1 / span 3;
+@media(hover: hover) {
+    .portfolio-item:hover img {
+        transform: scale(1.05);
+        filter: brightness(1.05);
+    }
 }
 
-/* Sports */
-.sports{
-grid-column:5 / span 2;
-grid-row:1 / span 2;
+/* TABLET GRID (2 Columns) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 350px;
+    }
+    .portfolio-item { aspect-ratio: unset; }
+    
+    .item-hero { grid-column: 1 / span 2; grid-row: 1 / span 2; } /* Large top image */
+    .item-tall { grid-row: span 2; } /* Tall image */
 }
 
-/* Editorial Tall */
-.item-tall{
-grid-column:5 / span 2;
-grid-row:3 / span 3;
-}
+/* DESKTOP GRID (6 Columns Bento) */
+@media (min-width: 1024px) {
+    .portfolio-grid {
+        grid-template-columns: repeat(6, 1fr);
+        grid-auto-rows: minmax(220px, auto); /* Allows flexibility based on content */
+        gap: var(--grid-gap);
+    }
+    
+    .portfolio-item { aspect-ratio: unset; min-height: 280px; }
 
-/* Product */
-.product{
-grid-column:1 / span 2;
-grid-row:4 / span 2;
-}
-
-/* Festivals */
-.festivals{
-grid-column:3 / span 2;
-grid-row:4 / span 2;
-}
-
+    .item-hero { grid-column: 1 / span 4; grid-row: 1 / span 3; }
+    .sports { grid-column: 5 / span 2; grid-row: 1 / span 2; }
+    .item-tall { grid-column: 5 / span 2; grid-row: 3 / span 3; }
+    .product { grid-column: 1 / span 2; grid-row: 4 / span 2; }
+    .festivals { grid-column: 3 / span 2; grid-row: 4 / span 2; }
 }
 
 /* CROPS */
-.portraits img{object-position:50% 20%}
-.product img{object-position:center top}
+.portraits img { object-position: 50% 20%; }
+.product img {
+    object-fit: contain;
+    padding: 15px;
+    padding-bottom: 90px;
+    background: #0a0a0a;
+}
+@media (min-width: 768px) {
+    .product img { padding: 20px; padding-bottom: 110px; }
+}
 
 /* OVERLAY */
-.item-overlay{
-position:absolute;
-bottom:0;
-width:100%;
-padding:32px;
-background:linear-gradient(to top,rgba(0,0,0,.92),transparent);
+.item-overlay {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 24px;
+    background: linear-gradient(to top, rgba(0,0,0,.95) 10%, rgba(0,0,0,.6) 60%, transparent);
 }
 
-.item-overlay h3{
-font-family:"Cormorant Garamond";
-font-size:1.5rem;
-margin-top:6px;
+@media (min-width: 768px) {
+    .item-overlay { padding: 32px; }
 }
 
-.price{
-margin-top:8px;
-letter-spacing:1px;
-font-size:.85rem;
-opacity:.85;
+.item-overlay h3 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(1.3rem, 2.5vw, 1.6rem);
+    margin-top: 6px;
+    line-height: 1.2;
 }
 
-/* CTA */
-.cta-btn{
-padding:18px 32px;
-border-radius:50px;
-border:1px solid rgba(255,255,255,.2);
-text-decoration:none;
-color:white;
-font-size:.7rem;
-letter-spacing:2px;
-transition:.3s;
-display:flex;
-align-items:center;
-justify-content:center;
-min-height:48px;
+.price {
+    margin-top: 8px;
+    letter-spacing: 1px;
+    font-size: .8rem;
+    opacity: .85;
+    line-height: 1.4;
 }
 
-.cta-btn:hover{background:white;color:black}
-
-/* LIGHTBOX */
-#lightbox{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.96);
-display:none;
-justify-content:center;
-align-items:center;
-backdrop-filter:blur(12px);
-z-index: 1000;
+/* ================= CTA ================= */
+.cta-btn {
+    padding: 16px 28px;
+    border-radius: 50px;
+    border: 1px solid rgba(255,255,255,.2);
+    text-decoration: none;
+    color: white;
+    font-size: .7rem;
+    letter-spacing: 2px;
+    transition: .3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50px; /* Better touch target */
+    width: 100%;
 }
 
-#lightbox.active{display:flex}
-
-.lb-image{
-max-width:90%;
-max-height:90%;
-border-radius:18px;
-box-shadow: 0 20px 60px rgba(0,0,0,0.8);
-object-fit: contain;
+@media (min-width: 480px) {
+    .cta-btn { width: auto; padding: 18px 32px; }
 }
 
-.lb-btn{
-position:absolute;
-font-size:40px;
-padding:18px;
-min-width:50px;
-min-height:50px;
-cursor:pointer;
-opacity:.6;
-transition:.3s;
-color: white;
-background: transparent;
-border: none;
-display: flex;
-align-items: center;
-justify-content: center;
-z-index: 1001;
+.cta-btn:hover { background: white; color: black; }
+
+/* ================= LIGHTBOX ================= */
+#lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.98);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 1000;
+    padding: 10px;
 }
 
-.lb-btn:hover{opacity:1; transform: scale(1.1);}
+#lightbox.active { display: flex; }
 
-#prev{left:30px}
-#next{right:30px}
-#close{top:30px;right:30px; font-size: 50px;}
-
-footer{
-text-align:center;
-padding:50px;
-opacity:.4;
-letter-spacing:2px;
-font-size:.75rem;
+.lb-image {
+    max-width: 100%;
+    max-height: 85vh;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+    object-fit: contain;
+    user-select: none; /* Prevents text selection on swipe */
+    -webkit-user-select: none;
 }
 
+@media (min-width: 768px) {
+    .lb-image { max-width: 90%; max-height: 90vh; border-radius: 18px; }
+}
+
+.lb-btn {
+    position: absolute;
+    font-size: 30px;
+    padding: 10px;
+    min-width: 50px;
+    min-height: 50px;
+    cursor: pointer;
+    opacity: .7;
+    transition: .3s;
+    color: white;
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
+}
+
+@media (min-width: 768px) {
+    .lb-btn { font-size: 40px; padding: 18px; opacity: .6; }
+}
+
+.lb-btn:hover { opacity: 1; transform: scale(1.1); }
+
+/* Adjusted positions for mobile touch accessibility */
+#prev { left: 5px; top: 50%; transform: translateY(-50%); }
+#next { right: 5px; top: 50%; transform: translateY(-50%); }
+#close { top: 15px; right: 15px; font-size: 40px; background: rgba(0,0,0,0.3); border-radius: 50%; width: 45px; height: 45px; }
+
+@media (min-width: 768px) {
+    #prev { left: 30px; transform: none; }
+    #next { right: 30px; transform: none; }
+    #close { top: 30px; right: 30px; font-size: 50px; background: transparent; }
+}
+
+footer {
+    text-align: center;
+    padding: 40px 20px 60px 20px;
+    opacity: .4;
+    letter-spacing: 2px;
+    font-size: .75rem;
+}
 </style>
 </head>
 
 <body>
 
 <nav>
-<img src="https://lh3.googleusercontent.com/d/1oBEoO4rF3oUw0M4DH6Z7QKmWl-JivlFG=s200" alt="ShutterPhrase Logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'150\' height=\'28\'><text x=\'0\' y=\'20\' fill=\'white\' font-family=\'Cormorant Garamond\' font-size=\'24\'>SHUTTERPHRASE</text></svg>'">
-<div>
-<a href="#portfolio">WORK</a>
-<a href="#contact">CONTACT</a>
-<a href="https://www.instagram.com/shutterphrase.in/" target="_blank">INSTAGRAM</a>
-</div>
+    <img src="https://lh3.googleusercontent.com/d/1oBEoO4rF3oUw0M4DH6Z7QKmWl-JivlFG=s200" alt="ShutterPhrase Logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'150\' height=\'28\'><text x=\'0\' y=\'20\' fill=\'white\' font-family=\'Cormorant Garamond\' font-size=\'24\'>SHUTTERPHRASE</text></svg>'">
+    <div>
+        <a href="#portfolio">WORK</a>
+        <a href="#contact">CONTACT</a>
+        <a href="https://www.instagram.com/shutterphrase.in/" target="_blank">INSTAGRAM</a>
+    </div>
 </nav>
 
 <section>
-<div class="showreel-wrapper">
-
-<div class="showreel-frame">
-<div class="showreel-inner">
-<iframe src="https://drive.google.com/file/d/1gy2hENhvnUE52Ox1FPGpgHZc2multqNr/preview"></iframe>
-</div>
-</div>
-
-<div class="showreel-frame">
-<div class="showreel-inner">
-<iframe src="https://drive.google.com/file/d/1gYhjAm7YX4pxv51eGxUt_WjRRBakgNfA/preview"></iframe>
-</div>
-</div>
-
-<div class="showreel-frame">
-<div class="showreel-inner">
-<iframe src="https://drive.google.com/file/d/1JHGmDjoeWSwHHhzdUM_SCqVbUQZJBYYX/preview"></iframe>
-</div>
-</div>
-
-</div>
+    <div class="showreel-wrapper">
+        <div class="showreel-frame">
+            <div class="showreel-inner">
+                <iframe src="https://drive.google.com/file/d/1gy2hENhvnUE52Ox1FPGpgHZc2multqNr/preview" loading="lazy"></iframe>
+            </div>
+        </div>
+        <div class="showreel-frame">
+            <div class="showreel-inner">
+                <iframe src="https://drive.google.com/file/d/1gYhjAm7YX4pxv51eGxUt_WjRRBakgNfA/preview" loading="lazy"></iframe>
+            </div>
+        </div>
+        <div class="showreel-frame">
+            <div class="showreel-inner">
+                <iframe src="https://drive.google.com/file/d/1JHGmDjoeWSwHHhzdUM_SCqVbUQZJBYYX/preview" loading="lazy"></iframe>
+            </div>
+        </div>
+    </div>
 </section>
 
 <section id="portfolio">
-<div class="portfolio-grid" id="grid"></div>
+    <div class="portfolio-grid" id="grid"></div>
 </section>
 
 <section id="contact" style="text-align:center;">
-<h2>Let’s Build Something Impactful</h2>
-<div style="margin-top:35px; display:flex; gap:20px; justify-content:center; flex-wrap:wrap;">
-<a href="mailto:abhishek@shutterphrase.in" class="cta-btn">EMAIL</a>
-<a href="https://www.instagram.com/shutterphrase.in/" target="_blank" class="cta-btn">INSTAGRAM</a>
-</div>
+    <h2>Let’s Build Something Impactful</h2>
+    <div style="margin-top:35px; display:flex; gap:15px; justify-content:center; flex-wrap:wrap;">
+        <a href="mailto:abhishek@shutterphrase.in" class="cta-btn">EMAIL</a>
+        <a href="https://www.instagram.com/shutterphrase.in/" target="_blank" class="cta-btn">INSTAGRAM</a>
+    </div>
 </section>
 
 <footer>
-© 2026 SHUTTERPHRASE
+    © 2026 SHUTTERPHRASE
 </footer>
 
-<!-- Lightbox HTML markup -->
+<!-- Lightbox -->
 <div id="lightbox">
-    <button class="lb-btn" id="close">&times;</button>
-    <button class="lb-btn" id="prev">&#10094;</button>
+    <button class="lb-btn" id="close" aria-label="Close Lightbox">&times;</button>
+    <button class="lb-btn" id="prev" aria-label="Previous Image">&#10094;</button>
     <img id="lbImg" class="lb-image" src="" alt="Lightbox Image">
-    <button class="lb-btn" id="next">&#10095;</button>
+    <button class="lb-btn" id="next" aria-label="Next Image">&#10095;</button>
 </div>
 
 <!-- Dynamic Grid & Lightbox Logic -->
@@ -345,47 +452,47 @@ document.addEventListener('DOMContentLoaded', () => {
         return `https://lh3.googleusercontent.com/d/${id}=s1200`;
     }
     
-    // Original Content Data + Assigned Grid Classes for the layout
+    // Original Content Data
     const data = [
         {
-            category:"Portraits",
-            title:"Eternal Grace",
-            price:"Portrait sessions begin at ₹8,000",
-            cover:"1LabVyDvm0d5d7K6S-7ljM-YkNGZrqEvt",
-            gridClass:"item-hero portraits",
-            images:["1LabVyDvm0d5d7K6S-7ljM-YkNGZrqEvt","1i_yGBk20gfPnNmnkZi9Mtp4kOjzf2qIh","1r6cvRabydlH5r7gMCt_goJR_leDfrvh5"]
+            category: "Portraits",
+            title: "Eternal Grace",
+            price: "Portrait sessions begin at ₹8,000",
+            cover: "1LabVyDvm0d5d7K6S-7ljM-YkNGZrqEvt",
+            gridClass: "item-hero portraits",
+            images: ["1LabVyDvm0d5d7K6S-7ljM-YkNGZrqEvt","1i_yGBk20gfPnNmnkZi9Mtp4kOjzf2qIh","1r6cvRabydlH5r7gMCt_goJR_leDfrvh5"]
         },
         {
-            category:"Sports",
-            title:"The Decisive Moment",
-            price:"Sports coverage begins at ₹12,000",
-            cover:"14QOLFGoqcSiStCe5miofoOjkJED-INtT",
-            gridClass:"sports",
-            images:["14QOLFGoqcSiStCe5miofoOjkJED-INtT","1Qca9zh6RFxlAm0oo-CgKu73lyrjOEE_U","1wRTXqWUrRWR-toD6rR_6cUHdYl1Fhztn"]
+            category: "Sports",
+            title: "The Decisive Moment",
+            price: "Sports coverage begins at ₹12,000",
+            cover: "14QOLFGoqcSiStCe5miofoOjkJED-INtT",
+            gridClass: "sports",
+            images: ["14QOLFGoqcSiStCe5miofoOjkJED-INtT","1Qca9zh6RFxlAm0oo-CgKu73lyrjOEE_U","1wRTXqWUrRWR-toD6rR_6cUHdYl1Fhztn"]
         },
         {
-            category:"Product",
-            title:"The Craft",
-            price:"Product photography begins at ₹15,000",
-            cover:"1wzDtv35e5A89_eYSKA4mmwKtWE3sWv1N",
-            gridClass:"product",
-            images:["1wzDtv35e5A89_eYSKA4mmwKtWE3sWv1N","1dSX70LpWAqSgKumPIGnfV145iHl_uYNa","1ArFVKoGRQiiS94EDgEW4AkQO93K1MGTL"]
+            category: "Product",
+            title: "The Craft",
+            price: "Product photography begins at ₹15,000",
+            cover: "1wzDtv35e5A89_eYSKA4mmwKtWE3sWv1N",
+            gridClass: "product",
+            images: ["1wzDtv35e5A89_eYSKA4mmwKtWE3sWv1N","1dSX70LpWAqSgKumPIGnfV145iHl_uYNa","1ArFVKoGRQiiS94EDgEW4AkQO93K1MGTL"]
         },
         {
-            category:"Festivals",
-            title:"Cultural Pulse",
-            price:"Festival coverage begins at ₹18,000",
-            cover:"1hZfC_qzPh2EHi6KCTabHnUVQ-XRR5zwW",
-            gridClass:"festivals",
-            images:["1hZfC_qzPh2EHi6KCTabHnUVQ-XRR5zwW","1lr660KxM3akw_YVaIlyNwjx9tVMhsJVj","1WDbk-0ZIy4qvl7IBkFcUHXaeDIIWpvkR"]
+            category: "Festivals",
+            title: "Cultural Pulse",
+            price: "Festival coverage begins at ₹18,000",
+            cover: "1hZfC_qzPh2EHi6KCTabHnUVQ-XRR5zwW",
+            gridClass: "festivals",
+            images: ["1hZfC_qzPh2EHi6KCTabHnUVQ-XRR5zwW","1lr660KxM3akw_YVaIlyNwjx9tVMhsJVj","1WDbk-0ZIy4qvl7IBkFcUHXaeDIIWpvkR"]
         },
         {
-            category:"Editorial",
-            title:"Visual Experiments",
-            price:"Editorial shoots begin at ₹25,000",
-            cover:"1_uVWOL_oX55K7z3zg2eki87iTuOZVeS-",
-            gridClass:"item-tall",
-            images:["1_uVWOL_oX55K7z3zg2eki87iTuOZVeS-","1YxkbKGFWmOrKc-wCi58tyskGS8fycUyz"]
+            category: "Editorial",
+            title: "Visual Experiments",
+            price: "Editorial shoots begin at ₹25,000",
+            cover: "1_uVWOL_oX55K7z3zg2eki87iTuOZVeS-",
+            gridClass: "item-tall",
+            images: ["1_uVWOL_oX55K7z3zg2eki87iTuOZVeS-","1YxkbKGFWmOrKc-wCi58tyskGS8fycUyz"]
         }
     ];
 
@@ -407,7 +514,6 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
 
-        // Click opens the sub-gallery for this specific category
         div.onclick = () => openLightbox(item.images);
         grid.appendChild(div);
     });
@@ -421,7 +527,7 @@ document.addEventListener('DOMContentLoaded', () => {
         current = 0;
         update();
         lightbox.classList.add("active");
-        document.body.style.overflow = 'hidden'; // Prevent scrolling
+        document.body.style.overflow = 'hidden'; 
     }
 
     function update() {
@@ -444,7 +550,7 @@ document.addEventListener('DOMContentLoaded', () => {
         lbImg.src = ''; 
     }
 
-    // 3. Event Listeners
+    // 3. Desktop/Click Event Listeners
     document.getElementById("next").onclick = e => { e.stopPropagation(); next(); };
     document.getElementById("prev").onclick = e => { e.stopPropagation(); prev(); };
     document.getElementById("close").onclick = closeLightbox;
@@ -459,6 +565,29 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === "ArrowLeft") prev();
         if (e.key === "Escape") closeLightbox();
     });
+
+    // 4. Mobile Touch Swipe Functionality
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    lightbox.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, {passive: true});
+
+    lightbox.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, {passive: true});
+
+    function handleSwipe() {
+        const swipeThreshold = 50; // Minimum distance to register a swipe
+        if (touchEndX < touchStartX - swipeThreshold) {
+            next(); // Swiped left -> show next image
+        }
+        if (touchEndX > touchStartX + swipeThreshold) {
+            prev(); // Swiped right -> show previous image
+        }
+    }
 });
 </script>
 
