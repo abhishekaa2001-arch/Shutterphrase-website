@@ -164,7 +164,7 @@ nav a:hover { opacity: 1; }
 }
 
 .showreel-frame {
-    width: min(75vw, 260px); /* Slightly narrower frame to control overall height */
+    width: min(75vw, 260px); 
     flex: 0 0 auto;
     scroll-snap-align: center;
 }
@@ -172,12 +172,14 @@ nav a:hover { opacity: 1; }
 .showreel-inner {
     position: relative;
     width: 100%;
-    aspect-ratio: 3 / 4; /* Adjusted vertical ratio */
+    aspect-ratio: 3 / 4; /* The visual crop of the container */
     border-radius: 24px;
     overflow: hidden;
     box-shadow: 0 20px 50px rgba(0,0,0,.6);
     transition: .6s ease;
     background: #111;
+    /* iOS Safari fix to ensure iframe obeys the rounded corners */
+    -webkit-mask-image: -webkit-radial-gradient(white, black); 
 }
 
 @media (min-width: 768px) {
@@ -190,12 +192,17 @@ nav a:hover { opacity: 1; }
 
 .showreel-inner iframe {
     position: absolute;
-    top: 50%; left: 50%;
-    /* Scale the iframe up to push letterboxing outside the container */
-    width: 135%; 
-    height: 135%;
+    top: 50%; 
+    left: 50%;
+    
+    /* Force the iframe itself to be exactly 9:16. 
+       This stops the Google Drive player from stretching the thumbnail */
+    width: 100%;
+    height: auto;
+    aspect-ratio: 9 / 16; 
+    
     border: none;
-    /* Center it perfectly */
+    /* Center it to crop the overflowing top and bottom cleanly */
     transform: translate(-50%, -50%); 
 }
 
