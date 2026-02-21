@@ -176,7 +176,7 @@ nav a:hover { opacity: 1; }
     border-radius: 24px;
     overflow: hidden;
     box-shadow: 0 20px 50px rgba(0,0,0,.6);
-    transition: .6s ease;
+    transition: transform .6s ease;
     background: #111;
     /* iOS Safari fix to ensure iframe obeys the rounded corners */
     -webkit-mask-image: -webkit-radial-gradient(white, black); 
@@ -223,7 +223,7 @@ nav a:hover { opacity: 1; }
     cursor: pointer;
     border: 1px solid rgba(255,255,255,.08);
     box-shadow: 0 20px 50px rgba(0,0,0,.5);
-    transition: transform .4s ease, box-shadow .4s ease;
+    transition: transform .6s ease, box-shadow .6s ease;
     
     /* Default mobile aspect ratio to keep it elegant */
     aspect-ratio: 4/5;
@@ -244,11 +244,27 @@ nav a:hover { opacity: 1; }
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: 1.4s ease;
+    transition: transform 1.4s ease, filter 1.4s ease;
 }
 
 @media(hover: hover) {
     .portfolio-item:hover img {
+        transform: scale(1.05);
+        filter: brightness(1.05);
+    }
+}
+
+/* ================= MOBILE SCROLL EFFECTS ================= */
+/* Simulates the desktop hover effects when elements enter the center of a touch screen */
+@media (hover: none) {
+    .showreel-inner.in-view { 
+        transform: translateY(-12px); 
+    }
+    .portfolio-item.in-view {
+        transform: translateY(-8px);
+        box-shadow: 0 40px 110px rgba(0,0,0,.8);
+    }
+    .portfolio-item.in-view img {
         transform: scale(1.05);
         filter: brightness(1.05);
     }
@@ -614,13 +630,36 @@ document.addEventListener('DOMContentLoaded', () => {
     }, {passive: true});
 
     function handleSwipe() {
-        const swipeThreshold = 50; // Minimum distance to register a swipe
+        const swipeThreshold = 50; 
         if (touchEndX < touchStartX - swipeThreshold) {
-            next(); // Swiped left -> show next image
+            next(); 
         }
         if (touchEndX > touchStartX + swipeThreshold) {
-            prev(); // Swiped right -> show previous image
+            prev(); 
         }
+    }
+
+    // 5. Mobile Scroll "Hover" Intersections
+    // Automatically applies hover effects when items scroll into the center of a touch screen
+    if (window.matchMedia("(hover: none)").matches) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                } else {
+                    entry.target.classList.remove('in-view');
+                }
+            });
+        }, {
+            // Trigger when the element is within the middle 50% of the screen (both X and Y axis)
+            rootMargin: '-25% -25% -25% -25%',
+            threshold: 0
+        });
+
+        // Observe both the grid cards and the showreel frames
+        document.querySelectorAll('.portfolio-item, .showreel-inner').forEach(el => {
+            observer.observe(el);
+        });
     }
 });
 </script>
