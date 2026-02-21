@@ -703,6 +703,27 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else if (video.webkitEnterFullscreen) {
                         video.webkitEnterFullscreen(); // iOS native player fallback
                     }
+
+                    // --- Auto-unmute when expanding to fullscreen ---
+                    video.muted = false;
+                    const muteBtn = container.querySelector('.mute-btn');
+                    if (muteBtn) {
+                        muteBtn.querySelector('.icon-muted').style.display = 'none';
+                        muteBtn.querySelector('.icon-unmuted').style.display = 'block';
+                    }
+                    
+                    // Smart feature: Automatically mute the OTHER videos so audio doesn't overlap
+                    document.querySelectorAll('video').forEach(otherVideo => {
+                        if (otherVideo !== video) {
+                            otherVideo.muted = true;
+                            const otherBtn = otherVideo.parentElement.querySelector('.mute-btn');
+                            if (otherBtn) {
+                                otherBtn.querySelector('.icon-muted').style.display = 'block';
+                                otherBtn.querySelector('.icon-unmuted').style.display = 'none';
+                            }
+                        }
+                    });
+
                 } else {
                     // Exit fullscreen
                     if (document.exitFullscreen) {
