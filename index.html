@@ -211,7 +211,7 @@ nav a:hover { opacity: 1; }
 }
 
 @media (min-width: 768px) { .showreel-inner { box-shadow: 0 35px 90px rgba(0,0,0,.7); } }
-@media(hover: hover) { .showreel-inner:hover { transform: translateY(-12px); } }
+@media(hover: hover) { .showreel-inner:not(:fullscreen):hover { transform: translateY(-12px); } }
 
 /* Native HTML5 Video - Perfect edge-to-edge fit! */
 .showreel-inner video {
@@ -225,11 +225,29 @@ nav a:hover { opacity: 1; }
     border: none;
 }
 
-/* Premium Audio Toggle Button */
-.mute-btn {
+/* --- FULLSCREEN STYLES --- */
+/* When the container goes fullscreen, remove rounded corners and adjust fit to prevent extreme cropping on desktop */
+.showreel-inner:fullscreen {
+    border-radius: 0;
+    clip-path: none;
+    background: #000;
+}
+.showreel-inner:-webkit-full-screen {
+    border-radius: 0;
+    -webkit-clip-path: none;
+    clip-path: none;
+    background: #000;
+}
+.showreel-inner:fullscreen video {
+    object-fit: contain; /* Shows entire vertical video with black pillar-boxing on widescreen monitors */
+}
+.showreel-inner:-webkit-full-screen video {
+    object-fit: contain;
+}
+
+/* Premium Audio & Fullscreen Toggle Buttons */
+.mute-btn, .fs-btn {
     position: absolute;
-    bottom: 15px;
-    right: 15px;
     width: 38px;
     height: 38px;
     background: rgba(0,0,0,0.4);
@@ -245,7 +263,15 @@ nav a:hover { opacity: 1; }
     -webkit-backdrop-filter: blur(8px);
     transition: 0.3s;
 }
-.mute-btn:hover { background: rgba(0,0,0,0.8); border-color: rgba(255,255,255,0.6); transform: scale(1.05); }
+
+.mute-btn { bottom: 15px; right: 15px; }
+.fs-btn { top: 15px; right: 15px; }
+
+.mute-btn:hover, .fs-btn:hover { 
+    background: rgba(0,0,0,0.8); 
+    border-color: rgba(255,255,255,0.6); 
+    transform: scale(1.05); 
+}
 
 /* ================= PORTFOLIO ================= */
 .portfolio-grid { display: grid; grid-template-columns: 1fr; gap: var(--grid-gap); margin-top: 40px; }
@@ -393,6 +419,9 @@ footer { text-align: center; padding: 40px 20px 60px 20px; opacity: .4; letter-s
         <div class="showreel-frame">
             <div class="showreel-inner">
                 <video src="https://res.cloudinary.com/dbwqlw6pr/video/upload/v1771682733/Reel2_mnf61h.mp4" autoplay loop muted playsinline aria-label="Video Portfolio Reel 1"></video>
+                <button class="fs-btn" aria-label="Toggle Fullscreen">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                </button>
                 <button class="mute-btn" aria-label="Toggle Audio">
                     <svg class="icon-muted" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
                     <svg class="icon-unmuted" style="display:none;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
@@ -403,6 +432,9 @@ footer { text-align: center; padding: 40px 20px 60px 20px; opacity: .4; letter-s
         <div class="showreel-frame">
             <div class="showreel-inner">
                 <video src="https://res.cloudinary.com/dbwqlw6pr/video/upload/v1771684120/reel1_jjndze.mp4" autoplay loop muted playsinline aria-label="Video Portfolio Reel 2"></video>
+                <button class="fs-btn" aria-label="Toggle Fullscreen">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                </button>
                 <button class="mute-btn" aria-label="Toggle Audio">
                     <svg class="icon-muted" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
                     <svg class="icon-unmuted" style="display:none;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
@@ -413,6 +445,9 @@ footer { text-align: center; padding: 40px 20px 60px 20px; opacity: .4; letter-s
         <div class="showreel-frame">
             <div class="showreel-inner">
                 <video src="https://res.cloudinary.com/dbwqlw6pr/video/upload/v1771684121/reel3_icsqkj.mp4" autoplay loop muted playsinline aria-label="Video Portfolio Reel 3"></video>
+                <button class="fs-btn" aria-label="Toggle Fullscreen">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                </button>
                 <button class="mute-btn" aria-label="Toggle Audio">
                     <svg class="icon-muted" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
                     <svg class="icon-unmuted" style="display:none;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
@@ -644,9 +679,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.portfolio-item, .showreel-inner').forEach(el => hoverObserver.observe(el));
     }
 
-    // Custom Audio Toggle Logic for Premium Experience
-    document.querySelectorAll('.mute-btn').forEach(btn => {
-        // Connect to custom magnetic cursor
+    // Premium Video Buttons Logic (Audio Toggle & Fullscreen)
+    document.querySelectorAll('.mute-btn, .fs-btn').forEach(btn => {
+        // Connect buttons to custom magnetic cursor
         if (window.matchMedia("(pointer: fine)").matches) {
             btn.addEventListener('mouseenter', () => cursor.classList.add('hover-btn'));
             btn.addEventListener('mouseleave', () => cursor.classList.remove('hover-btn'));
@@ -654,32 +689,58 @@ document.addEventListener('DOMContentLoaded', () => {
         
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
-            const video = btn.parentElement.querySelector('video');
-            const iconMuted = btn.querySelector('.icon-muted');
-            const iconUnmuted = btn.querySelector('.icon-unmuted');
+            const container = btn.parentElement;
+            const video = container.querySelector('video');
 
-            if (video.muted) {
-                // Unmute this video
-                video.muted = false;
-                iconMuted.style.display = 'none';
-                iconUnmuted.style.display = 'block';
-                
-                // Smart feature: Automatically mute the OTHER videos so audio doesn't overlap
-                document.querySelectorAll('video').forEach(otherVideo => {
-                    if (otherVideo !== video) {
-                        otherVideo.muted = true;
-                        const otherBtn = otherVideo.parentElement.querySelector('.mute-btn');
-                        if (otherBtn) {
-                            otherBtn.querySelector('.icon-muted').style.display = 'block';
-                            otherBtn.querySelector('.icon-unmuted').style.display = 'none';
-                        }
+            // --- Fullscreen Logic ---
+            if (btn.classList.contains('fs-btn')) {
+                if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+                    // Enter fullscreen
+                    if (container.requestFullscreen) {
+                        container.requestFullscreen();
+                    } else if (container.webkitRequestFullscreen) {
+                        container.webkitRequestFullscreen(); // Safari
+                    } else if (video.webkitEnterFullscreen) {
+                        video.webkitEnterFullscreen(); // iOS native player fallback
                     }
-                });
-            } else {
-                // Mute this video
-                video.muted = true;
-                iconMuted.style.display = 'block';
-                iconUnmuted.style.display = 'none';
+                } else {
+                    // Exit fullscreen
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen(); // Safari
+                    }
+                }
+            }
+            
+            // --- Audio Logic ---
+            if (btn.classList.contains('mute-btn')) {
+                const iconMuted = btn.querySelector('.icon-muted');
+                const iconUnmuted = btn.querySelector('.icon-unmuted');
+
+                if (video.muted) {
+                    // Unmute this video
+                    video.muted = false;
+                    iconMuted.style.display = 'none';
+                    iconUnmuted.style.display = 'block';
+                    
+                    // Smart feature: Automatically mute the OTHER videos so audio doesn't overlap
+                    document.querySelectorAll('video').forEach(otherVideo => {
+                        if (otherVideo !== video) {
+                            otherVideo.muted = true;
+                            const otherBtn = otherVideo.parentElement.querySelector('.mute-btn');
+                            if (otherBtn) {
+                                otherBtn.querySelector('.icon-muted').style.display = 'block';
+                                otherBtn.querySelector('.icon-unmuted').style.display = 'none';
+                            }
+                        }
+                    });
+                } else {
+                    // Mute this video
+                    video.muted = true;
+                    iconMuted.style.display = 'block';
+                    iconUnmuted.style.display = 'none';
+                }
             }
         });
     });
