@@ -136,10 +136,20 @@ nav a:hover { opacity: 1; color: #ffdf85; text-shadow: 0 0 15px rgba(245, 166, 3
 .scroll-text p { font-size: clamp(0.95rem, 2vw, 1.2rem); opacity: 0.8; max-width: 500px; margin: 0 auto; text-shadow: 0 0 20px rgba(255,255,255,0.1); }
 
 .scroll-video-container {
-    position: relative; width: 100%; max-width: 400px; aspect-ratio: 9 / 16; display: flex; justify-content: center; pointer-events: none;
+    position: relative; 
+    /* Guaranteed safety heights for mobile so it never pushes the button behind the overflow hidden wall */
+    height: 50dvh; 
+    max-height: 500px;
+    aspect-ratio: 9 / 16; 
+    max-width: 90vw; /* Failsafe for very narrow phones */
+    display: flex; justify-content: center; pointer-events: none;
     clip-path: inset(35% 40% round 1000px); -webkit-clip-path: inset(35% 40% round 1000px); 
     will-change: clip-path; transform: translateZ(0);
 }
+@media (min-width: 768px) {
+    .scroll-video-container { height: 65dvh; max-height: 650px; }
+}
+
 .scroll-video-container video { width: 100%; height: 100%; object-fit: cover; transform: scale(0.7); will-change: transform; }
 
 .scroll-btn-wrapper { margin-top: 2rem; will-change: transform, opacity, filter; opacity: 0; filter: blur(10px); transform: translateY(-120px); }
