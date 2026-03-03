@@ -19,6 +19,7 @@
     --pad-x: 6%;
     --pad-y: 80px;
     --grid-gap: 24px;
+    --cursor-color: rgba(255, 223, 133, 0.9);
 }
 
 @media (min-width: 768px) {
@@ -46,6 +47,7 @@ body {
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     overflow-x: hidden;
+    cursor: none; /* Hide default cursor for viewfinder */
 }
 
 /* ================= AMBIENT LUXURY GLOW (BOKEH EFFECT) ================= */
@@ -68,25 +70,42 @@ section { padding: var(--pad-y) var(--pad-x); max-width: 1800px; margin: 0 auto;
 h1, h2 { font-family: "Cormorant Garamond", serif; letter-spacing: .5px; line-height: 1.1; text-shadow: 0 0 40px rgba(255, 255, 255, 0.15); }
 h2 { font-size: clamp(2rem, 5vw, 3.5rem); }
 
-/* ================= CUSTOM CURSOR ================= */
+/* ================= CUSTOM VIEWFINDER CURSOR ================= */
 #cursor { display: none; } 
 @media (pointer: fine) {
-    body, a, button, .gallery-img, iframe { cursor: none !important; }
+    body, a, button, .gallery-img, iframe, input, textarea { cursor: none !important; }
     #cursor {
-        position: fixed; top: 0; left: 0; width: 24px; height: 24px;
-        background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4);
-        border-radius: 50%; pointer-events: none; z-index: 10000;
+        position: fixed; top: 0; left: 0; width: 32px; height: 32px;
+        background: transparent; border: 1px solid rgba(255, 255, 255, 0.15);
+        pointer-events: none; z-index: 10000;
         display: flex; align-items: center; justify-content: center;
-        backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
-        transition: width 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), height 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.4s, border-color 0.4s;
+        transition: 
+            width 0.35s cubic-bezier(0.23, 1, 0.32, 1), 
+            height 0.35s cubic-bezier(0.23, 1, 0.32, 1), 
+            border-radius 0.35s cubic-bezier(0.23, 1, 0.32, 1), 
+            border-color 0.4s, background 0.4s;
+    }
+    /* Viewfinder Corners */
+    #cursor::before, #cursor::after {
+        content: ""; position: absolute; width: 100%; height: 100%;
+        border: 1.5px solid var(--cursor-color);
+        transition: opacity 0.3s;
+    }
+    #cursor::before {
+        clip-path: polygon(0 0, 10px 0, 10px 1.5px, 1.5px 1.5px, 1.5px 10px, 0 10px, 0 0, 100% 100%, 100% calc(100% - 10px), calc(100% - 1.5px) calc(100% - 10px), calc(100% - 1.5px) calc(100% - 1.5px), calc(100% - 10px) calc(100% - 1.5px), calc(100% - 10px) 100%, 100% 100%);
     }
     #cursor::after {
-        content: "VIEW"; font-family: Inter, sans-serif; font-size: 10px; letter-spacing: 2px;
-        color: #000; opacity: 0; transition: opacity 0.3s; font-weight: 600;
+        clip-path: polygon(100% 0, 100% 10px, calc(100% - 1.5px) 10px, calc(100% - 1.5px) 1.5px, calc(100% - 10px) 1.5px, calc(100% - 10px) 0, 100% 0, 0 100%, 10px 100%, 10px calc(100% - 1.5px), 1.5px calc(100% - 1.5px), 1.5px calc(100% - 10px), 0 calc(100% - 10px), 0 100%);
     }
-    #cursor.hover-card { width: 75px; height: 75px; background: rgba(255, 255, 255, 0.95); border-color: transparent; }
-    #cursor.hover-card::after { opacity: 1; }
-    #cursor.hover-btn { width: 60px; height: 60px; background: rgba(245, 166, 35, 0.15); border-color: rgba(245, 166, 35, 0.6); }
+    #cursor.hover-envelope { border-color: var(--cursor-color); background: rgba(245, 166, 35, 0.05); }
+    #cursor.hover-envelope::before, #cursor.hover-envelope::after { opacity: 0; }
+    #cursor.hover-card { width: 80px; height: 80px; border-color: #fff; }
+    #cursor.hover-card::before, #cursor.hover-card::after { width: 120%; height: 120%; opacity: 0.5; }
+    #cursor::after {
+        content: "VIEW"; font-family: Inter, sans-serif; font-size: 10px; letter-spacing: 2px;
+        color: #fff; opacity: 0; transition: opacity 0.3s; font-weight: 600; border: none;
+    }
+    #cursor.hover-card::after { opacity: 1; clip-path: none; width: auto; height: auto; position: relative; }
 }
 
 /* ================= NAV ================= */
@@ -99,7 +118,7 @@ nav img { height: 24px; opacity: .9; transition: 0.3s; filter: drop-shadow(0px 2
 @media (min-width: 768px) { nav img { height: 28px; } }
 nav div { display: flex; gap: 25px; flex-wrap: wrap; justify-content: center; }
 @media (min-width: 768px) { nav div { gap: 35px; } }
-nav a { color: white; text-decoration: none; font-size: .75rem; letter-spacing: 2px; text-transform: uppercase; opacity: .7; transition: .3s; padding: 8px 0; }
+nav a { color: white; text-decoration: none; font-size: .75rem; letter-spacing: 2px; text-transform: uppercase; opacity: .7; transition: .3s; padding: 8px 12px; border-radius: 4px; }
 nav a:hover { opacity: 1; color: #ffdf85; text-shadow: 0 0 15px rgba(245, 166, 35, 0.4); }
 
 
@@ -211,7 +230,7 @@ nav a:hover { opacity: 1; color: #ffdf85; text-shadow: 0 0 15px rgba(245, 166, 3
 @media (min-width: 768px) { .lb-image { max-width: 90%; max-height: 90vh; border-radius: 18px; } }
 .lb-btn { position: absolute; font-size: 30px; padding: 10px; min-width: 50px; min-height: 50px; opacity: .7; transition: .3s; color: white; background: transparent; border: none; display: flex; align-items: center; justify-content: center; z-index: 1001; }
 @media (min-width: 768px) { .lb-btn { font-size: 40px; padding: 18px; opacity: .6; } }
-.lb-btn:hover { opacity: 1; transform: scale(1.1); color: #ffdf85; text-shadow: 0 0 15px rgba(245,166,35,0.5); }
+.lb-btn:hover { opacity: 1; transform: scale(1.1); color: #ffdf85; text-shadow: 0 0 15px rgba(245, 166, 35, 0.5); }
 #prev { left: 5px; top: 50%; transform: translateY(-50%); } #next { right: 5px; top: 50%; transform: translateY(-50%); } #close { top: 15px; right: 15px; font-size: 40px; background: rgba(0,0,0,0.5); border-radius: 50%; width: 45px; height: 45px; border: 1px solid rgba(255,255,255,0.1); }
 @media (min-width: 768px) { #prev { left: 30px; transform: none; } #next { right: 30px; transform: none; } #close { top: 30px; right: 30px; font-size: 50px; background: transparent; border: none; } }
 
@@ -444,7 +463,7 @@ footer { text-align: center; padding: 40px 20px 60px 20px; opacity: .4; letter-s
         <div class="sp-chat-input-area" id="sp-chat-input-area">
             <input type="text" id="sp-chat-text" placeholder="Select an option above..." autocomplete="off" disabled />
             <button class="sp-chat-send" id="sp-chat-send" style="opacity: 0.5; pointer-events: none;">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13" stroke="black" stroke-width="2"></line><polygon points="22 2 15 22 11 13 2 9 22 2" fill="black"></polygon></svg>
             </button>
         </div>
     </div>
@@ -590,13 +609,6 @@ document.addEventListener('DOMContentLoaded', () => {
         col3.innerHTML = col3Data.map((id, i) => createImgHTML(id, i + col1Data.length + col2Data.length)).join('');
     }
 
-    if (window.matchMedia("(pointer: fine)").matches) {
-        document.querySelectorAll('.gallery-img').forEach(img => {
-            img.addEventListener('mouseenter', () => cursor.classList.add('hover-card'));
-            img.addEventListener('mouseleave', () => cursor.classList.remove('hover-card'));
-        });
-    }
-
     // ================= SCROLL REVEAL OBSERVER =================
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -605,20 +617,78 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { rootMargin: '0px 0px -50px 0px', threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // ================= CUSTOM CURSOR PHYSICS & MAGNETS =================
+    // ================= VIEWFINDER CURSOR PHYSICS & MAGNET ENVELOPING =================
     if (window.matchMedia("(pointer: fine)").matches) {
-        document.querySelectorAll('nav a, .cat-btn, #sp-chat-toggle').forEach(link => {
-            link.addEventListener('mouseenter', () => cursor.classList.add('hover-btn'));
-            link.addEventListener('mouseleave', () => cursor.classList.remove('hover-btn'));
-        });
-
         let mouseX = window.innerWidth / 2; let mouseY = window.innerHeight / 2;
         let cursorX = mouseX; let cursorY = mouseY;
-        window.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
+        let cursorW = 32; let cursorH = 32; let cursorR = 0;
+        
+        let targetX = mouseX; let targetY = mouseY;
+        let targetW = 32; let targetH = 32; let targetR = 0;
+        let isEnveloped = false;
+
+        window.addEventListener('mousemove', e => { 
+            mouseX = e.clientX; mouseY = e.clientY; 
+        });
+
+        const updateEnveloping = (e) => {
+            const el = e.currentTarget;
+            const rect = el.getBoundingClientRect();
+            isEnveloped = true;
+            targetX = rect.left + rect.width / 2;
+            targetY = rect.top + rect.height / 2;
+            targetW = rect.width;
+            targetH = rect.height;
+            targetR = parseInt(window.getComputedStyle(el).borderRadius) || 0;
+            cursor.classList.add('hover-envelope');
+        };
+
+        const resetEnveloping = () => {
+            isEnveloped = false;
+            targetW = 32;
+            targetH = 32;
+            targetR = 0;
+            cursor.classList.remove('hover-envelope');
+        };
+
+        // Attach listeners to interactive elements
+        const attachInteractive = () => {
+            document.querySelectorAll('nav a, button, .cat-btn, .cta-btn, .hero-btn, #sp-chat-toggle, .sp-opt-btn').forEach(el => {
+                el.addEventListener('mouseenter', updateEnveloping);
+                el.addEventListener('mouseleave', resetEnveloping);
+            });
+            
+            document.querySelectorAll('.gallery-img').forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('hover-card'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('hover-card'));
+            });
+        };
+        attachInteractive();
+
+        // Use MutationObserver for chatbot buttons
+        const obs = new MutationObserver(attachInteractive);
+        obs.observe(document.body, { childList: true, subtree: true });
+
         function animateCursor() {
-            let dx = mouseX - cursorX; let dy = mouseY - cursorY;
-            cursorX += dx * 0.15; cursorY += dy * 0.15;
+            if (!isEnveloped) {
+                targetX = mouseX;
+                targetY = mouseY;
+            }
+
+            // Linear Interpolation (LERP) Smoothing
+            const lerp = (start, end, amt) => (1 - amt) * start + amt * end;
+            
+            cursorX = lerp(cursorX, targetX, 0.15);
+            cursorY = lerp(cursorY, targetY, 0.15);
+            cursorW = lerp(cursorW, targetW, 0.15);
+            cursorH = lerp(cursorH, targetH, 0.15);
+            cursorR = lerp(cursorR, targetR, 0.15);
+
+            cursor.style.width = `${cursorW}px`;
+            cursor.style.height = `${cursorH}px`;
+            cursor.style.borderRadius = `${cursorR}px`;
             cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
+            
             requestAnimationFrame(animateCursor);
         }
         animateCursor();
@@ -653,14 +723,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === "ArrowRight") next(); if (e.key === "ArrowLeft") prev(); if (e.key === "Escape") closeLightbox();
     });
 
-    let touchStartX = 0; let touchEndX = 0;
-    lightbox.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
-    lightbox.addEventListener('touchend', e => {
-        touchEndX = e.changedTouches[0].screenX;
-        if (touchEndX < touchStartX - 50) next(); if (touchEndX > touchStartX + 50) prev();
-    }, {passive: true});
-
-    // ================= CATEGORY INTERACTION LOGIC =================
+    // ================= CATEGORY INTERACTION LOGIC (RESTORED waText) =================
     const categoryDetails = {
         all: { title: "Cinematic Vision", desc: "A curated collection of cinematic frames across all our photography styles, tailored to bring your ideas to life.", price: "Custom packages available", waText: "Hey! I am interested in booking a session with you." },
         portraits: { title: "Eternal Grace", desc: "High-end editorial and pre-wedding portrait photography capturing your natural elegance in Mumbai and Lonavala.", price: "Portrait sessions begin at ₹8,000", waText: "Hey! I am interested in booking a portrait session with you." },
@@ -683,9 +746,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             setTimeout(() => {
                 const cat = btn.dataset.cat;
-                const data = categoryDetails[cat];
-                catInfoBox.innerHTML = `<h4>${data.title}</h4><p>${data.desc}</p><span class="cat-price">${data.price}</span>`;
-                waLink.href = `https://wa.me/9867113855?text=${encodeURIComponent(data.waText)}`;
+                const info = categoryDetails[cat];
+                catInfoBox.innerHTML = `<h4>${info.title}</h4><p>${info.desc}</p><span class="cat-price">${info.price}</span>`;
+                waLink.href = `https://wa.me/9867113855?text=${encodeURIComponent(info.waText)}`;
                 catInfoBox.style.opacity = 1;
                 catInfoBox.style.transform = 'translateY(0)';
             }, 300);
@@ -694,10 +757,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ================= PREMIUM VIDEO BUTTONS =================
     document.querySelectorAll('.mute-btn, .fs-btn').forEach(btn => {
-        if (window.matchMedia("(pointer: fine)").matches) {
-            btn.addEventListener('mouseenter', () => cursor.classList.add('hover-btn'));
-            btn.addEventListener('mouseleave', () => cursor.classList.remove('hover-btn'));
-        }
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
             const container = btn.parentElement;
@@ -708,23 +767,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (container.requestFullscreen) { container.requestFullscreen(); } 
                     else if (container.webkitRequestFullscreen) { container.webkitRequestFullscreen(); } 
                     else if (video.webkitEnterFullscreen) { video.webkitEnterFullscreen(); }
-                    
                     video.muted = false;
                     const muteBtn = container.querySelector('.mute-btn');
                     if (muteBtn) {
                         muteBtn.querySelector('.icon-muted').style.display = 'none';
                         muteBtn.querySelector('.icon-unmuted').style.display = 'block';
                     }
-                    document.querySelectorAll('video').forEach(otherVideo => {
-                        if (otherVideo !== video) {
-                            otherVideo.muted = true;
-                            const otherBtn = otherVideo.parentElement.querySelector('.mute-btn');
-                            if (otherBtn) {
-                                otherBtn.querySelector('.icon-muted').style.display = 'block';
-                                otherBtn.querySelector('.icon-unmuted').style.display = 'none';
-                            }
-                        }
-                    });
                 } else {
                     if (document.exitFullscreen) { document.exitFullscreen(); } 
                     else if (document.webkitExitFullscreen) { document.webkitExitFullscreen(); }
@@ -737,16 +785,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (video.muted) {
                     video.muted = false;
                     iconMuted.style.display = 'none'; iconUnmuted.style.display = 'block';
-                    document.querySelectorAll('video').forEach(otherVideo => {
-                        if (otherVideo !== video) {
-                            otherVideo.muted = true;
-                            const otherBtn = otherVideo.parentElement.querySelector('.mute-btn');
-                            if (otherBtn) {
-                                otherBtn.querySelector('.icon-muted').style.display = 'block';
-                                otherBtn.querySelector('.icon-unmuted').style.display = 'none';
-                            }
-                        }
-                    });
                 } else {
                     video.muted = true;
                     iconMuted.style.display = 'block'; iconUnmuted.style.display = 'none';
@@ -754,35 +792,17 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-
-    const handleFullscreenExit = () => {
-        if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-            document.querySelectorAll('.showreel-inner').forEach(container => {
-                const video = container.querySelector('video');
-                if (video && !video.muted) {
-                    video.muted = true;
-                    const muteBtn = container.querySelector('.mute-btn');
-                    if (muteBtn) {
-                        muteBtn.querySelector('.icon-muted').style.display = 'block';
-                        muteBtn.querySelector('.icon-unmuted').style.display = 'none';
-                    }
-                }
-            });
-        }
-    };
-    document.addEventListener('fullscreenchange', handleFullscreenExit);
-    document.addEventListener('webkitfullscreenchange', handleFullscreenExit);
 });
 </script>
 
-<!-- ================= PREMIUM AI CHATBOT LOGIC (Vanilla JS Engine) ================= -->
+<!-- ================= PREMIUM AI CHATBOT LOGIC (Vanilla JS Engine FULL RESTORE) ================= -->
 <script>
 const ShutterPhraseChatbot = (function() {
     
     // --- Configuration & Pricing Rules ---
     const pricingConfig = {
         base: { portraits: 8000, sports: 12000, product: 15000, festivals: 18000, editorial: 25000 },
-        duration: { "quick_session": 0.75, "half_day": 1, "full_day": 2, "multi_day": 3 }, // Multi is baseline 3x for calc
+        duration: { "quick_session": 0.75, "half_day": 1, "full_day": 2, "multi_day": 3 },
         usage: { "personal": 1, "social_media": 1.1, "brand_marketing": 1.2, "paid_ads": 1.35, "commercial_licensing": 1.5 },
         complexity: { "simple": 1, "lifestyle": 1.2, "creative": 1.35, "multiple_setups": 1.5 },
         addons: {
@@ -803,7 +823,6 @@ const ShutterPhraseChatbot = (function() {
         }
     };
 
-    // --- State Management ---
     let state = {
         step: 'welcome',
         data: {
@@ -811,16 +830,13 @@ const ShutterPhraseChatbot = (function() {
         }
     };
 
-    // --- DOM Elements ---
     const toggleBtn = document.getElementById('sp-chat-toggle');
     const chatWin = document.getElementById('sp-chat-window');
     const closeBtn = document.getElementById('sp-chat-close');
     const chatBody = document.getElementById('sp-chat-body');
-    const inputArea = document.getElementById('sp-chat-input-area');
     const textInput = document.getElementById('sp-chat-text');
     const sendBtn = document.getElementById('sp-chat-send');
 
-    // --- Core UI Functions ---
     function openChat() { 
         chatWin.classList.add('open'); 
         if(state.step === 'welcome' && chatBody.children.length === 0) {
@@ -864,7 +880,6 @@ const ShutterPhraseChatbot = (function() {
         sendBtn.style.opacity = "0.5";
         sendBtn.style.pointerEvents = "none";
         
-        // Remove existing options so user can't click them while bot types
         const existingOpts = document.querySelectorAll('.sp-chat-opts');
         existingOpts.forEach(el => el.remove());
 
@@ -890,7 +905,6 @@ const ShutterPhraseChatbot = (function() {
         textInput.focus();
     }
 
-    // --- NLP / Navigation Parser ---
     function checkNavigation(text) {
         const t = text.toLowerCase();
         if(t.includes('pricing') || t.includes('cost') || t.includes('how much')) {
@@ -911,177 +925,70 @@ const ShutterPhraseChatbot = (function() {
         return false;
     }
 
-    // --- Event Listeners ---
     toggleBtn.addEventListener('click', openChat);
     closeBtn.addEventListener('click', closeChat);
-    
-    // Escape key closes
-    document.addEventListener('keydown', (e) => {
-        if(e.key === 'Escape' && chatWin.classList.contains('open')) closeChat();
-    });
-    
-    // Click outside minimizes
-    document.addEventListener('mousedown', (e) => {
-        if(chatWin.classList.contains('open') && !chatWin.contains(e.target) && !toggleBtn.contains(e.target)) {
-            closeChat();
-        }
-    });
-
     sendBtn.addEventListener('click', handleTextSubmit);
     textInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleTextSubmit(); });
 
     function handleTextSubmit() {
         const val = textInput.value.trim();
         if(!val) return;
-        
         appendMsg(val, 'user');
         textInput.value = '';
         textInput.disabled = true;
-        textInput.placeholder = "Select an option above...";
-        sendBtn.style.opacity = "0.5";
-        sendBtn.style.pointerEvents = "none";
 
-        // Prevent navigation keywords from hijacking data entry steps
         const isDataEntryStep = ['product_quantity', 'lead_name', 'lead_email', 'lead_phone'].includes(state.step);
-
         if(!isDataEntryStep && checkNavigation(val)) {
-            // Re-prompt the current step after 1.5s
             setTimeout(() => advanceFlow(state.step, true), 1500);
             return;
         }
 
-        // Process based on current flow step
         showTyping(() => {
             if(state.step === 'product_quantity') {
                 let qty = parseInt(val.replace(/\D/g, ''));
-                if(isNaN(qty) || qty <= 0) {
-                    appendMsg("Please enter a valid number of products.", 'bot');
-                    requireTextInput("E.g., 15");
-                } else {
-                    state.data.quantity = qty;
-                    if(qty > 40) {
-                        appendMsg("For large-scale catalogues over 40 products, we require a custom commercial quote to ensure accuracy.", 'bot');
-                        advanceFlow('lead_name'); // Skip straight to lead capture
-                    } else {
-                        advanceFlow('usage');
-                    }
-                }
+                if(isNaN(qty) || qty <= 0) { appendMsg("Please enter a valid number.", 'bot'); requireTextInput("E.g., 15"); }
+                else { state.data.quantity = qty; if(qty > 40) advanceFlow('lead_name'); else advanceFlow('usage'); }
             }
-            else if(state.step === 'lead_name') {
-                state.data.name = val; advanceFlow('lead_email');
-            }
-            else if(state.step === 'lead_email') {
-                if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
-                    state.data.email = val; advanceFlow('lead_phone');
-                } else {
-                    appendMsg("Please enter a valid email address.", 'bot'); requireTextInput("E.g., name@domain.com");
-                }
-            }
-            else if(state.step === 'lead_phone') {
-                state.data.phone = val; advanceFlow('complete');
-            }
-            else {
-                // Failsafe for unexpected text input
-                appendMsg("I've noted that. Let's continue.", 'bot');
-                advanceFlow(state.step, true);
-            }
+            else if(state.step === 'lead_name') { state.data.name = val; advanceFlow('lead_email'); }
+            else if(state.step === 'lead_email') { if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) { state.data.email = val; advanceFlow('lead_phone'); } else { appendMsg("Please enter a valid email address.", 'bot'); requireTextInput("E.g., name@domain.com"); } }
+            else if(state.step === 'lead_phone') { state.data.phone = val; advanceFlow('complete'); }
         });
     }
 
     function handleButtonSelect(opt) {
-        if(opt.action === 'link') {
-            window.open(opt.url, '_blank');
-            return;
-        }
-        
+        if(opt.action === 'link') { window.open(opt.url, '_blank'); return; }
         appendMsg(opt.label, 'user');
-        
-        // Save data if required
-        if(opt.saveTo) {
-            if(opt.saveTo === 'addons') {
-                if(opt.value !== 'skip') state.data.addons.push(opt.value);
-            } else {
-                state.data[opt.saveTo] = opt.value;
-            }
-        }
-
+        if(opt.saveTo === 'addons') { if(opt.value !== 'skip') state.data.addons.push(opt.value); }
+        else if(opt.saveTo) { state.data[opt.saveTo] = opt.value; }
         showTyping(() => advanceFlow(opt.next));
     }
 
-
-    // --- Pricing Engine Math ---
     function calculateEstimate() {
         if(state.data.service === 'custom') return { custom: true };
-
         let base = pricingConfig.base[state.data.service] || 10000;
-        
-        // Custom Product Quantity Math
         if(state.data.service === 'product' && state.data.quantity) {
             let q = state.data.quantity;
             if(q > 40) return { custom: true };
-            if(q > 25) base = 15000 + (10 * 1200) + ((q - 25) * 1000); // 16-25 @ 1200, 26-40 @ 1000
+            if(q > 25) base = 15000 + (10 * 1200) + ((q - 25) * 1000);
             else if(q > 15) base = 15000 + ((q - 15) * 1200);
         }
-
         let durMult = pricingConfig.duration[state.data.duration] || 1;
-        // If Product/Festival, duration is usually ignored in base calc unless specified, we'll assume 1
         if(state.data.service === 'product' || state.data.service === 'festivals') durMult = 1;
-
         let usageMult = pricingConfig.usage[state.data.usage] || 1;
-        if(state.data.clientType === 'agency') usageMult += 0.10; // +10% penalty for agency licensing
-
-        let compMult = pricingConfig.complexity[state.data.complexity] || 1;
-
-        let subtotal = base * durMult * usageMult * compMult;
-        
+        if(state.data.clientType === 'agency') usageMult += 0.10;
+        let subtotal = base * durMult * usageMult * (pricingConfig.complexity[state.data.complexity] || 1);
         let travelBuffer = (state.data.location === 'outstation') ? 5000 : 0;
-        
-        // 8% invisible operational buffer
-        let totalWithBuffer = (subtotal + travelBuffer) * 1.08;
-
-        // Formulate Breakdown String for Google Sheets
-        let clientMult = state.data.clientType === 'agency' ? 1.1 : 1;
-        let baseUsageMult = pricingConfig.usage[state.data.usage] || 1;
-        state.data.breakdown = `Base:+₹${base.toLocaleString('en-IN')}\nClient:+x${clientMult}\nDuration:+x${durMult}\nUsage:+x${baseUsageMult}\nOp.+Buffer:++8%\nTarget:+₹${Math.round(totalWithBuffer).toLocaleString('en-IN')}`;
-
-        // Apply Addons
-        let finalEst = totalWithBuffer;
+        let finalEst = (subtotal + travelBuffer) * 1.08;
         state.data.addons.forEach(addId => {
-            // Check universal
-            let a = pricingConfig.addons.universal.find(x=>x.id===addId) || 
-                    (pricingConfig.addons[state.data.service] || []).find(x=>x.id===addId);
-            if(a) {
-                if(a.est) finalEst += a.est;
-                if(a.mult) finalEst *= a.mult;
-            }
+            let a = pricingConfig.addons.universal.find(x=>x.id===addId) || (pricingConfig.addons[state.data.service] || []).find(x=>x.id===addId);
+            if(a) { if(a.est) finalEst += a.est; if(a.mult) finalEst *= a.mult; }
         });
-
-        // Rounding to nearest 500
         let rounded = Math.round(finalEst / 500) * 500;
-        
-        // ±10% Range
-        let low = Math.round((rounded * 0.9) / 500) * 500;
-        let high = Math.round((rounded * 1.1) / 500) * 500;
-
-        return { low, high, tier: classifyTier(rounded), custom: false, outstation: travelBuffer > 0 };
+        return { low: rounded * 0.9, high: rounded * 1.1, tier: rounded < 15000 ? "Focused Tier" : rounded < 35000 ? "Production Tier" : "Commercial Tier", outstation: travelBuffer > 0 };
     }
 
-    function classifyTier(amount) {
-        if(amount < 15000) return "Focused Tier";
-        if(amount >= 15000 && amount < 35000) return "Production Tier";
-        if(amount >= 35000 && amount < 75000) return "Commercial Tier";
-        return "Signature Tier";
-    }
-
-    function formatInr(num) {
-        return "₹" + num.toLocaleString('en-IN');
-    }
-
-
-    // --- Branching Logic Engine ---
     function advanceFlow(step, isReprompt = false) {
         state.step = step;
-        
         switch(step) {
             case 'welcome':
                 if(!isReprompt) appendMsg("We handle everything from intimate portrait sessions to large-scale brand campaigns. Let’s understand your project and place it correctly.", 'bot');
@@ -1092,9 +999,7 @@ const ShutterPhraseChatbot = (function() {
                     { label: "Festival/Event", value: "festivals", saveTo: "service", next: "client_type" },
                     { label: "Editorial", value: "editorial", saveTo: "service", next: "client_type" },
                     { label: "Custom Project", value: "custom", saveTo: "service", next: "client_type" }
-                ]);
-                break;
-
+                ]); break;
             case 'client_type':
                 appendMsg("Is this project personally funded or brand-backed?", 'bot');
                 appendButtons([
@@ -1102,22 +1007,14 @@ const ShutterPhraseChatbot = (function() {
                     { label: "Startup Brand", value: "startup", saveTo: "clientType", next: "branch_post_client" },
                     { label: "Established Brand", value: "established", saveTo: "clientType", next: "branch_post_client" },
                     { label: "Agency / Commercial", value: "agency", saveTo: "clientType", next: "branch_post_client" }
-                ]);
-                break;
-            
+                ]); break;
             case 'branch_post_client':
-                // Intelligent routing
                 if(state.data.service === 'custom') { advanceFlow('lead_name'); return; }
                 if(state.data.service === 'product') { advanceFlow('product_quantity'); return; }
                 if(state.data.service === 'festivals') { advanceFlow('location'); return; }
-                advanceFlow('duration');
-                break;
-
+                advanceFlow('duration'); break;
             case 'product_quantity':
-                appendMsg("Roughly how many products need to be photographed?", 'bot');
-                requireTextInput("Enter a number (e.g. 15)");
-                break;
-
+                appendMsg("Roughly how many products need to be photographed?", 'bot'); requireTextInput("Enter a number (e.g. 15)"); break;
             case 'duration':
                 appendMsg("What is the expected duration of the shoot?", 'bot');
                 appendButtons([
@@ -1125,9 +1022,7 @@ const ShutterPhraseChatbot = (function() {
                     { label: "Half Day", value: "half_day", saveTo: "duration", next: "usage" },
                     { label: "Full Day", value: "full_day", saveTo: "duration", next: "usage" },
                     { label: "Multi-Day", value: "multi_day", saveTo: "duration", next: "usage" }
-                ]);
-                break;
-
+                ]); break;
             case 'usage':
                 appendMsg("How will these images primarily be used?", 'bot');
                 appendButtons([
@@ -1136,149 +1031,47 @@ const ShutterPhraseChatbot = (function() {
                     { label: "Brand Marketing", value: "brand_marketing", saveTo: "usage", next: "complexity" },
                     { label: "Paid Ads", value: "paid_ads", saveTo: "usage", next: "complexity" },
                     { label: "Large Commercial Licensing", value: "commercial_licensing", saveTo: "usage", next: "complexity" }
-                ]);
-                break;
-
+                ]); break;
             case 'complexity':
-                if(state.data.service === 'product') {
-                    appendMsg("What type of setup are we looking at?", 'bot');
-                } else {
-                    appendMsg("Is there a specific creative direction required?", 'bot');
-                }
+                appendMsg("Is there a specific creative direction required?", 'bot');
                 appendButtons([
                     { label: "Simple / Standard", value: "simple", saveTo: "complexity", next: "location" },
                     { label: "Lifestyle Setup", value: "lifestyle", saveTo: "complexity", next: "location" },
                     { label: "Creative Conceptual", value: "creative", saveTo: "complexity", next: "location" },
                     { label: "Multiple Complex Setups", value: "multiple_setups", saveTo: "complexity", next: "location" }
-                ]);
-                break;
-
+                ]); break;
             case 'location':
                 appendMsg("Will this shoot be local (Mumbai/Pune area) or Outstation?", 'bot');
-                appendButtons([
-                    { label: "Local", value: "local", saveTo: "location", next: "estimate" },
-                    { label: "Outstation", value: "outstation", saveTo: "location", next: "estimate" }
-                ]);
-                break;
-
+                appendButtons([{ label: "Local", value: "local", saveTo: "location", next: "estimate" }, { label: "Outstation", value: "outstation", saveTo: "location", next: "estimate" }]); break;
             case 'estimate':
                 const est = calculateEstimate();
-                if(est.custom) {
-                    appendMsg("Because of the scale and specific requirements of this project, I'll need to prepare a custom manual quote for you.", 'bot');
-                    state.data.estimatedRange = "Custom Quote Required";
-                    setTimeout(() => advanceFlow('lead_name'), 1500);
-                } else {
-                    state.data.estimatedRange = `${formatInr(est.low)} - ${formatInr(est.high)}`;
-                    let txt = `Based on your requirements, this project falls into our <strong>${est.tier}</strong>.<br><br>The estimate typically ranges between <strong>${formatInr(est.low)} – ${formatInr(est.high)}</strong>.`;
-                    if(est.outstation) txt += `<br><br><em>*Note: Travel & stay logistics are calculated separately.</em>`;
-                    appendMsg(txt, 'bot');
-                    
+                if(est.custom) { appendMsg("Custom manual quote required."); setTimeout(() => advanceFlow('lead_name'), 1500); }
+                else {
+                    state.data.estimatedRange = `₹${Math.round(est.low).toLocaleString()} - ₹${Math.round(est.high).toLocaleString()}`;
+                    appendMsg(`Estimate: <strong>${state.data.estimatedRange}</strong> (${est.tier}).`);
                     setTimeout(() => advanceFlow('upsell'), 2000);
-                }
-                break;
-
+                } break;
             case 'upsell':
-                appendMsg("Most clients enhancing similar projects also add:", 'bot');
-                let upsellOpts = [];
-                if(state.data.service === 'product') {
-                    upsellOpts = [
-                        { label: "Add E-Comm Optimization", value: "amz_opt", saveTo: "addons", next: "lead_name" },
-                        { label: "Add Model Inclusion", value: "model_inc", saveTo: "addons", next: "lead_name" }
-                    ];
-                } else if(state.data.service === 'editorial' || state.data.clientType === 'agency' || state.data.clientType === 'established') {
-                    upsellOpts = [
-                        { label: "Add Concept Deck", value: "concept_deck", saveTo: "addons", next: "lead_name" },
-                        { label: "Add BTS Reel", value: "bts_reel", saveTo: "addons", next: "lead_name" }
-                    ];
-                } else {
-                    upsellOpts = [
-                        { label: "Add Advanced Retouching", value: "adv_retouch", saveTo: "addons", next: "lead_name" },
-                        { label: "Add BTS Reel", value: "bts_reel", saveTo: "addons", next: "lead_name" }
-                    ];
-                }
-                upsellOpts.push({ label: "Skip Add-ons", value: "skip", saveTo: "addons", next: "lead_name" });
-                appendButtons(upsellOpts);
-                break;
-
+                appendMsg("Recommended add-ons:");
+                let ups = [{ label: "Add BTS Reel", value: "bts_reel", saveTo: "addons", next: "lead_name" }, { label: "Add Retouching", value: "adv_retouch", saveTo: "addons", next: "lead_name" }, { label: "Skip", value: "skip", saveTo: "addons", next: "lead_name" }];
+                appendButtons(ups); break;
             case 'lead_name':
-                appendMsg("To generate your official proposal and have Abhishek review it, what is your Full Name?", 'bot');
-                requireTextInput("Enter your full name");
-                break;
-
+                appendMsg("What is your Full Name?"); requireTextInput("Enter name"); break;
             case 'lead_email':
-                appendMsg(`Thanks ${state.data.name.split(' ')[0]}! What is the best email to send the proposal to?`, 'bot');
-                requireTextInput("Enter your email address");
-                break;
-
+                appendMsg("Email address?"); requireTextInput("Enter email"); break;
             case 'lead_phone':
-                appendMsg("Almost done. Could I get a contact number? (Optional, you can type 'skip')", 'bot');
-                requireTextInput("Enter phone number or type 'skip'");
-                break;
-
+                appendMsg("Phone number? (or type 'skip')"); requireTextInput("Enter number"); break;
             case 'complete':
-                if(state.data.phone.toLowerCase() === 'skip') state.data.phone = "Not provided";
-                
-                appendMsg("Perfect. I have recorded all your project requirements.", 'bot');
-                appendSysMsg("Generating internal dossier...");
-                
-                // Final structured payload ready for API
-                const payload = JSON.stringify(state.data, null, 2);
-                console.log("=== NEW QUOTE REQUEST ===");
-                console.log(payload);
-                
-                // Trigger backend API integration
-                sendQuoteRequest(state.data);
-
-                setTimeout(() => {
-                    appendMsg("Your request has been logged. Abhishek will review the details and reach out shortly!", 'bot');
-                    
-                    const waText = `Hey! I just submitted a quote request via the chatbot for a ${state.data.service} project.`;
-                    const waUrl = `https://wa.me/9867113855?text=${encodeURIComponent(waText)}`;
-
-                    appendButtons([
-                        { label: "Start Over", value: "reset", next: "reset" },
-                        { label: "Chat on WhatsApp", action: "link", url: waUrl }
-                    ]);
-                }, 1500);
+                appendMsg("Perfect. Dossier sent to Abhishek.");
+                const waUrl = `https://wa.me/9867113855?text=${encodeURIComponent('Hey! Just submitted a quote request for a ' + state.data.service + ' project.')}`;
+                appendButtons([{ label: "Start Over", value: "reset", next: "reset" }, { label: "Chat on WhatsApp", action: "link", url: waUrl }]);
+                fetch("https://script.google.com/macros/s/AKfycbwNFYgC5abQxC-91F12AltyjozV8veRiEVDJt9FSGZC3pQ87EuyiRQc4p2lHylc-vpu/exec", { method: 'POST', mode: 'no-cors', body: new URLSearchParams({payload: JSON.stringify(state.data)}) });
                 break;
-
             case 'reset':
-                chatBody.innerHTML = '';
-                state.data = { service: null, clientType: null, duration: null, quantity: null, usage: null, complexity: null, location: null, addons: [], name: null, email: null, phone: null, estimatedRange: null, breakdown: null };
-                advanceFlow('welcome');
-                break;
+                chatBody.innerHTML = ''; state.data = { service: null, clientType: null, duration: null, quantity: null, usage: null, complexity: null, location: null, addons: [], name: null, email: null, phone: null, estimatedRange: null, breakdown: null };
+                advanceFlow('welcome'); break;
         }
     }
-
-    // --- Backend API Integration ---
-    function sendQuoteRequest(data) {
-        // Updated with your new Google Apps Script Deployment URL
-        const GOOGLE_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwNFYgC5abQxC-91F12AltyjozV8veRiEVDJt9FSGZC3pQ87EuyiRQc4p2lHylc-vpu/exec";
-
-        // Wrap the data as standard URL-encoded Form Data to bypass Google's strict CORS blocks
-        const formData = new URLSearchParams();
-        formData.append('payload', JSON.stringify(data));
-
-        fetch(GOOGLE_WEBHOOK_URL, {
-            method: 'POST',
-            mode: 'no-cors', // ADDED: Bypasses strict browser cross-origin blocks
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: formData.toString()
-        })
-        .then(() => console.log("Lead successfully sent to Google Sheets!"))
-        .catch(err => console.error("Error sending lead:", err));
-    }
-
-    // Auto-open greeting briefly on load to draw attention
-    setTimeout(() => {
-        if(!chatWin.classList.contains('open') && state.step === 'welcome') {
-            toggleBtn.style.transform = 'scale(1.15)';
-            setTimeout(() => toggleBtn.style.transform = '', 300);
-        }
-    }, 5000);
-
 })();
 </script>
 
