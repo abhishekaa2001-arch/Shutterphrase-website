@@ -487,29 +487,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const col2 = document.querySelector('.gallery-col.col-2');
     const col3 = document.querySelector('.gallery-col.col-3');
 
-    // ================= AUTO-REVEAL SCROLL LOGIC =================
-    // Only trigger once per user session
+    // ================= AUTO-REVEAL HERO SCROLL LOGIC =================
     const hasAutoScrolled = sessionStorage.getItem('shutterphrase_auto_scrolled');
     if (!hasAutoScrolled && heroSection) {
         let startTime = null;
         let isInterrupted = false;
-        const duration = 3500; // slow, premium feel
-        // targetScroll adjusted to stop where the full hero is revealed and button is visible
+        const duration = 3500;
         const targetScroll = heroSection.offsetHeight - window.innerHeight; 
 
         const stopAutoScroll = () => {
             if (isInterrupted) return;
             isInterrupted = true;
-            // Set flag so it doesn't trigger on refresh
             sessionStorage.setItem('shutterphrase_auto_scrolled', 'true');
-            // Remove listeners
             window.removeEventListener('wheel', stopAutoScroll);
             window.removeEventListener('touchstart', stopAutoScroll);
             window.removeEventListener('keydown', stopAutoScroll);
             window.removeEventListener('mousedown', stopAutoScroll);
         };
 
-        // If user manually interacts, stop auto-scroll immediately
         window.addEventListener('wheel', stopAutoScroll, { passive: true });
         window.addEventListener('touchstart', stopAutoScroll, { passive: true });
         window.addEventListener('keydown', stopAutoScroll, { passive: true });
@@ -520,12 +515,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!startTime) startTime = timestamp;
             const elapsed = timestamp - startTime;
             const progress = Math.min(elapsed / duration, 1);
-
-            // Easing: easeInOutQuad for premium smoothness
             const ease = progress < 0.5 ? 2 * progress * progress : 1 - Math.pow(-2 * progress + 2, 2) / 2;
-            
             window.scrollTo(0, targetScroll * ease);
-
             if (progress < 1) {
                 requestAnimationFrame(autoScrollStep);
             } else {
@@ -533,10 +524,72 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Brief delay for stable page load before starting
         setTimeout(() => {
             if (!isInterrupted) requestAnimationFrame(autoScrollStep);
         }, 800);
+    }
+
+    // ================= ✨ GALLERY AUTO-REVEAL LOGIC =================
+    const hasGalleryAutoScrolled = sessionStorage.getItem('shutterphrase_gallery_scrolled');
+    const browseHeader = document.getElementById('portfolio-start');
+    
+    if (!hasGalleryAutoScrolled && portSection && browseHeader) {
+        let gStartTime = null;
+        let isGInterrupted = false;
+        let isGAnimating = false; // To prevent double triggers
+        const gDuration = 5500; // Premium 5.5 second reveal
+
+        const stopGAutoScroll = () => {
+            if (isGInterrupted) return;
+            isGInterrupted = true;
+            isGAnimating = false;
+            sessionStorage.setItem('shutterphrase_gallery_scrolled', 'true');
+            window.removeEventListener('wheel', stopGAutoScroll);
+            window.removeEventListener('touchstart', stopGAutoScroll);
+            window.removeEventListener('keydown', stopGAutoScroll);
+            window.removeEventListener('mousedown', stopGAutoScroll);
+            window.removeEventListener('scroll', checkGalleryTrigger);
+        };
+
+        function checkGalleryTrigger() {
+            if (isGInterrupted || isGAnimating || sessionStorage.getItem('shutterphrase_gallery_scrolled')) return;
+
+            const headerRect = browseHeader.getBoundingClientRect();
+            // Start precisely when the header starts going ABOVE the viewable area (rect.top <= 0)
+            if (headerRect.top <= 0) {
+                isGAnimating = true;
+                
+                window.addEventListener('wheel', stopGAutoScroll, { passive: true });
+                window.addEventListener('touchstart', stopGAutoScroll, { passive: true });
+                window.addEventListener('keydown', stopGAutoScroll, { passive: true });
+                window.addEventListener('mousedown', stopGAutoScroll, { passive: true });
+
+                const startY = window.pageYOffset;
+                // Target: bottom of the portfolio scroll section to reveal all gallery animations
+                const targetY = portSection.offsetTop + portSection.offsetHeight - window.innerHeight;
+
+                function gAutoScrollStep(timestamp) {
+                    if (isGInterrupted) return;
+                    if (!gStartTime) gStartTime = timestamp;
+                    const elapsed = timestamp - gStartTime;
+                    const progress = Math.min(elapsed / gDuration, 1);
+                    // easeInOutQuad curve
+                    const ease = progress < 0.5 ? 2 * progress * progress : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+                    
+                    window.scrollTo(0, startY + (targetY - startY) * ease);
+
+                    if (progress < 1) {
+                        requestAnimationFrame(gAutoScrollStep);
+                    } else {
+                        stopGAutoScroll();
+                    }
+                }
+                requestAnimationFrame(gAutoScrollStep);
+            }
+        }
+
+        // Listen for the scroll to reach the header trigger point
+        window.addEventListener('scroll', checkGalleryTrigger, { passive: true });
     }
 
     function handleScrollAnimations() {
@@ -563,7 +616,6 @@ document.addEventListener('DOMContentLoaded', () => {
             scrollVideo.style.transform = `scale(${scale}) translateZ(0)`;
 
             let pBtn = Math.min(progress / 0.85, 1);
-            // Button starts 80px lower and moves up into place
             scrollBtnWrapper.style.transform = `translate3d(0, ${80 - (80 * pBtn)}px, 0)`;
             scrollBtnWrapper.style.opacity = pBtn;
             scrollBtnWrapper.style.filter = `blur(${10 - (10 * pBtn)}px)`;
