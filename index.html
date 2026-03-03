@@ -487,6 +487,57 @@ document.addEventListener('DOMContentLoaded', () => {
     const col2 = document.querySelector('.gallery-col.col-2');
     const col3 = document.querySelector('.gallery-col.col-3');
 
+    // ================= AUTO-REVEAL SCROLL LOGIC =================
+    // Only trigger once per user session
+    const hasAutoScrolled = sessionStorage.getItem('shutterphrase_auto_scrolled');
+    if (!hasAutoScrolled && heroSection) {
+        let startTime = null;
+        let isInterrupted = false;
+        const duration = 3500; // slow, premium feel
+        const targetScroll = heroSection.offsetHeight; // reveals the full hero section
+
+        const stopAutoScroll = () => {
+            if (isInterrupted) return;
+            isInterrupted = true;
+            // Set flag so it doesn't trigger on refresh
+            sessionStorage.setItem('shutterphrase_auto_scrolled', 'true');
+            // Remove listeners
+            window.removeEventListener('wheel', stopAutoScroll);
+            window.removeEventListener('touchstart', stopAutoScroll);
+            window.removeEventListener('keydown', stopAutoScroll);
+            window.removeEventListener('mousedown', stopAutoScroll);
+        };
+
+        // If user manually interacts, stop auto-scroll immediately
+        window.addEventListener('wheel', stopAutoScroll, { passive: true });
+        window.addEventListener('touchstart', stopAutoScroll, { passive: true });
+        window.addEventListener('keydown', stopAutoScroll, { passive: true });
+        window.addEventListener('mousedown', stopAutoScroll, { passive: true });
+
+        function autoScrollStep(timestamp) {
+            if (isInterrupted) return;
+            if (!startTime) startTime = timestamp;
+            const elapsed = timestamp - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+
+            // Easing: easeInOutQuad for premium smoothness
+            const ease = progress < 0.5 ? 2 * progress * progress : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+            
+            window.scrollTo(0, targetScroll * ease);
+
+            if (progress < 1) {
+                requestAnimationFrame(autoScrollStep);
+            } else {
+                stopAutoScroll();
+            }
+        }
+
+        // Brief delay for stable page load before starting
+        setTimeout(() => {
+            if (!isInterrupted) requestAnimationFrame(autoScrollStep);
+        }, 800);
+    }
+
     function handleScrollAnimations() {
         if(heroSection) {
             const rect = heroSection.getBoundingClientRect();
