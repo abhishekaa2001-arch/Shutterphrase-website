@@ -218,7 +218,7 @@ nav a:hover { opacity: 1; color: #ffdf85; text-shadow: 0 0 15px rgba(245, 166, 3
 
 .gallery-img { width: 100%; height: auto; aspect-ratio: 4/5; object-fit: cover; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); cursor: pointer; transition: transform 0.4s ease, filter 0.4s ease, box-shadow 0.4s ease; transform: translateZ(0); }
 @media (min-width: 768px) { .gallery-img { border-radius: 12px; } }
-@media (pointer: fine) { .gallery-img:hover { transform: scale(1.03); filter: brightness(1.1); box-shadow: 0 15px 40px rgba(255, 255, 255, 0.1); } }
+@media (pointer: fine) { .gallery-img:hover { transform: scale(1.03); filter: brightness(1.1); box-shadow: 0 15px 40px rgba(255,255,255,0.1); } }
 
 .reveal { opacity: 0; transform: translateY(40px); transition: opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
 .reveal.active { opacity: 1; transform: translateY(0); }
@@ -231,7 +231,7 @@ nav a:hover { opacity: 1; color: #ffdf85; text-shadow: 0 0 15px rgba(245, 166, 3
 .lb-btn { position: absolute; font-size: 30px; padding: 10px; min-width: 50px; min-height: 50px; opacity: .7; transition: .3s; color: white; background: transparent; border: none; display: flex; align-items: center; justify-content: center; z-index: 1001; }
 @media (min-width: 768px) { .lb-btn { font-size: 40px; padding: 18px; opacity: .6; } }
 .lb-btn:hover { opacity: 1; transform: scale(1.1); color: #ffdf85; text-shadow: 0 0 15px rgba(245, 166, 35, 0.5); }
-#prev { left: 5px; top: 50%; transform: translateY(-50%); } #next { right: 5px; top: 50%; transform: translateY(-50%); } #close { top: 15px; right: 15px; font-size: 40px; background: rgba(0,0,0,0.5); border-radius: 50%; width: 45px; height: 45px; border: 1px solid rgba(255, 255, 255, 0.1); }
+#prev { left: 5px; top: 50%; transform: translateY(-50%); } #next { right: 5px; top: 50%; transform: translateY(-50%); } #close { top: 15px; right: 15px; font-size: 40px; background: rgba(0,0,0,0.5); border-radius: 50%; width: 45px; height: 45px; border: 1px solid rgba(255,255,255,0.1); }
 @media (min-width: 768px) { #prev { left: 30px; transform: none; } #next { right: 30px; transform: none; } #close { top: 30px; right: 30px; font-size: 50px; background: transparent; border: none; } }
 
 /* ================= PREMIUM AI CHATBOT UI ================= */
@@ -550,55 +550,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
     window.dispatchEvent(new Event('scroll'));
 
-    // ================= CINEMATIC AUTO-REVEAL ON FIRST LOAD =================
-    function initCinematicReveal() {
-        if (sessionStorage.getItem('sp_hero_revealed_vfinal')) return;
-
-        const heroRect = heroSection.getBoundingClientRect();
-        const scrollRange = heroRect.height - window.innerHeight;
-        const duration = 5500; // Premium slow duration
-        let startTimestamp = null;
-        let isAutoScrolling = true;
-
-        const easeInOutQuad = (t) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-
-        const handleInteraction = () => {
-            if (!isAutoScrolling) return;
-            isAutoScrolling = false;
-            window.removeEventListener('wheel', handleInteraction);
-            window.removeEventListener('touchstart', handleInteraction);
-            window.removeEventListener('keydown', handleInteraction);
-            window.removeEventListener('mousedown', handleInteraction);
-            sessionStorage.setItem('sp_hero_revealed_vfinal', 'true');
-        };
-
-        window.addEventListener('wheel', handleInteraction, { passive: true });
-        window.addEventListener('touchstart', handleInteraction, { passive: true });
-        window.addEventListener('keydown', handleInteraction, { passive: true });
-        window.addEventListener('mousedown', handleInteraction, { passive: true });
-
-        const scrollStep = (timestamp) => {
-            if (!isAutoScrolling) return;
-            if (!startTimestamp) startTimestamp = timestamp;
-            const elapsed = timestamp - startTimestamp;
-            const progress = Math.min(elapsed / duration, 1);
-
-            if (progress < 1) {
-                const scrollPos = scrollRange * easeInOutQuad(progress);
-                window.scrollTo(0, scrollPos);
-                requestAnimationFrame(scrollStep);
-            } else {
-                window.scrollTo(0, scrollRange);
-                handleInteraction();
-            }
-        };
-
-        setTimeout(() => {
-            if (isAutoScrolling) requestAnimationFrame(scrollStep);
-        }, 1200);
-    }
-    initCinematicReveal();
-
     // ================= 3D FLATLAY SHOWREEL ANIMATION =================
     const srObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -657,6 +608,14 @@ document.addEventListener('DOMContentLoaded', () => {
         col2.innerHTML = col2Data.map((id, i) => createImgHTML(id, i + col1Data.length)).join('');
         col3.innerHTML = col3Data.map((id, i) => createImgHTML(id, i + col1Data.length + col2Data.length)).join('');
     }
+
+    // ================= SCROLL REVEAL OBSERVER =================
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) { entry.target.classList.add('active'); observer.unobserve(entry.target); }
+        });
+    }, { rootMargin: '0px 0px -50px 0px', threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
     // ================= VIEWFINDER CURSOR PHYSICS & MAGNET ENVELOPING =================
     if (window.matchMedia("(pointer: fine)").matches) {
@@ -743,13 +702,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ================= LIGHTBOX LOGIC =================
-    let current = 0; let galleryArr = [];
+    let current = 0; let gallery = [];
     const lightbox = document.getElementById("lightbox");
     const lbImg = document.getElementById("lbImg");
 
     document.getElementById('animated-gallery').addEventListener('click', (e) => {
         if(e.target.classList.contains('gallery-img')) {
-            galleryArr = allImages;
+            gallery = allImages;
             current = parseInt(e.target.dataset.index);
             update();
             lightbox.classList.add("active");
@@ -757,9 +716,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    function update() { lbImg.src = img(galleryArr[current]); }
-    function next() { current = (current + 1) % galleryArr.length; update(); }
-    function prev() { current = (current - 1 + galleryArr.length) % galleryArr.length; update(); }
+    function update() { lbImg.src = img(gallery[current]); }
+    function next() { current = (current + 1) % gallery.length; update(); }
+    function prev() { current = (current - 1 + gallery.length) % gallery.length; update(); }
     function closeLightbox() { lightbox.classList.remove("active"); document.body.style.overflow = ''; lbImg.src = ''; }
     
     document.getElementById("next").onclick = e => { e.stopPropagation(); next(); };
