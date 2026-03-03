@@ -220,15 +220,11 @@ nav a:hover { opacity: 1; color: #ffdf85; text-shadow: 0 0 15px rgba(245, 166, 3
     position: fixed; bottom: 30px; right: 30px; z-index: 9999; font-family: Inter, sans-serif;
 }
 #sp-chat-toggle {
-    width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #f5a623, #d48300);
-    border: none; cursor: pointer; box-shadow: 0 10px 30px rgba(245, 166, 35, 0.3); display: flex; align-items: center; justify-content: center;
-    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); pointer-events: auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
 }
-#sp-chat-toggle:hover { transform: scale(1.1); }
-#sp-chat-toggle svg { width: 28px; height: 28px; fill: #050505; }
 
 #sp-chat-window {
-    position: absolute; bottom: 80px; right: 0; width: calc(100vw - 40px); max-width: 380px; height: 600px; max-height: calc(100vh - 120px);
+    position: absolute; bottom: 70px; right: 0; width: calc(100vw - 40px); max-width: 380px; height: 600px; max-height: calc(100vh - 120px);
     background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
     border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.8);
     display: flex; flex-direction: column; overflow: hidden; transform-origin: bottom right;
@@ -429,8 +425,9 @@ footer { text-align: center; padding: 40px 20px 60px 20px; opacity: .4; letter-s
 
 <!-- ================= PREMIUM AI CHATBOT HTML ================= -->
 <div id="sp-chat-widget">
-    <button id="sp-chat-toggle" aria-label="Open Chatbot">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+    <button id="sp-chat-toggle" class="cta-btn" style="gap: 10px;" aria-label="Open Chatbot">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        Chat With Us
     </button>
     
     <div id="sp-chat-window">
@@ -810,7 +807,7 @@ const ShutterPhraseChatbot = (function() {
     let state = {
         step: 'welcome',
         data: {
-            service: null, clientType: null, duration: null, quantity: null, usage: null, complexity: null, location: null, addons: [], name: null, email: null, phone: null, estimatedRange: null
+            service: null, clientType: null, duration: null, quantity: null, usage: null, complexity: null, location: null, addons: [], name: null, email: null, phone: null, estimatedRange: null, breakdown: null
         }
     };
 
@@ -1042,6 +1039,11 @@ const ShutterPhraseChatbot = (function() {
         // 8% invisible operational buffer
         let totalWithBuffer = (subtotal + travelBuffer) * 1.08;
 
+        // Formulate Breakdown String for Google Sheets
+        let clientMult = state.data.clientType === 'agency' ? 1.1 : 1;
+        let baseUsageMult = pricingConfig.usage[state.data.usage] || 1;
+        state.data.breakdown = `Base:+₹${base.toLocaleString('en-IN')}\nClient:+x${clientMult}\nDuration:+x${durMult}\nUsage:+x${baseUsageMult}\nOp.+Buffer:++8%\nTarget:+₹${Math.round(totalWithBuffer).toLocaleString('en-IN')}`;
+
         // Apply Addons
         let finalEst = totalWithBuffer;
         state.data.addons.forEach(addId => {
@@ -1242,7 +1244,7 @@ const ShutterPhraseChatbot = (function() {
 
             case 'reset':
                 chatBody.innerHTML = '';
-                state.data = { service: null, clientType: null, duration: null, quantity: null, usage: null, complexity: null, location: null, addons: [], name: null, email: null, phone: null, estimatedRange: null };
+                state.data = { service: null, clientType: null, duration: null, quantity: null, usage: null, complexity: null, location: null, addons: [], name: null, email: null, phone: null, estimatedRange: null, breakdown: null };
                 advanceFlow('welcome');
                 break;
         }
@@ -1250,7 +1252,8 @@ const ShutterPhraseChatbot = (function() {
 
     // --- Backend API Integration ---
     function sendQuoteRequest(data) {
-        const GOOGLE_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbx6__cs93epHkDX9keeIaxtjDwM0qpck2n5H2ItxV5e8DK2dZVIClM-wAAiFBqEM6Kk/exec";
+        // Updated with your new Google Apps Script Deployment URL
+        const GOOGLE_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwNFYgC5abQxC-91F12AltyjozV8veRiEVDJt9FSGZC3pQ87EuyiRQc4p2lHylc-vpu/exec";
 
         // Wrap the data as standard URL-encoded Form Data to bypass Google's strict CORS blocks
         const formData = new URLSearchParams();
