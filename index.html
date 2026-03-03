@@ -151,7 +151,7 @@ nav a:hover { opacity: 1; color: #ffdf85; text-shadow: 0 0 15px rgba(245, 166, 3
 @media (min-width: 768px) { .scroll-video-container { height: 65dvh; max-height: 650px; } }
 .scroll-video-container video { width: 100%; height: 100%; object-fit: cover; transform: scale(0.7); will-change: transform; }
 
-.scroll-btn-wrapper { margin-top: 2rem; will-change: transform, opacity, filter; opacity: 0; filter: blur(10px); transform: translateY(-120px); }
+.scroll-btn-wrapper { margin-top: 6rem; will-change: transform, opacity, filter; opacity: 0; filter: blur(10px); transform: translateY(80px); }
 
 /* ================= LUXURY GRADIENT BUTTONS ================= */
 .hero-btn, .cta-btn {
@@ -494,7 +494,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let startTime = null;
         let isInterrupted = false;
         const duration = 3500; // slow, premium feel
-        const targetScroll = heroSection.offsetHeight; // reveals the full hero section
+        // targetScroll adjusted to stop where the full hero is revealed and button is visible
+        const targetScroll = heroSection.offsetHeight - window.innerHeight; 
 
         const stopAutoScroll = () => {
             if (isInterrupted) return;
@@ -561,8 +562,9 @@ document.addEventListener('DOMContentLoaded', () => {
             let scale = 0.7 + (0.3 * pAnim);
             scrollVideo.style.transform = `scale(${scale}) translateZ(0)`;
 
-            let pBtn = Math.min(progress / 0.7, 1);
-            scrollBtnWrapper.style.transform = `translate3d(0, ${-120 + (120 * pBtn)}px, 0)`;
+            let pBtn = Math.min(progress / 0.85, 1);
+            // Button starts 80px lower and moves up into place
+            scrollBtnWrapper.style.transform = `translate3d(0, ${80 - (80 * pBtn)}px, 0)`;
             scrollBtnWrapper.style.opacity = pBtn;
             scrollBtnWrapper.style.filter = `blur(${10 - (10 * pBtn)}px)`;
         }
