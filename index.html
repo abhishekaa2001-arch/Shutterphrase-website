@@ -9,9 +9,8 @@
 <meta name="description" content="ShutterPhrase provides high-end editorial, portrait, sports, and commercial photography across Mumbai, Pune, Lonavala, Nashik, and Alibaug. Book your premium session today.">
 <meta name="keywords" content="Photographer Mumbai, Wedding Photographer Pune, Editorial Photography Maharashtra, Alibaug photoshoots, Lonavala pre-wedding">
 
-<!-- Favicon (Browser Tab Logo) -->
+<!-- Favicon -->
 <link rel="icon" href="https://lh3.googleusercontent.com/d/1oBEoO4rF3oUw0M4DH6Z7QKmWl-JivlFG=s200" type="image/png">
-
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
@@ -21,21 +20,11 @@
     --grid-gap: 24px;
     --cursor-color: rgba(255, 223, 133, 0.9);
 }
-
 @media (min-width: 768px) {
-    :root {
-        --pad-x: 8%;
-        --pad-y: 100px;
-        --grid-gap: 40px;
-    }
+    :root { --pad-x: 8%; --pad-y: 100px; --grid-gap: 40px; }
 }
-
 @media (min-width: 1024px) {
-    :root {
-        --pad-x: 10%;
-        --pad-y: 130px;
-        --grid-gap: 50px;
-    }
+    :root { --pad-x: 10%; --pad-y: 130px; --grid-gap: 50px; }
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -47,14 +36,13 @@ body {
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     overflow-x: hidden;
-    cursor: none; /* Hide default cursor for viewfinder */
+    cursor: none;
 }
 
-/* ================= AMBIENT LUXURY GLOW (BOKEH EFFECT) ================= */
 .ambient-glow {
     position: fixed; top: 0; left: 0; right: 0; bottom: 0;
     pointer-events: none; z-index: 0;
-    background: 
+    background:
         radial-gradient(circle at 15% 25%, rgba(255,255,255,0.06) 0%, rgba(245,166,35,0.04) 15%, rgba(255,223,133,0.02) 30%, transparent 45%),
         radial-gradient(circle at 85% 15%, rgba(255,255,255,0.05) 0%, rgba(245,166,35,0.03) 12%, rgba(255,223,133,0.015) 25%, transparent 40%),
         radial-gradient(circle at 75% 75%, rgba(255,255,255,0.07) 0%, rgba(245,166,35,0.05) 18%, rgba(255,223,133,0.02) 35%, transparent 55%),
@@ -63,29 +51,28 @@ body {
     mix-blend-mode: screen;
 }
 
-.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
 
 section { padding: var(--pad-y) var(--pad-x); max-width: 1800px; margin: 0 auto; position: relative; z-index: 10; }
 
-h1, h2 { font-family: "Cormorant Garamond", serif; letter-spacing: .5px; line-height: 1.1; text-shadow: 0 0 40px rgba(255, 255, 255, 0.15); }
+h1, h2 { font-family: "Cormorant Garamond", serif; letter-spacing: .5px; line-height: 1.1; text-shadow: 0 0 40px rgba(255,255,255,0.15); }
 h2 { font-size: clamp(2rem, 5vw, 3.5rem); }
 
 /* ================= CUSTOM VIEWFINDER CURSOR ================= */
-#cursor { display: none; } 
+#cursor { display: none; }
 @media (pointer: fine) {
     body, a, button, .gallery-img, iframe, input, textarea { cursor: none !important; }
     #cursor {
         position: fixed; top: 0; left: 0; width: 32px; height: 32px;
-        background: transparent; border: 1px solid rgba(255, 255, 255, 0.15);
+        background: transparent; border: 1px solid rgba(255,255,255,0.15);
         pointer-events: none; z-index: 10000;
         display: flex; align-items: center; justify-content: center;
-        transition: 
-            width 0.35s cubic-bezier(0.23, 1, 0.32, 1), 
-            height 0.35s cubic-bezier(0.23, 1, 0.32, 1), 
-            border-radius 0.35s cubic-bezier(0.23, 1, 0.32, 1), 
+        transition:
+            width 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+            height 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+            border-radius 0.35s cubic-bezier(0.23, 1, 0.32, 1),
             border-color 0.4s, background 0.4s;
     }
-    /* Viewfinder Corners */
     #cursor::before, #cursor::after {
         content: ""; position: absolute; width: 100%; height: 100%;
         border: 1.5px solid var(--cursor-color);
@@ -97,7 +84,7 @@ h2 { font-size: clamp(2rem, 5vw, 3.5rem); }
     #cursor::after {
         clip-path: polygon(100% 0, 100% 10px, calc(100% - 1.5px) 10px, calc(100% - 1.5px) 1.5px, calc(100% - 10px) 1.5px, calc(100% - 10px) 0, 100% 0, 0 100%, 10px 100%, 10px calc(100% - 1.5px), 1.5px calc(100% - 1.5px), 1.5px calc(100% - 10px), 0 calc(100% - 10px), 0 100%);
     }
-    #cursor.hover-envelope { border-color: var(--cursor-color); background: rgba(245, 166, 35, 0.05); }
+    #cursor.hover-envelope { border-color: var(--cursor-color); background: rgba(245,166,35,0.05); }
     #cursor.hover-envelope::before, #cursor.hover-envelope::after { opacity: 0; }
     #cursor.hover-card { width: 80px; height: 80px; border-color: #fff; }
     #cursor.hover-card::before, #cursor.hover-card::after { width: 120%; height: 120%; opacity: 0.5; }
@@ -119,17 +106,16 @@ nav img { height: 24px; opacity: .9; transition: 0.3s; filter: drop-shadow(0px 2
 nav div { display: flex; gap: 25px; flex-wrap: wrap; justify-content: center; }
 @media (min-width: 768px) { nav div { gap: 35px; } }
 nav a { color: white; text-decoration: none; font-size: .75rem; letter-spacing: 2px; text-transform: uppercase; opacity: .7; transition: .3s; padding: 8px 12px; border-radius: 4px; }
-nav a:hover { opacity: 1; color: #ffdf85; text-shadow: 0 0 15px rgba(245, 166, 35, 0.4); }
+nav a:hover { opacity: 1; color: #ffdf85; text-shadow: 0 0 15px rgba(245,166,35,0.4); }
 
-
-/* ================= HERO ANIMATED SCROLL ================= */
+/* ================= HERO SCROLL ================= */
 .scroll-section { height: 180dvh; position: relative; width: 100%; z-index: 10; }
 @media (min-width: 768px) { .scroll-section { height: 220dvh; } }
 
 .sticky-wrapper {
-    position: sticky; top: 0; height: 100dvh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden;
-    background-color: #050505;
-    background-image: 
+    position: sticky; top: 0; height: 100dvh; width: 100%; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; overflow: hidden; background-color: #050505;
+    background-image:
         radial-gradient(circle at 40% 30%, rgba(255,255,255,0.06) 0%, rgba(245,166,35,0.04) 20%, rgba(255,223,133,0.02) 40%, transparent 60%),
         radial-gradient(circle at 60% 60%, rgba(255,255,255,0.04) 0%, rgba(245,166,35,0.02) 15%, rgba(255,223,133,0.01) 30%, transparent 50%);
     padding: 0 20px;
@@ -137,15 +123,15 @@ nav a:hover { opacity: 1; color: #ffdf85; text-shadow: 0 0 15px rgba(245, 166, 3
 
 .scroll-text {
     text-align: center; margin-bottom: 2rem; will-change: transform, opacity, filter;
-    transform: translateZ(0); opacity: 0; filter: blur(10px); transform: translateY(80px);
+    opacity: 0; filter: blur(10px); transform: translateY(80px);
 }
 .scroll-text h1 { font-size: clamp(2.5rem, 8vw, 6rem); margin-bottom: 1rem; }
 .scroll-text p { font-size: clamp(0.95rem, 2vw, 1.2rem); opacity: 0.8; max-width: 500px; margin: 0 auto; text-shadow: 0 0 20px rgba(255,255,255,0.1); }
 
 .scroll-video-container {
-    position: relative; height: 50dvh; max-height: 500px; aspect-ratio: 9 / 16; max-width: 90vw; 
+    position: relative; height: 50dvh; max-height: 500px; aspect-ratio: 9/16; max-width: 90vw;
     display: flex; justify-content: center; pointer-events: none;
-    clip-path: inset(35% 40% round 1000px); -webkit-clip-path: inset(35% 40% round 1000px); 
+    clip-path: inset(35% 40% round 1000px); -webkit-clip-path: inset(35% 40% round 1000px);
     will-change: clip-path; transform: translateZ(0);
 }
 @media (min-width: 768px) { .scroll-video-container { height: 65dvh; max-height: 650px; } }
@@ -153,16 +139,17 @@ nav a:hover { opacity: 1; color: #ffdf85; text-shadow: 0 0 15px rgba(245, 166, 3
 
 .scroll-btn-wrapper { margin-top: 6rem; will-change: transform, opacity, filter; opacity: 0; filter: blur(10px); transform: translateY(80px); }
 
-/* ================= LUXURY GRADIENT BUTTONS ================= */
+/* ================= BUTTONS ================= */
 .hero-btn, .cta-btn {
-    position: relative; background: linear-gradient(#050505, #050505) padding-box, linear-gradient(135deg, #f5a623, #ffdf85, #d48300) border-box;
-    border: 1px solid transparent; padding: 14px 32px; border-radius: 50px; color: white; 
-    font-family: Inter, sans-serif; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; 
-    cursor: pointer; transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s, color 0.4s; 
-    pointer-events: auto; box-shadow: 0 4px 20px rgba(245, 166, 35, 0.15); text-decoration: none;
+    position: relative;
+    background: linear-gradient(#050505, #050505) padding-box, linear-gradient(135deg, #f5a623, #ffdf85, #d48300) border-box;
+    border: 1px solid transparent; padding: 14px 32px; border-radius: 50px; color: white;
+    font-family: Inter, sans-serif; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;
+    cursor: pointer; transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s, color 0.4s;
+    pointer-events: auto; box-shadow: 0 4px 20px rgba(245,166,35,0.15); text-decoration: none;
     display: inline-flex; align-items: center; justify-content: center;
 }
-.hero-btn:hover, .cta-btn:hover { transform: scale(1.05); box-shadow: 0 8px 30px rgba(245, 166, 35, 0.35); color: #ffdf85; }
+.hero-btn:hover, .cta-btn:hover { transform: scale(1.05); box-shadow: 0 8px 30px rgba(245,166,35,0.35); color: #ffdf85; }
 
 /* ================= CATEGORY FILTERS ================= */
 .category-nav { margin-top: 30px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; padding: 0 15px; }
@@ -172,7 +159,7 @@ nav a:hover { opacity: 1; color: #ffdf85; text-shadow: 0 0 15px rgba(245, 166, 3
     text-transform: uppercase; cursor: pointer; transition: 0.3s; backdrop-filter: blur(5px); pointer-events: auto;
 }
 .cat-btn:hover { background: rgba(255,255,255,0.1); color: white; }
-.cat-btn.active { background: rgba(245, 166, 35, 0.15); border-color: rgba(245, 166, 35, 0.5); color: #ffdf85; box-shadow: 0 0 15px rgba(245, 166, 35, 0.2); }
+.cat-btn.active { background: rgba(245,166,35,0.15); border-color: rgba(245,166,35,0.5); color: #ffdf85; box-shadow: 0 0 15px rgba(245,166,35,0.2); }
 
 .category-info-box { margin-top: 25px; min-height: 90px; transition: opacity 0.3s ease, transform 0.3s ease; padding: 0 20px; max-width: 600px; margin-left: auto; margin-right: auto; }
 .category-info-box h4 { font-family: "Cormorant Garamond", serif; font-size: 1.5rem; color: #ffdf85; margin-bottom: 8px; font-style: italic; }
@@ -180,7 +167,7 @@ nav a:hover { opacity: 1; color: #ffdf85; text-shadow: 0 0 15px rgba(245, 166, 3
 .cat-price { display: inline-block; margin-top: 12px; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; padding: 5px 14px; background: rgba(255,255,255,0.05); border-radius: 6px; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
 
 /* ================= SHOWREEL ================= */
-.swipe-hint { display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: rgba(255, 255, 255, 0.6); text-transform: uppercase; letter-spacing: 2px; margin-bottom: -15px; margin-top: -20px; gap: 8px; animation: pulse 2s infinite; }
+.swipe-hint { display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 2px; margin-bottom: -15px; margin-top: -20px; gap: 8px; animation: pulse 2s infinite; }
 @keyframes pulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; transform: translateX(3px); } }
 @media (min-width: 768px) { .swipe-hint { display: none; } }
 
@@ -190,7 +177,7 @@ nav a:hover { opacity: 1; color: #ffdf85; text-shadow: 0 0 15px rgba(245, 166, 3
 @media (min-width: 1024px) { .showreel-wrapper { gap: 70px; } }
 
 .showreel-frame { width: min(75vw, 260px); flex: 0 0 auto; scroll-snap-align: center; }
-.showreel-inner { position: relative; width: 100%; aspect-ratio: 9 / 16; border-radius: 24px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,.6); background: #111; clip-path: inset(0 round 24px); -webkit-clip-path: inset(0 round 24px); transform-origin: bottom center; transform: translateY(150px) rotateX(65deg) scale(0.8); opacity: 0; transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 1.2s ease, box-shadow 0.6s ease; will-change: transform, opacity; }
+.showreel-inner { position: relative; width: 100%; aspect-ratio: 9/16; border-radius: 24px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,.6); background: #111; clip-path: inset(0 round 24px); -webkit-clip-path: inset(0 round 24px); transform-origin: bottom center; transform: translateY(150px) rotateX(65deg) scale(0.8); opacity: 0; transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 1.2s ease, box-shadow 0.6s ease; will-change: transform, opacity; }
 .showreel-inner.erect { transform: translateY(0) rotateX(0deg) scale(1); opacity: 1; }
 @media (min-width: 768px) { .showreel-inner.erect { box-shadow: 0 35px 90px rgba(0,0,0,.7); } }
 @media(hover: hover) { .showreel-inner.erect:not(:fullscreen):hover { transform: translateY(-12px); box-shadow: 0 40px 100px rgba(255,255,255,0.05); } }
@@ -201,12 +188,11 @@ nav a:hover { opacity: 1; color: #ffdf85; text-shadow: 0 0 15px rgba(245, 166, 3
 
 .mute-btn, .fs-btn { position: absolute; width: 38px; height: 38px; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; color: white; z-index: 10; cursor: pointer; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transition: 0.4s; }
 .mute-btn { bottom: 15px; right: 15px; } .fs-btn { top: 15px; right: 15px; }
-.mute-btn:hover, .fs-btn:hover { background: rgba(20,20,20,0.9); border-color: #f5a623; box-shadow: 0 0 15px rgba(245, 166, 35, 0.4); color: #f5a623; transform: scale(1.1); }
+.mute-btn:hover, .fs-btn:hover { background: rgba(20,20,20,0.9); border-color: #f5a623; box-shadow: 0 0 15px rgba(245,166,35,0.4); color: #f5a623; transform: scale(1.1); }
 
-
-/* ================= 3D ANIMATED PORTFOLIO GALLERY ================= */
+/* ================= 3D PORTFOLIO GALLERY ================= */
 .portfolio-scroll-section { height: 220dvh; position: relative; width: 100%; margin-top: 80px; z-index: 10; }
-@media (min-width: 768px) { .portfolio-scroll-section { height: 350dvh; } } 
+@media (min-width: 768px) { .portfolio-scroll-section { height: 350dvh; } }
 .portfolio-sticky { position: sticky; top: 0; height: 100dvh; width: 100%; overflow: hidden; perspective: 1000px; perspective-origin: center top; display: flex; justify-content: center; align-items: center; }
 .gallery-glow { pointer-events: none; position: absolute; z-index: 0; height: 100dvh; width: 100%; background: radial-gradient(circle at 25% 45%, rgba(255,255,255,0.08) 0%, rgba(245,166,35,0.06) 20%, rgba(255,223,133,0.03) 40%, transparent 60%), radial-gradient(circle at 75% 55%, rgba(255,255,255,0.07) 0%, rgba(245,166,35,0.05) 15%, rgba(255,223,133,0.02) 35%, transparent 55%); filter: blur(45px); mix-blend-mode: screen; }
 
@@ -230,69 +216,62 @@ nav a:hover { opacity: 1; color: #ffdf85; text-shadow: 0 0 15px rgba(245, 166, 3
 @media (min-width: 768px) { .lb-image { max-width: 90%; max-height: 90vh; border-radius: 18px; } }
 .lb-btn { position: absolute; font-size: 30px; padding: 10px; min-width: 50px; min-height: 50px; opacity: .7; transition: .3s; color: white; background: transparent; border: none; display: flex; align-items: center; justify-content: center; z-index: 1001; }
 @media (min-width: 768px) { .lb-btn { font-size: 40px; padding: 18px; opacity: .6; } }
-.lb-btn:hover { opacity: 1; transform: scale(1.1); color: #ffdf85; text-shadow: 0 0 15px rgba(245, 166, 35, 0.5); }
-#prev { left: 5px; top: 50%; transform: translateY(-50%); } #next { right: 5px; top: 50%; transform: translateY(-50%); } #close { top: 15px; right: 15px; font-size: 40px; background: rgba(0,0,0,0.5); border-radius: 50%; width: 45px; height: 45px; border: 1px solid rgba(255,255,255,0.1); }
+.lb-btn:hover { opacity: 1; transform: scale(1.1); color: #ffdf85; text-shadow: 0 0 15px rgba(245,166,35,0.5); }
+#prev { left: 5px; top: 50%; transform: translateY(-50%); } #next { right: 5px; top: 50%; transform: translateY(-50%); }
+#close { top: 15px; right: 15px; font-size: 40px; background: rgba(0,0,0,0.5); border-radius: 50%; width: 45px; height: 45px; border: 1px solid rgba(255,255,255,0.1); }
 @media (min-width: 768px) { #prev { left: 30px; transform: none; } #next { right: 30px; transform: none; } #close { top: 30px; right: 30px; font-size: 50px; background: transparent; border: none; } }
 
-/* ================= PREMIUM AI CHATBOT UI ================= */
-#sp-chat-widget {
-    position: fixed; bottom: 30px; right: 30px; z-index: 9999; font-family: Inter, sans-serif;
-}
-#sp-chat-toggle {
-    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-}
+/* ================= CHATBOT UI ================= */
+#sp-chat-widget { position: fixed; bottom: 30px; right: 30px; z-index: 9999; font-family: Inter, sans-serif; }
+#sp-chat-toggle { box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
 
 #sp-chat-window {
-    position: absolute; bottom: 70px; right: 0; width: calc(100vw - 40px); max-width: 380px; height: 600px; max-height: calc(100vh - 120px);
-    background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-    border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+    position: absolute; bottom: 70px; right: 0; width: calc(100vw - 40px); max-width: 400px; height: 640px; max-height: calc(100vh - 120px);
+    background: rgba(15,15,15,0.88); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.8);
     display: flex; flex-direction: column; overflow: hidden; transform-origin: bottom right;
     transition: opacity 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
     opacity: 0; transform: scale(0.8) translateY(20px); pointer-events: none;
 }
 #sp-chat-window.open { opacity: 1; transform: scale(1) translateY(0); pointer-events: auto; }
 
-.sp-chat-header {
-    padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center;
-}
+.sp-chat-header { padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; }
 .sp-chat-header div { display: flex; flex-direction: column; }
 .sp-chat-title { font-family: "Cormorant Garamond", serif; font-size: 1.3rem; color: #ffdf85; line-height: 1; }
 .sp-chat-subtitle { font-size: 0.7rem; color: rgba(255,255,255,0.5); letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; }
 .sp-chat-close { background: none; border: none; color: rgba(255,255,255,0.5); cursor: pointer; font-size: 24px; transition: 0.3s; line-height: 1; padding: 0; }
 .sp-chat-close:hover { color: white; transform: rotate(90deg); }
 
-.sp-chat-body {
-    flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; scroll-behavior: smooth;
-    scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.2) transparent;
-}
+.sp-chat-body { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.2) transparent; }
 .sp-chat-body::-webkit-scrollbar { width: 6px; }
 .sp-chat-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
 
 .sp-msg { max-width: 85%; padding: 12px 16px; border-radius: 14px; font-size: 0.9rem; line-height: 1.4; animation: msgFadeIn 0.3s ease forwards; }
 @keyframes msgFadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
 .sp-msg.bot { background: rgba(255,255,255,0.06); color: #fff; align-self: flex-start; border-bottom-left-radius: 4px; }
 .sp-msg.user { background: linear-gradient(135deg, #f5a623, #d48300); color: #000; align-self: flex-end; border-bottom-right-radius: 4px; font-weight: 500; }
 .sp-msg.sys { align-self: center; background: transparent; color: rgba(255,255,255,0.4); font-size: 0.75rem; text-align: center; }
 
 .sp-chat-opts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 5px; }
-.sp-opt-btn {
-    background: transparent; border: 1px solid rgba(245, 166, 35, 0.4); color: #ffdf85; padding: 8px 14px; border-radius: 20px;
-    font-family: Inter, sans-serif; font-size: 0.8rem; cursor: pointer; transition: 0.3s;
-}
-.sp-opt-btn:hover { background: rgba(245, 166, 35, 0.15); border-color: #f5a623; }
+.sp-opt-btn { background: transparent; border: 1px solid rgba(245,166,35,0.4); color: #ffdf85; padding: 8px 14px; border-radius: 20px; font-family: Inter, sans-serif; font-size: 0.8rem; cursor: pointer; transition: 0.3s; }
+.sp-opt-btn:hover { background: rgba(245,166,35,0.15); border-color: #f5a623; }
 
-.sp-chat-input-area {
-    padding: 15px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; gap: 10px; background: rgba(0,0,0,0.2);
-}
-.sp-chat-input-area input {
-    flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px;
-    padding: 12px; color: white; font-family: Inter, sans-serif; font-size: 0.9rem; outline: none; transition: 0.3s;
-}
-.sp-chat-input-area input:focus { border-color: rgba(245, 166, 35, 0.5); }
-.sp-chat-send {
-    background: linear-gradient(135deg, #f5a623, #d48300); border: none; border-radius: 10px; width: 45px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s;
-}
+/* Multi-Select */
+.sp-multiselect-wrapper { display: flex; flex-direction: column; gap: 10px; margin-top: 5px; width: 100%; }
+.sp-checkbox-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border: 1px solid rgba(245,166,35,0.3); border-radius: 12px; cursor: pointer; transition: 0.25s; background: rgba(255,255,255,0.03); }
+.sp-checkbox-item:hover { background: rgba(245,166,35,0.08); border-color: rgba(245,166,35,0.6); }
+.sp-checkbox-item.selected { background: rgba(245,166,35,0.12); border-color: #f5a623; }
+.sp-checkbox-item input[type="checkbox"] { appearance: none; -webkit-appearance: none; width: 18px; height: 18px; border: 1.5px solid rgba(245,166,35,0.5); border-radius: 5px; background: transparent; cursor: pointer; flex-shrink: 0; position: relative; transition: 0.2s; }
+.sp-checkbox-item.selected input[type="checkbox"] { background: #f5a623; border-color: #f5a623; }
+.sp-checkbox-item.selected input[type="checkbox"]::after { content: '✓'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #000; font-size: 11px; font-weight: 700; line-height: 1; }
+.sp-checkbox-label { font-size: 0.85rem; color: #f5f5f5; flex: 1; }
+.sp-confirm-btn { background: linear-gradient(135deg, #f5a623, #d48300); border: none; border-radius: 20px; color: #000; font-family: Inter, sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; padding: 11px 22px; cursor: pointer; transition: 0.3s; margin-top: 4px; align-self: flex-start; }
+.sp-confirm-btn:hover { opacity: 0.85; transform: scale(1.03); }
+
+.sp-chat-input-area { padding: 15px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; gap: 10px; background: rgba(0,0,0,0.2); }
+.sp-chat-input-area input { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 12px; color: white; font-family: Inter, sans-serif; font-size: 0.9rem; outline: none; transition: 0.3s; }
+.sp-chat-input-area input:focus { border-color: rgba(245,166,35,0.5); }
+.sp-chat-send { background: linear-gradient(135deg, #f5a623, #d48300); border: none; border-radius: 10px; width: 45px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; }
 .sp-chat-send:hover { opacity: 0.8; }
 .sp-chat-send svg { width: 18px; height: 18px; fill: #000; }
 
@@ -301,7 +280,6 @@ nav a:hover { opacity: 1; color: #ffdf85; text-shadow: 0 0 15px rgba(245, 166, 3
 .typing-dot:nth-child(1) { animation-delay: -0.32s; } .typing-dot:nth-child(2) { animation-delay: -0.16s; }
 @keyframes typing { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
 
-/* Mobile Adjustments for Chatbot */
 @media (max-width: 480px) {
     #sp-chat-widget { bottom: 20px; right: 20px; }
     #sp-chat-window { position: fixed; bottom: 0; right: 0; width: 100vw; max-width: 100vw; height: 100dvh; max-height: 100dvh; border-radius: 0; border: none; }
@@ -336,12 +314,12 @@ footer { text-align: center; padding: 40px 20px 60px 20px; opacity: .4; letter-s
             <video class="scroll-video" src="https://res.cloudinary.com/dbwqlw6pr/video/upload/v1772478991/Precision_In_Every_Frame_version_1_usko0r.mp4" autoplay loop muted playsinline></video>
         </div>
         <div class="scroll-btn-wrapper">
-            <a href="#portfolio-start" style="text-decoration: none;"><button class="hero-btn">Explore Portfolio</button></a>
+            <a href="#portfolio-start" style="text-decoration:none;"><button class="hero-btn">Explore Portfolio</button></a>
         </div>
     </div>
 </section>
 
-<section style="padding-top: 20px;">
+<section style="padding-top:20px;">
     <div class="swipe-hint reveal">Swipe to explore <span>&rarr;</span></div>
     <div class="showreel-wrapper">
         <div class="showreel-frame">
@@ -377,10 +355,9 @@ footer { text-align: center; padding: 40px 20px 60px 20px; opacity: .4; letter-s
     </div>
 </section>
 
-<!-- ================= NEW 3D ANIMATED PORTFOLIO GALLERY ================= -->
-<div id="portfolio-start" style="padding-top: 100px; text-align: center; position: relative; z-index: 10;" class="reveal">
-    <h2>Browse our <span style="color: #ffdf85; font-style: italic; text-shadow: 0 0 20px rgba(245,166,35,0.3);">work</span><br>here</h2>
-    <p style="margin-top: 16px; opacity: 0.8; max-width: 600px; margin-left: auto; margin-right: auto; font-size: clamp(0.9rem, 2vw, 1rem); text-shadow: 0 0 15px rgba(255,255,255,0.1); padding: 0 15px;">
+<div id="portfolio-start" style="padding-top:100px; text-align:center; position:relative; z-index:10;" class="reveal">
+    <h2>Browse our <span style="color:#ffdf85; font-style:italic; text-shadow:0 0 20px rgba(245,166,35,0.3);">work</span><br>here</h2>
+    <p style="margin-top:16px; opacity:0.8; max-width:600px; margin-left:auto; margin-right:auto; font-size:clamp(0.9rem,2vw,1rem); text-shadow:0 0 15px rgba(255,255,255,0.1); padding:0 15px;">
         We deliver high-quality, cinematic images for every vision—from high-energy sports and intimate portraits to premium product campaigns.
     </p>
 </div>
@@ -396,11 +373,9 @@ footer { text-align: center; padding: 40px 20px 60px 20px; opacity: .4; letter-s
     </div>
 </section>
 
-<!-- Moved Category & Booking Section Below Gallery -->
-<div id="portfolio-categories" style="padding-top: 60px; text-align: center; position: relative; z-index: 10;" class="reveal">
-    <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: #fff; margin-bottom: 10px;">Ready to Book?</h3>
-    <p style="opacity: 0.8; font-size: 0.9rem; margin-bottom: 20px;">Select a category below to view details and start a conversation.</p>
-
+<div id="portfolio-categories" style="padding-top:60px; text-align:center; position:relative; z-index:10;" class="reveal">
+    <h3 style="font-family:'Cormorant Garamond',serif; font-size:2rem; color:#fff; margin-bottom:10px;">Ready to Book?</h3>
+    <p style="opacity:0.8; font-size:0.9rem; margin-bottom:20px;">Select a category below to view details and start a conversation.</p>
     <div class="category-nav">
         <button class="cat-btn active" data-cat="all">All</button>
         <button class="cat-btn" data-cat="portraits">Portraits</button>
@@ -409,31 +384,26 @@ footer { text-align: center; padding: 40px 20px 60px 20px; opacity: .4; letter-s
         <button class="cat-btn" data-cat="festivals">Festivals</button>
         <button class="cat-btn" data-cat="editorial">Editorial</button>
     </div>
-
     <div id="category-info" class="category-info-box">
         <h4>Cinematic Vision</h4>
         <p>A curated collection of cinematic frames across all our photography styles, tailored to bring your ideas to life.</p>
         <span class="cat-price">Custom packages available</span>
     </div>
-
-    <div style="margin-top: 32px; display: flex; justify-content: center; gap: 15px;">
-        <a id="whatsapp-link" href="https://wa.me/9867113855?text=Hey!%20I%20am%20interested%20in%20booking%20a%20session%20with%20you." target="_blank" style="text-decoration: none;"><button class="hero-btn">Chat on WhatsApp</button></a>
+    <div style="margin-top:32px; display:flex; justify-content:center; gap:15px;">
+        <a id="whatsapp-link" href="https://wa.me/9867113855?text=Hey!%20I%20am%20interested%20in%20booking%20a%20session%20with%20you." target="_blank" style="text-decoration:none;"><button class="hero-btn">Chat on WhatsApp</button></a>
     </div>
 </div>
 
 <section id="contact" style="text-align:center;" class="reveal">
-    <h2>Let’s Build Something Impactful</h2>
+    <h2>Let's Build Something Impactful</h2>
     <div style="margin-top:35px; display:flex; gap:15px; justify-content:center; flex-wrap:wrap;">
         <a href="mailto:abhishek@shutterphrase.in" class="cta-btn">Email Us</a>
         <a href="https://www.instagram.com/shutterphrase.in/" target="_blank" class="cta-btn">Instagram</a>
     </div>
 </section>
 
-<footer>
-    © 2026 SHUTTERPHRASE
-</footer>
+<footer>© 2026 SHUTTERPHRASE</footer>
 
-<!-- Lightbox -->
 <div id="lightbox">
     <button class="lb-btn" id="close" aria-label="Close Lightbox">&times;</button>
     <button class="lb-btn" id="prev" aria-label="Previous Image">&#10094;</button>
@@ -441,14 +411,11 @@ footer { text-align: center; padding: 40px 20px 60px 20px; opacity: .4; letter-s
     <button class="lb-btn" id="next" aria-label="Next Image">&#10095;</button>
 </div>
 
-
-<!-- ================= PREMIUM AI CHATBOT HTML ================= -->
 <div id="sp-chat-widget">
-    <button id="sp-chat-toggle" class="cta-btn" style="gap: 10px;" aria-label="Open Chatbot">
+    <button id="sp-chat-toggle" class="cta-btn" style="gap:10px;" aria-label="Open Chatbot">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
         Chat With Us
     </button>
-    
     <div id="sp-chat-window">
         <div class="sp-chat-header">
             <div>
@@ -457,12 +424,10 @@ footer { text-align: center; padding: 40px 20px 60px 20px; opacity: .4; letter-s
             </div>
             <button class="sp-chat-close" id="sp-chat-close">&times;</button>
         </div>
-        <div class="sp-chat-body" id="sp-chat-body">
-            <!-- Messages dynamically injected here -->
-        </div>
+        <div class="sp-chat-body" id="sp-chat-body"></div>
         <div class="sp-chat-input-area" id="sp-chat-input-area">
             <input type="text" id="sp-chat-text" placeholder="Select an option above..." autocomplete="off" disabled />
-            <button class="sp-chat-send" id="sp-chat-send" style="opacity: 0.5; pointer-events: none;">
+            <button class="sp-chat-send" id="sp-chat-send" style="opacity:0.5; pointer-events:none;">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13" stroke="black" stroke-width="2"></line><polygon points="22 2 15 22 11 13 2 9 22 2" fill="black"></polygon></svg>
             </button>
         </div>
@@ -472,28 +437,24 @@ footer { text-align: center; padding: 40px 20px 60px 20px; opacity: .4; letter-s
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ================= HIGH-PERFORMANCE SCROLL ENGINE =================
     let isScrolling = false;
-
     const heroSection = document.getElementById('hero-scroll-section');
     const scrollText = document.querySelector('.scroll-text');
     const scrollVideoContainer = document.querySelector('.scroll-video-container');
     const scrollVideo = document.querySelector('.scroll-video');
     const scrollBtnWrapper = document.querySelector('.scroll-btn-wrapper');
-    
     const portSection = document.getElementById('portfolio-scroll');
     const galleryContainer = document.getElementById('animated-gallery');
     const col1 = document.querySelector('.gallery-col.col-1');
     const col2 = document.querySelector('.gallery-col.col-2');
     const col3 = document.querySelector('.gallery-col.col-3');
 
-    // ================= AUTO-REVEAL HERO SCROLL LOGIC =================
+    // ── Hero Auto-Scroll (800ms delay, 3.5s easeInOutQuad) ──
     const hasAutoScrolled = sessionStorage.getItem('shutterphrase_auto_scrolled');
     if (!hasAutoScrolled && heroSection) {
-        let startTime = null;
-        let isInterrupted = false;
+        let startTime = null, isInterrupted = false;
         const duration = 3500;
-        const targetScroll = heroSection.offsetHeight - window.innerHeight; 
+        const targetScroll = heroSection.offsetHeight - window.innerHeight;
 
         const stopAutoScroll = () => {
             if (isInterrupted) return;
@@ -504,7 +465,6 @@ document.addEventListener('DOMContentLoaded', () => {
             window.removeEventListener('keydown', stopAutoScroll);
             window.removeEventListener('mousedown', stopAutoScroll);
         };
-
         window.addEventListener('wheel', stopAutoScroll, { passive: true });
         window.addEventListener('touchstart', stopAutoScroll, { passive: true });
         window.addEventListener('keydown', stopAutoScroll, { passive: true });
@@ -517,32 +477,23 @@ document.addEventListener('DOMContentLoaded', () => {
             const progress = Math.min(elapsed / duration, 1);
             const ease = progress < 0.5 ? 2 * progress * progress : 1 - Math.pow(-2 * progress + 2, 2) / 2;
             window.scrollTo(0, targetScroll * ease);
-            if (progress < 1) {
-                requestAnimationFrame(autoScrollStep);
-            } else {
-                stopAutoScroll();
-            }
+            if (progress < 1) requestAnimationFrame(autoScrollStep);
+            else stopAutoScroll();
         }
-
-        setTimeout(() => {
-            if (!isInterrupted) requestAnimationFrame(autoScrollStep);
-        }, 800);
+        setTimeout(() => { if (!isInterrupted) requestAnimationFrame(autoScrollStep); }, 800);
     }
 
-    // ================= ✨ GALLERY AUTO-REVEAL LOGIC =================
+    // ── Gallery Auto-Scroll (5.5s, triggers when #portfolio-start top <= 0) ──
     const hasGalleryAutoScrolled = sessionStorage.getItem('shutterphrase_gallery_scrolled');
     const browseHeader = document.getElementById('portfolio-start');
-    
+
     if (!hasGalleryAutoScrolled && portSection && browseHeader) {
-        let gStartTime = null;
-        let isGInterrupted = false;
-        let isGAnimating = false; // To prevent double triggers
-        const gDuration = 5500; // Premium 5.5 second reveal
+        let gStartTime = null, isGInterrupted = false, isGAnimating = false;
+        const gDuration = 5500;
 
         const stopGAutoScroll = () => {
             if (isGInterrupted) return;
-            isGInterrupted = true;
-            isGAnimating = false;
+            isGInterrupted = true; isGAnimating = false;
             sessionStorage.setItem('shutterphrase_gallery_scrolled', 'true');
             window.removeEventListener('wheel', stopGAutoScroll);
             window.removeEventListener('touchstart', stopGAutoScroll);
@@ -553,19 +504,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function checkGalleryTrigger() {
             if (isGInterrupted || isGAnimating || sessionStorage.getItem('shutterphrase_gallery_scrolled')) return;
-
             const headerRect = browseHeader.getBoundingClientRect();
-            // Start precisely when the header starts going ABOVE the viewable area (rect.top <= 0)
             if (headerRect.top <= 0) {
                 isGAnimating = true;
-                
                 window.addEventListener('wheel', stopGAutoScroll, { passive: true });
                 window.addEventListener('touchstart', stopGAutoScroll, { passive: true });
                 window.addEventListener('keydown', stopGAutoScroll, { passive: true });
                 window.addEventListener('mousedown', stopGAutoScroll, { passive: true });
 
                 const startY = window.pageYOffset;
-                // Target: bottom of the portfolio scroll section to reveal all gallery animations
                 const targetY = portSection.offsetTop + portSection.offsetHeight - window.innerHeight;
 
                 function gAutoScrollStep(timestamp) {
@@ -573,133 +520,88 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (!gStartTime) gStartTime = timestamp;
                     const elapsed = timestamp - gStartTime;
                     const progress = Math.min(elapsed / gDuration, 1);
-                    // easeInOutQuad curve
                     const ease = progress < 0.5 ? 2 * progress * progress : 1 - Math.pow(-2 * progress + 2, 2) / 2;
-                    
                     window.scrollTo(0, startY + (targetY - startY) * ease);
-
-                    if (progress < 1) {
-                        requestAnimationFrame(gAutoScrollStep);
-                    } else {
-                        stopGAutoScroll();
-                    }
+                    if (progress < 1) requestAnimationFrame(gAutoScrollStep);
+                    else stopGAutoScroll();
                 }
                 requestAnimationFrame(gAutoScrollStep);
             }
         }
-
-        // Listen for the scroll to reach the header trigger point
         window.addEventListener('scroll', checkGalleryTrigger, { passive: true });
     }
 
+    // ── Scroll-Driven Animations ──
     function handleScrollAnimations() {
-        if(heroSection) {
+        if (heroSection) {
             const rect = heroSection.getBoundingClientRect();
             const scrollRange = rect.height - window.innerHeight;
-            let progress = -rect.top / scrollRange;
-            progress = Math.max(0, Math.min(1, progress));
+            let progress = Math.max(0, Math.min(1, -rect.top / scrollRange));
 
             let pText = Math.max(0, Math.min((progress - 0.2) / 0.6, 1));
-            scrollText.style.transform = `translate3d(0, ${80 - (80 * pText)}px, 0)`;
+            scrollText.style.transform = `translate3d(0, ${80 - 80 * pText}px, 0)`;
             scrollText.style.opacity = pText;
-            scrollText.style.filter = `blur(${10 - (10 * pText)}px)`;
+            scrollText.style.filter = `blur(${10 - 10 * pText}px)`;
 
             let pAnim = Math.min(progress / 0.8, 1);
-            let insetY = 35 - (35 * pAnim);
-            let insetX = 40 - (40 * pAnim);
-            let round = 1000 - (980 * pAnim);
-            
+            let insetY = 35 - 35 * pAnim, insetX = 40 - 40 * pAnim, round = 1000 - 980 * pAnim;
             scrollVideoContainer.style.clipPath = `inset(${insetY}% ${insetX}% round ${round}px)`;
             scrollVideoContainer.style.webkitClipPath = `inset(${insetY}% ${insetX}% round ${round}px)`;
-
-            let scale = 0.7 + (0.3 * pAnim);
-            scrollVideo.style.transform = `scale(${scale}) translateZ(0)`;
+            scrollVideo.style.transform = `scale(${0.7 + 0.3 * pAnim}) translateZ(0)`;
 
             let pBtn = Math.min(progress / 0.85, 1);
-            scrollBtnWrapper.style.transform = `translate3d(0, ${80 - (80 * pBtn)}px, 0)`;
+            scrollBtnWrapper.style.transform = `translate3d(0, ${80 - 80 * pBtn}px, 0)`;
             scrollBtnWrapper.style.opacity = pBtn;
-            scrollBtnWrapper.style.filter = `blur(${10 - (10 * pBtn)}px)`;
+            scrollBtnWrapper.style.filter = `blur(${10 - 10 * pBtn}px)`;
         }
 
         if (portSection && galleryContainer && col1 && col2 && col3) {
             const pRect = portSection.getBoundingClientRect();
             const pScrollRange = pRect.height - window.innerHeight;
-            let pProgress = -pRect.top / pScrollRange;
-            pProgress = Math.max(0, Math.min(1, pProgress));
+            let pProgress = Math.max(0, Math.min(1, -pRect.top / pScrollRange));
 
-            let pRotate = Math.min(pProgress / 0.5, 1);
-            let rotateX = 75 - (75 * pRotate);
-
-            let pScale = Math.max(0, Math.min((pProgress - 0.5) / 0.4, 1));
-            let scale = 1.2 - (0.2 * pScale);
-
+            let rotateX = 75 - 75 * Math.min(pProgress / 0.5, 1);
+            let scale = 1.2 - 0.2 * Math.max(0, Math.min((pProgress - 0.5) / 0.4, 1));
             galleryContainer.style.transform = `rotateX(${rotateX}deg) scale(${scale}) translateZ(0)`;
 
             let pCol = Math.max(0, Math.min((pProgress - 0.5) / 0.5, 1));
-            let yOuter = -10 + (12 * pCol); 
-            let yInner = 15 - (10 * pCol);  
-            
-            col1.style.transform = `translate3d(0, ${yOuter}%, 0)`;
-            col3.style.transform = `translate3d(0, ${yOuter}%, 0)`;
-            col2.style.transform = `translate3d(0, ${yInner}%, 0)`;
+            col1.style.transform = `translate3d(0, ${-10 + 12 * pCol}%, 0)`;
+            col3.style.transform = `translate3d(0, ${-10 + 12 * pCol}%, 0)`;
+            col2.style.transform = `translate3d(0, ${15 - 10 * pCol}%, 0)`;
         }
-
         isScrolling = false;
     }
 
     window.addEventListener('scroll', () => {
-        if (!isScrolling) {
-            window.requestAnimationFrame(handleScrollAnimations);
-            isScrolling = true;
-        }
+        if (!isScrolling) { window.requestAnimationFrame(handleScrollAnimations); isScrolling = true; }
     }, { passive: true });
     window.dispatchEvent(new Event('scroll'));
 
-    // ================= 3D FLATLAY SHOWREEL ANIMATION =================
+    // ── Showreel 3D Animation ──
     const srObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                setTimeout(() => { entry.target.classList.add('erect'); }, entry.target.dataset.delay);
+                setTimeout(() => entry.target.classList.add('erect'), entry.target.dataset.delay);
                 srObserver.unobserve(entry.target);
             }
         });
     }, { rootMargin: '0px 0px -50px 0px', threshold: 0.1 });
+    document.querySelectorAll('.showreel-inner').forEach((el, i) => { el.dataset.delay = i * 150; srObserver.observe(el); });
 
-    document.querySelectorAll('.showreel-inner').forEach((el, index) => {
-        el.dataset.delay = index * 150;
-        srObserver.observe(el);
-    });
-
-    // ================= GALLERY DATA INJECTION =================
-    function img(id){ return id.startsWith('http') ? id : `https://lh3.googleusercontent.com/d/${id}=s1200`; }
+    // ── Gallery Data ──
+    function img(id) { return id.startsWith('http') ? id : `https://lh3.googleusercontent.com/d/${id}=s1200`; }
     const cursor = document.getElementById('cursor');
-    
+
     const data = [
-        { images: [
-            "1LabVyDvm0d5d7K6S-7ljM-YkNGZrqEvt", "1i_yGBk20gfPnNmnkZi9Mtp4kOjzf2qIh", "1r6cvRabydlH5r7gMCt_goJR_leDfrvh5",
-            "https://res.cloudinary.com/dbwqlw6pr/image/upload/v1772480262/portrait-3_djbmch.jpg"
-        ] },
-        { images: [
-            "14QOLFGoqcSiStCe5miofoOjkJED-INtT", "1Qca9zh6RFxlAm0oo-CgKu73lyrjOEE_U", "1wRTXqWUrRWR-toD6rR_6cUHdYl1Fhztn",
-            "https://res.cloudinary.com/dbwqlw6pr/image/upload/v1772480274/portrait-2_tawcde.jpg"
-        ] },
-        { images: [
-            "1wzDtv35e5A89_eYSKA4mmwKtWE3sWv1N", "1dSX70LpWAqSgKumPIGnfV145iHl_uYNa", "1ArFVKoGRQiiS94EDgEW4AkQO93K1MGTL",
-            "https://res.cloudinary.com/dbwqlw6pr/image/upload/v1772480262/Volleyball-037_vhuj1v.jpg"
-        ] },
-        { images: [
-            "1hZfC_qzPh2EHi6KCTabHnUVQ-XRR5zwW", "1lr660KxM3akw_YVaIlyNwjx9tVMhsJVj", "1WDbk-0ZIy4qvl7IBkFcUHXaeDIIWpvkR",
-            "https://res.cloudinary.com/dbwqlw6pr/image/upload/v1772480258/PRANALI_-062_xrboxh.jpg"
-        ] },
-        { images: [
-            "1_uVWOL_oX55K7z3zg2eki87iTuOZVeS-", "1YxkbKGFWmOrKc-wCi58tyskGS8fycUyz",
-            "https://res.cloudinary.com/dbwqlw6pr/image/upload/v1772480252/Print-10_zntnaj.jpg",
-            "https://res.cloudinary.com/dbwqlw6pr/image/upload/v1772480250/IMG_0296-Enhanced-NR_pnce6i.jpg"
-        ] }
+        { images: ["1LabVyDvm0d5d7K6S-7ljM-YkNGZrqEvt","1i_yGBk20gfPnNmnkZi9Mtp4kOjzf2qIh","1r6cvRabydlH5r7gMCt_goJR_leDfrvh5","https://res.cloudinary.com/dbwqlw6pr/image/upload/v1772480262/portrait-3_djbmch.jpg"] },
+        { images: ["14QOLFGoqcSiStCe5miofoOjkJED-INtT","1Qca9zh6RFxlAm0oo-CgKu73lyrjOEE_U","1wRTXqWUrRWR-toD6rR_6cUHdYl1Fhztn","https://res.cloudinary.com/dbwqlw6pr/image/upload/v1772480274/portrait-2_tawcde.jpg"] },
+        { images: ["1wzDtv35e5A89_eYSKA4mmwKtWE3sWv1N","1dSX70LpWAqSgKumPIGnfV145iHl_uYNa","1ArFVKoGRQiiS94EDgEW4AkQO93K1MGTL","https://res.cloudinary.com/dbwqlw6pr/image/upload/v1772480262/Volleyball-037_vhuj1v.jpg"] },
+        { images: ["1hZfC_qzPh2EHi6KCTabHnUVQ-XRR5zwW","1lr660KxM3akw_YVaIlyNwjx9tVMhsJVj","1WDbk-0ZIy4qvl7IBkFcUHXaeDIIWpvkR","https://res.cloudinary.com/dbwqlw6pr/image/upload/v1772480258/PRANALI_-062_xrboxh.jpg"] },
+        { images: ["1_uVWOL_oX55K7z3zg2eki87iTuOZVeS-","1YxkbKGFWmOrKc-wCi58tyskGS8fycUyz","https://res.cloudinary.com/dbwqlw6pr/image/upload/v1772480252/Print-10_zntnaj.jpg","https://res.cloudinary.com/dbwqlw6pr/image/upload/v1772480250/IMG_0296-Enhanced-NR_pnce6i.jpg"] }
     ];
 
     let allImages = data.reduce((acc, item) => { acc.push(...item.images); return acc; }, []);
-    allImages = [...allImages, ...allImages, ...allImages.slice(0, 6)]; 
+    allImages = [...allImages, ...allImages, ...allImages.slice(0, 6)];
 
     const colSize = Math.ceil(allImages.length / 3);
     const col1Data = allImages.slice(0, colSize);
@@ -707,142 +609,102 @@ document.addEventListener('DOMContentLoaded', () => {
     const col3Data = allImages.slice(colSize * 2);
 
     const createImgHTML = (id, globalIndex) => `<img src="${img(id)}" class="gallery-img" data-index="${globalIndex}" loading="lazy" alt="Portfolio Image">`;
-
-    if(col1 && col2 && col3) {
+    if (col1 && col2 && col3) {
         col1.innerHTML = col1Data.map((id, i) => createImgHTML(id, i)).join('');
         col2.innerHTML = col2Data.map((id, i) => createImgHTML(id, i + col1Data.length)).join('');
         col3.innerHTML = col3Data.map((id, i) => createImgHTML(id, i + col1Data.length + col2Data.length)).join('');
     }
 
-    // ================= SCROLL REVEAL OBSERVER =================
+    // ── Scroll Reveal ──
     const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) { entry.target.classList.add('active'); observer.unobserve(entry.target); }
-        });
+        entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('active'); observer.unobserve(entry.target); } });
     }, { rootMargin: '0px 0px -50px 0px', threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // ================= VIEWFINDER CURSOR PHYSICS & MAGNET ENVELOPING =================
+    // ── Viewfinder Cursor Physics ──
     if (window.matchMedia("(pointer: fine)").matches) {
-        let mouseX = window.innerWidth / 2; let mouseY = window.innerHeight / 2;
-        let cursorX = mouseX; let cursorY = mouseY;
-        let cursorW = 32; let cursorH = 32; let cursorR = 0;
-        
-        let targetX = mouseX; let targetY = mouseY;
-        let targetW = 32; let targetH = 32; let targetR = 0;
+        let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+        let cursorX = mouseX, cursorY = mouseY, cursorW = 32, cursorH = 32, cursorR = 0;
+        let targetX = mouseX, targetY = mouseY, targetW = 32, targetH = 32, targetR = 0;
         let isEnveloped = false;
 
-        window.addEventListener('mousemove', e => { 
-            mouseX = e.clientX; mouseY = e.clientY; 
-        });
+        window.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
 
         const updateEnveloping = (e) => {
-            const el = e.currentTarget;
-            const rect = el.getBoundingClientRect();
+            const el = e.currentTarget, rect = el.getBoundingClientRect();
             isEnveloped = true;
-            targetX = rect.left + rect.width / 2;
-            targetY = rect.top + rect.height / 2;
-            targetW = rect.width;
-            targetH = rect.height;
+            targetX = rect.left + rect.width / 2; targetY = rect.top + rect.height / 2;
+            targetW = rect.width; targetH = rect.height;
             targetR = parseInt(window.getComputedStyle(el).borderRadius) || 0;
             cursor.classList.add('hover-envelope');
         };
-
         const resetEnveloping = () => {
-            isEnveloped = false;
-            targetW = 32;
-            targetH = 32;
-            targetR = 0;
+            isEnveloped = false; targetW = 32; targetH = 32; targetR = 0;
             cursor.classList.remove('hover-envelope');
         };
-
-        // Attach listeners to interactive elements
         const attachInteractive = () => {
-            document.querySelectorAll('nav a, button, .cat-btn, .cta-btn, .hero-btn, #sp-chat-toggle, .sp-opt-btn').forEach(el => {
-                // Remove existing listeners before adding to avoid duplication
+            document.querySelectorAll('nav a, button, .cat-btn, .cta-btn, .hero-btn, #sp-chat-toggle, .sp-opt-btn, .sp-confirm-btn, .sp-checkbox-item').forEach(el => {
                 el.removeEventListener('mouseenter', updateEnveloping);
                 el.removeEventListener('mouseleave', resetEnveloping);
                 el.removeEventListener('click', resetEnveloping);
-                
                 el.addEventListener('mouseenter', updateEnveloping);
                 el.addEventListener('mouseleave', resetEnveloping);
-                // Force immediate reset on click, vital for elements that disappear (like chatbot options)
                 el.addEventListener('click', resetEnveloping);
             });
-            
             document.querySelectorAll('.gallery-img').forEach(el => {
                 el.addEventListener('mouseenter', () => cursor.classList.add('hover-card'));
                 el.addEventListener('mouseleave', () => cursor.classList.remove('hover-card'));
             });
         };
         attachInteractive();
-
-        // Use MutationObserver for chatbot buttons
-        const obs = new MutationObserver(attachInteractive);
-        obs.observe(document.body, { childList: true, subtree: true });
+        new MutationObserver(attachInteractive).observe(document.body, { childList: true, subtree: true });
 
         function animateCursor() {
-            if (!isEnveloped) {
-                targetX = mouseX;
-                targetY = mouseY;
-            }
-
-            // Linear Interpolation (LERP) Smoothing
-            const lerp = (start, end, amt) => (1 - amt) * start + amt * end;
-            
-            cursorX = lerp(cursorX, targetX, 0.15);
-            cursorY = lerp(cursorY, targetY, 0.15);
-            cursorW = lerp(cursorW, targetW, 0.15);
-            cursorH = lerp(cursorH, targetH, 0.15);
+            if (!isEnveloped) { targetX = mouseX; targetY = mouseY; }
+            const lerp = (s, e, a) => (1 - a) * s + a * e;
+            cursorX = lerp(cursorX, targetX, 0.15); cursorY = lerp(cursorY, targetY, 0.15);
+            cursorW = lerp(cursorW, targetW, 0.15); cursorH = lerp(cursorH, targetH, 0.15);
             cursorR = lerp(cursorR, targetR, 0.15);
-
-            cursor.style.width = `${cursorW}px`;
-            cursor.style.height = `${cursorH}px`;
+            cursor.style.width = `${cursorW}px`; cursor.style.height = `${cursorH}px`;
             cursor.style.borderRadius = `${cursorR}px`;
             cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
-            
             requestAnimationFrame(animateCursor);
         }
         animateCursor();
     }
 
-    // ================= LIGHTBOX LOGIC =================
-    let current = 0; let gallery = [];
+    // ── Lightbox ──
+    let current = 0, gallery = [];
     const lightbox = document.getElementById("lightbox");
     const lbImg = document.getElementById("lbImg");
 
     document.getElementById('animated-gallery').addEventListener('click', (e) => {
-        if(e.target.classList.contains('gallery-img')) {
-            gallery = allImages;
-            current = parseInt(e.target.dataset.index);
-            update();
-            lightbox.classList.add("active");
-            document.body.style.overflow = 'hidden';
+        if (e.target.classList.contains('gallery-img')) {
+            gallery = allImages; current = parseInt(e.target.dataset.index);
+            update(); lightbox.classList.add("active"); document.body.style.overflow = 'hidden';
         }
     });
-
     function update() { lbImg.src = img(gallery[current]); }
     function next() { current = (current + 1) % gallery.length; update(); }
     function prev() { current = (current - 1 + gallery.length) % gallery.length; update(); }
     function closeLightbox() { lightbox.classList.remove("active"); document.body.style.overflow = ''; lbImg.src = ''; }
-    
     document.getElementById("next").onclick = e => { e.stopPropagation(); next(); };
     document.getElementById("prev").onclick = e => { e.stopPropagation(); prev(); };
     document.getElementById("close").onclick = closeLightbox;
-    lightbox.onclick = (e) => { if(e.target.id === "lightbox") closeLightbox(); };
+    lightbox.onclick = (e) => { if (e.target.id === "lightbox") closeLightbox(); };
     document.addEventListener("keydown", (e) => {
         if (!lightbox.classList.contains("active")) return;
         if (e.key === "ArrowRight") next(); if (e.key === "ArrowLeft") prev(); if (e.key === "Escape") closeLightbox();
     });
 
-    // ================= CATEGORY INTERACTION LOGIC (waText) =================
+    // ── Category Interaction ──
     const categoryDetails = {
-        all: { title: "Cinematic Vision", desc: "A curated collection of cinematic frames across all our photography styles, tailored to bring your ideas to life.", price: "Custom packages available", waText: "Hey! I am interested in booking a session with you." },
-        portraits: { title: "Eternal Grace", desc: "High-end editorial and pre-wedding portrait photography capturing your natural elegance in Mumbai and Lonavala.", price: "Portrait sessions begin at ₹8,000", waText: "Hey! I am interested in booking a portrait session with you." },
-        sports: { title: "The Decisive Moment", desc: "High-octane action sports and fitness photography coverage, freezing peak performance in time.", price: "Sports coverage begins at ₹12,000", waText: "Hey! I am interested in booking a sports photography session with you." },
-        product: { title: "The Craft", desc: "Premium commercial and product photography highlighting the finest details of your brand.", price: "Product photography begins at ₹15,000", waText: "Hey! I am interested in booking a product photography session with you." },
-        festivals: { title: "Cultural Pulse", desc: "Vibrant cultural festival and event photography, capturing the raw emotion and energy of the crowd.", price: "Festival coverage begins at ₹18,000", waText: "Hey! I am interested in booking festival/event coverage with you." },
-        editorial: { title: "Visual Experiments", desc: "Creative editorial fashion photo shoots on location, pushing the boundaries of visual storytelling.", price: "Editorial shoots begin at ₹25,000", waText: "Hey! I am interested in booking an editorial shoot with you." }
+        all:       { title: "Cinematic Vision",    desc: "A curated collection of cinematic frames across all our photography styles, tailored to bring your ideas to life.", price: "Custom packages available",        waText: "Hey! I am interested in booking a session with you." },
+        portraits: { title: "Eternal Grace",       desc: "High-end editorial and pre-wedding portrait photography capturing your natural elegance in Mumbai and Lonavala.",    price: "Portrait sessions begin at ₹8,000",  waText: "Hey! I am interested in booking a portrait session with you." },
+        sports:    { title: "The Decisive Moment", desc: "High-octane action sports and fitness photography coverage, freezing peak performance in time.",                    price: "Sports coverage begins at ₹12,000",  waText: "Hey! I am interested in booking a sports photography session with you." },
+        product:   { title: "The Craft",           desc: "Premium commercial and product photography highlighting the finest details of your brand.",                         price: "Product photography begins at ₹15,000",waText: "Hey! I am interested in booking a product photography session with you." },
+        festivals: { title: "Cultural Pulse",      desc: "Vibrant cultural festival and event photography, capturing the raw emotion and energy of the crowd.",               price: "Festival coverage begins at ₹18,000", waText: "Hey! I am interested in booking festival/event coverage with you." },
+        editorial: { title: "Visual Experiments",  desc: "Creative editorial fashion photo shoots on location, pushing the boundaries of visual storytelling.",               price: "Editorial shoots begin at ₹25,000",  waText: "Hey! I am interested in booking an editorial shoot with you." }
     };
 
     const catButtons = document.querySelectorAll('.cat-btn');
@@ -853,130 +715,100 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', () => {
             catButtons.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            catInfoBox.style.opacity = 0;
-            catInfoBox.style.transform = 'translateY(10px)';
-
+            catInfoBox.style.opacity = 0; catInfoBox.style.transform = 'translateY(10px)';
             setTimeout(() => {
-                const cat = btn.dataset.cat;
-                const info = categoryDetails[cat];
+                const info = categoryDetails[btn.dataset.cat];
                 catInfoBox.innerHTML = `<h4>${info.title}</h4><p>${info.desc}</p><span class="cat-price">${info.price}</span>`;
                 waLink.href = `https://wa.me/9867113855?text=${encodeURIComponent(info.waText)}`;
-                catInfoBox.style.opacity = 1;
-                catInfoBox.style.transform = 'translateY(0)';
+                catInfoBox.style.opacity = 1; catInfoBox.style.transform = 'translateY(0)';
             }, 300);
         });
     });
 
-    // ================= PREMIUM VIDEO BUTTONS =================
+    // ── Video Controls ──
     document.querySelectorAll('.mute-btn, .fs-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
             const container = btn.parentElement;
             const video = container.querySelector('video');
-
             if (btn.classList.contains('fs-btn')) {
                 if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-                    if (container.requestFullscreen) { container.requestFullscreen(); } 
-                    else if (container.webkitRequestFullscreen) { container.webkitRequestFullscreen(); } 
-                    else if (video.webkitEnterFullscreen) { video.webkitEnterFullscreen(); }
+                    if (container.requestFullscreen) container.requestFullscreen();
+                    else if (container.webkitRequestFullscreen) container.webkitRequestFullscreen();
+                    else if (video.webkitEnterFullscreen) video.webkitEnterFullscreen();
                     video.muted = false;
-                    const muteBtn = container.querySelector('.mute-btn');
-                    if (muteBtn) {
-                        muteBtn.querySelector('.icon-muted').style.display = 'none';
-                        muteBtn.querySelector('.icon-unmuted').style.display = 'block';
-                    }
+                    const mb = container.querySelector('.mute-btn');
+                    if (mb) { mb.querySelector('.icon-muted').style.display = 'none'; mb.querySelector('.icon-unmuted').style.display = 'block'; }
                 } else {
-                    if (document.exitFullscreen) { document.exitFullscreen(); } 
-                    else if (document.webkitExitFullscreen) { document.webkitExitFullscreen(); }
+                    if (document.exitFullscreen) document.exitFullscreen();
+                    else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
                 }
             }
-            
             if (btn.classList.contains('mute-btn')) {
-                const iconMuted = btn.querySelector('.icon-muted');
-                const iconUnmuted = btn.querySelector('.icon-unmuted');
-                if (video.muted) {
-                    video.muted = false;
-                    iconMuted.style.display = 'none'; iconUnmuted.style.display = 'block';
-                } else {
-                    video.muted = true;
-                    iconMuted.style.display = 'block'; iconUnmuted.style.display = 'none';
-                }
+                const im = btn.querySelector('.icon-muted'), iu = btn.querySelector('.icon-unmuted');
+                if (video.muted) { video.muted = false; im.style.display = 'none'; iu.style.display = 'block'; }
+                else { video.muted = true; im.style.display = 'block'; iu.style.display = 'none'; }
             }
         });
     });
 });
 </script>
 
-<!-- ================= PREMIUM AI CHATBOT LOGIC (Vanilla JS Engine) ================= -->
+<!-- ================= CHATBOT ENGINE ================= -->
 <script>
-const ShutterPhraseChatbot = (function() {
-    
-    // --- Configuration & Pricing Rules ---
+const ShutterPhraseChatbot = (function () {
+
+    const GOOGLE_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwNFYgC5abQxC-91F12AltyjozV8veRiEVDJt9FSGZC3pQ87EuyiRQc4p2lHylc-vpu/exec";
+
     const pricingConfig = {
-        base: { portraits: 8000, sports: 12000, product: 15000, festivals: 18000, editorial: 25000 },
-        duration: { "quick_session": 0.75, "half_day": 1, "full_day": 2, "multi_day": 3 }, // Multi is baseline 3x for calc
-        usage: { "personal": 1, "social_media": 1.1, "brand_marketing": 1.2, "paid_ads": 1.35, "commercial_licensing": 1.5 },
-        complexity: { "simple": 1, "lifestyle": 1.2, "creative": 1.35, "multiple_setups": 1.5 },
+        base:       { portraits: 8000, sports: 12000, product: 15000, festivals: 18000, editorial: 25000 },
+        duration:   { quick_session: 0.75, half_day: 1, full_day: 2, multi_day: 3 },
+        usage:      { personal: 1, social_media: 1.1, brand_marketing: 1.2, paid_ads: 1.35, commercial_licensing: 1.5 },
+        complexity: { simple: 1, lifestyle: 1.2, creative: 1.35, multiple_setups: 1.5 },
         addons: {
             universal: [
-                { id: "adv_retouch", name: "Advanced Retouching (+₹5K)", est: 5000 },
-                { id: "express", name: "Express Delivery (+25%)", mult: 1.25 },
-                { id: "bts_reel", name: "BTS Reel (+₹10K)", est: 10000 },
-                { id: "creative_dir", name: "Creative Direction (+₹7K)", est: 7000 }
+                { id: "adv_retouch",  name: "Advanced Retouching (+₹5K)",  est: 5000 },
+                { id: "express",      name: "Express Delivery (+25%)",       mult: 1.25 },
+                { id: "bts_reel",     name: "BTS Reel (+₹10K)",             est: 10000 },
+                { id: "creative_dir", name: "Creative Direction (+₹7K)",     est: 7000 }
             ],
-            product: [
-                { id: "amz_opt", name: "E-Comm Optimization (+₹5K)", est: 5000 },
-                { id: "model_inc", name: "Model Inclusion (+₹10K)", est: 10000 }
+            product:   [
+                { id: "amz_opt",   name: "E-Comm Optimization (+₹5K)", est: 5000 },
+                { id: "model_inc", name: "Model Inclusion (+₹10K)",    est: 10000 }
             ],
             editorial: [
-                { id: "concept_deck", name: "Concept Deck (+₹12K)", est: 12000 },
-                { id: "onset_assist", name: "On-set Assistant (+₹6K)", est: 6000 }
+                { id: "concept_deck",  name: "Concept Deck (+₹12K)",      est: 12000 },
+                { id: "onset_assist",  name: "On-set Assistant (+₹6K)",    est: 6000 }
             ]
         }
     };
 
-    // --- State Management ---
     let state = {
         step: 'welcome',
-        data: {
-            service: null, clientType: null, duration: null, quantity: null, usage: null, complexity: null, location: null, addons: [], name: null, email: null, phone: null, estimatedRange: null, breakdown: null
-        }
+        data: { service: null, clientType: null, duration: null, quantity: null, usage: [], complexity: null, location: null, addons: [], name: null, email: null, phone: null, estimatedRange: null, breakdown: null, fixedBudget: null }
     };
 
-    // --- DOM Elements ---
-    const toggleBtn = document.getElementById('sp-chat-toggle');
-    const chatWin = document.getElementById('sp-chat-window');
-    const closeBtn = document.getElementById('sp-chat-close');
-    const chatBody = document.getElementById('sp-chat-body');
-    const inputArea = document.getElementById('sp-chat-input-area');
-    const textInput = document.getElementById('sp-chat-text');
-    const sendBtn = document.getElementById('sp-chat-send');
+    const toggleBtn  = document.getElementById('sp-chat-toggle');
+    const chatWin    = document.getElementById('sp-chat-window');
+    const closeBtn   = document.getElementById('sp-chat-close');
+    const chatBody   = document.getElementById('sp-chat-body');
+    const textInput  = document.getElementById('sp-chat-text');
+    const sendBtn    = document.getElementById('sp-chat-send');
 
-    // --- Core UI Functions ---
-    function openChat() { 
-        chatWin.classList.add('open'); 
-        if(state.step === 'welcome' && chatBody.children.length === 0) {
-            advanceFlow('welcome'); 
-        }
-    }
+    function openChat()  { chatWin.classList.add('open'); if (state.step === 'welcome' && chatBody.children.length === 0) advanceFlow('welcome'); }
     function closeChat() { chatWin.classList.remove('open'); }
-    function scrollToBottom() { chatBody.scrollTop = chatBody.scrollHeight; }
-    
-    function appendMsg(text, type='bot', skipAnim=false) {
-        const div = document.createElement('div');
-        div.className = `sp-msg ${type}`;
-        div.innerHTML = text;
-        if(skipAnim) div.style.animation = 'none';
-        chatBody.appendChild(div);
-        scrollToBottom();
-    }
+    function scrollToBottom() { setTimeout(() => { chatBody.scrollTop = chatBody.scrollHeight; }, 50); }
 
+    function appendMsg(text, type = 'bot') {
+        const div = document.createElement('div');
+        div.className = `sp-msg ${type}`; div.innerHTML = text;
+        chatBody.appendChild(div); scrollToBottom();
+    }
     function appendSysMsg(text) {
         const div = document.createElement('div');
         div.className = 'sp-msg sys'; div.innerHTML = text;
         chatBody.appendChild(div); scrollToBottom();
     }
-
     function appendButtons(options) {
         const wrapper = document.createElement('div');
         wrapper.className = 'sp-chat-opts';
@@ -986,262 +818,192 @@ const ShutterPhraseChatbot = (function() {
             btn.onclick = () => handleButtonSelect(opt);
             wrapper.appendChild(btn);
         });
-        chatBody.appendChild(wrapper);
-        scrollToBottom();
+        chatBody.appendChild(wrapper); scrollToBottom();
     }
 
-    function showTyping(callback, delay=600) {
+    // Multi-select checkbox UI
+    function appendMultiSelect(items, confirmLabel, onConfirm) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'sp-multiselect-wrapper';
+        const selectedIds = new Set();
+
+        items.forEach(item => {
+            const row = document.createElement('label');
+            row.className = 'sp-checkbox-item';
+            row.innerHTML = `<input type="checkbox" value="${item.id}"><span class="sp-checkbox-label">${item.name}</span>`;
+            const cb = row.querySelector('input[type="checkbox"]');
+            cb.addEventListener('change', () => {
+                if (cb.checked) { selectedIds.add(item.id); row.classList.add('selected'); }
+                else            { selectedIds.delete(item.id); row.classList.remove('selected'); }
+            });
+            wrapper.appendChild(row);
+        });
+
+        const confirmBtn = document.createElement('button');
+        confirmBtn.className = 'sp-confirm-btn';
+        confirmBtn.textContent = confirmLabel || 'Confirm Selection';
+        confirmBtn.onclick = () => onConfirm([...selectedIds]);
+        wrapper.appendChild(confirmBtn);
+        chatBody.appendChild(wrapper); scrollToBottom();
+    }
+
+    function showTyping(callback, delay = 600) {
         textInput.disabled = true;
         textInput.placeholder = "Select an option above...";
-        sendBtn.style.opacity = "0.5";
-        sendBtn.style.pointerEvents = "none";
-        
-        // Remove existing options so user can't click them while bot types
-        const existingOpts = document.querySelectorAll('.sp-chat-opts');
-        existingOpts.forEach(el => el.remove());
+        sendBtn.style.opacity = "0.5"; sendBtn.style.pointerEvents = "none";
+        chatBody.querySelectorAll('.sp-chat-opts, .sp-multiselect-wrapper').forEach(el => el.remove());
 
         const typ = document.createElement('div');
         typ.className = 'typing-indicator'; typ.id = 'sp-typing';
         typ.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
-        chatBody.appendChild(typ);
-        scrollToBottom();
-        
-        setTimeout(() => {
-            const t = document.getElementById('sp-typing');
-            if(t) t.remove();
-            callback();
-        }, delay);
+        chatBody.appendChild(typ); scrollToBottom();
+
+        setTimeout(() => { const t = document.getElementById('sp-typing'); if (t) t.remove(); callback(); }, delay);
     }
 
     function requireTextInput(placeholder) {
-        textInput.disabled = false;
-        textInput.placeholder = placeholder;
-        textInput.value = '';
-        sendBtn.style.opacity = "1";
-        sendBtn.style.pointerEvents = "auto";
-        textInput.focus();
+        textInput.disabled = false; textInput.placeholder = placeholder; textInput.value = '';
+        sendBtn.style.opacity = "1"; sendBtn.style.pointerEvents = "auto"; textInput.focus();
     }
 
-    // --- NLP / Navigation Parser ---
     function checkNavigation(text) {
         const t = text.toLowerCase();
-        if(t.includes('pricing') || t.includes('cost') || t.includes('how much')) {
-            appendMsg("I'm currently helping you generate a custom quote! Alternatively, you can view our base starting packages in the section below the gallery.", 'bot');
-            document.getElementById('portfolio-categories').scrollIntoView({behavior: 'smooth'});
-            return true;
+        if (t.includes('pricing') || t.includes('cost') || t.includes('how much')) {
+            appendMsg("I'm currently helping you generate a custom quote! You can also view base packages below the gallery.", 'bot');
+            document.getElementById('portfolio-categories').scrollIntoView({ behavior: 'smooth' }); return true;
         }
-        if(t.includes('portfolio') || t.includes('work') || t.includes('gallery')) {
-            appendMsg("I've scrolled you to our recent cinematic work.", 'bot');
-            document.getElementById('portfolio-start').scrollIntoView({behavior: 'smooth'});
-            return true;
+        if (t.includes('portfolio') || t.includes('work') || t.includes('gallery')) {
+            appendMsg("I've scrolled you to our recent work.", 'bot');
+            document.getElementById('portfolio-start').scrollIntoView({ behavior: 'smooth' }); return true;
         }
-        if(t.includes('contact') || t.includes('email') || t.includes('phone') || t.includes('where')) {
-            appendMsg("I've scrolled you to our contact section. We are based in Mumbai, but travel globally for assignments.", 'bot');
-            document.getElementById('contact').scrollIntoView({behavior: 'smooth'});
-            return true;
+        if (t.includes('contact') || t.includes('email') || t.includes('where')) {
+            appendMsg("I've scrolled you to our contact section.", 'bot');
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' }); return true;
         }
         return false;
     }
 
-    // --- Event Listeners ---
     toggleBtn.addEventListener('click', openChat);
     closeBtn.addEventListener('click', closeChat);
-    
-    // Escape key closes
-    document.addEventListener('keydown', (e) => {
-        if(e.key === 'Escape' && chatWin.classList.contains('open')) closeChat();
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && chatWin.classList.contains('open')) closeChat(); });
+    document.addEventListener('mousedown', e => {
+        if (chatWin.classList.contains('open') && !chatWin.contains(e.target) && !toggleBtn.contains(e.target)) closeChat();
     });
-    
-    // Click outside minimizes
-    document.addEventListener('mousedown', (e) => {
-        if(chatWin.classList.contains('open') && !chatWin.contains(e.target) && !toggleBtn.contains(e.target)) {
-            closeChat();
-        }
-    });
-
     sendBtn.addEventListener('click', handleTextSubmit);
-    textInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleTextSubmit(); });
+    textInput.addEventListener('keypress', e => { if (e.key === 'Enter') handleTextSubmit(); });
 
     function handleTextSubmit() {
-        const val = textInput.value.trim();
-        if(!val) return;
-        
+        const val = textInput.value.trim(); if (!val) return;
         appendMsg(val, 'user');
-        textInput.value = '';
-        textInput.disabled = true;
+        textInput.value = ''; textInput.disabled = true;
         textInput.placeholder = "Select an option above...";
-        sendBtn.style.opacity = "0.5";
-        sendBtn.style.pointerEvents = "none";
+        sendBtn.style.opacity = "0.5"; sendBtn.style.pointerEvents = "none";
 
-        // Prevent navigation keywords from hijacking data entry steps
-        const isDataEntryStep = ['product_quantity', 'lead_name', 'lead_email', 'lead_phone'].includes(state.step);
+        const isDataEntry = ['product_quantity', 'lead_name', 'lead_email', 'lead_phone', 'fixed_budget_entry'].includes(state.step);
+        if (!isDataEntry && checkNavigation(val)) { setTimeout(() => advanceFlow(state.step, true), 1500); return; }
 
-        if(!isDataEntryStep && checkNavigation(val)) {
-            // Re-prompt the current step after 1.5s
-            setTimeout(() => advanceFlow(state.step, true), 1500);
-            return;
-        }
-
-        // Process based on current flow step
         showTyping(() => {
-            if(state.step === 'product_quantity') {
+            if (state.step === 'product_quantity') {
                 let qty = parseInt(val.replace(/\D/g, ''));
-                if(isNaN(qty) || qty <= 0) {
-                    appendMsg("Please enter a valid number of products.", 'bot');
-                    requireTextInput("E.g., 15");
-                } else {
-                    state.data.quantity = qty;
-                    if(qty > 40) {
-                        appendMsg("For large-scale catalogues over 40 products, we require a custom commercial quote to ensure accuracy.", 'bot');
-                        advanceFlow('lead_name'); // Skip straight to lead capture
-                    } else {
-                        advanceFlow('usage');
-                    }
-                }
+                if (isNaN(qty) || qty <= 0) { appendMsg("Please enter a valid number of products.", 'bot'); requireTextInput("E.g., 15"); }
+                else { state.data.quantity = qty; advanceFlow(qty > 40 ? 'lead_name' : 'usage'); }
             }
-            else if(state.step === 'lead_name') {
-                state.data.name = val; advanceFlow('lead_email');
+            else if (state.step === 'fixed_budget_entry') {
+                state.data.fixedBudget = val;
+                appendMsg(`Budget of <strong>${val}</strong> noted. A few quick details to complete your dossier:`, 'bot');
+                setTimeout(() => advanceFlow('lead_name'), 800);
             }
-            else if(state.step === 'lead_email') {
-                if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
-                    state.data.email = val; advanceFlow('lead_phone');
-                } else {
-                    appendMsg("Please enter a valid email address.", 'bot'); requireTextInput("E.g., name@domain.com");
-                }
+            else if (state.step === 'lead_name')  { state.data.name = val;  advanceFlow('lead_email'); }
+            else if (state.step === 'lead_email') {
+                if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) { state.data.email = val; advanceFlow('lead_phone'); }
+                else { appendMsg("Please enter a valid email address.", 'bot'); requireTextInput("E.g., name@domain.com"); }
             }
-            else if(state.step === 'lead_phone') {
-                state.data.phone = val; advanceFlow('complete');
-            }
-            else {
-                // Failsafe for unexpected text input
-                appendMsg("I've noted that. Let's continue.", 'bot');
-                advanceFlow(state.step, true);
-            }
+            else if (state.step === 'lead_phone') { state.data.phone = val; advanceFlow('complete'); }
+            else { appendMsg("Noted — let's continue.", 'bot'); advanceFlow(state.step, true); }
         });
     }
 
     function handleButtonSelect(opt) {
-        if(opt.action === 'link') {
-            window.open(opt.url, '_blank');
-            return;
-        }
-        
+        if (opt.action === 'link') { window.open(opt.url, '_blank'); return; }
         appendMsg(opt.label, 'user');
-        
-        // Save data if required
-        if(opt.saveTo) {
-            if(opt.saveTo === 'addons') {
-                if(opt.value !== 'skip') state.data.addons.push(opt.value);
-            } else {
-                state.data[opt.saveTo] = opt.value;
-            }
+        if (opt.saveTo) {
+            if (opt.saveTo === 'addons') { if (opt.value !== 'skip') state.data.addons.push(opt.value); }
+            else state.data[opt.saveTo] = opt.value;
         }
-
         showTyping(() => advanceFlow(opt.next));
     }
 
-
-    // --- Pricing Engine Math ---
+    // ── Pricing Engine ──
     function calculateEstimate() {
-        if(state.data.service === 'custom') return { custom: true };
-
+        if (state.data.service === 'custom') return { custom: true };
         let base = pricingConfig.base[state.data.service] || 10000;
-        
-        // Custom Product Quantity Math
-        if(state.data.service === 'product' && state.data.quantity) {
+        if (state.data.service === 'product' && state.data.quantity) {
             let q = state.data.quantity;
-            if(q > 40) return { custom: true };
-            if(q > 25) base = 15000 + (10 * 1200) + ((q - 25) * 1000); // 16-25 @ 1200, 26-40 @ 1000
-            else if(q > 15) base = 15000 + ((q - 15) * 1200);
+            if (q > 40) return { custom: true };
+            if (q > 25) base = 15000 + (10 * 1200) + ((q - 25) * 1000);
+            else if (q > 15) base = 15000 + ((q - 15) * 1200);
         }
-
-        let durMult = pricingConfig.duration[state.data.duration] || 1;
-        // If Product/Festival, duration is usually ignored in base calc unless specified, we'll assume 1
-        if(state.data.service === 'product' || state.data.service === 'festivals') durMult = 1;
-
-        let usageMult = pricingConfig.usage[state.data.usage] || 1;
-        if(state.data.clientType === 'agency') usageMult += 0.10; // +10% penalty for agency licensing
-
+        let durMult = (['product','festivals'].includes(state.data.service)) ? 1 : (pricingConfig.duration[state.data.duration] || 1);
+        let usageMult = Array.isArray(state.data.usage) && state.data.usage.length > 0
+            ? Math.max(...state.data.usage.map(u => pricingConfig.usage[u] || 1))
+            : 1;
+        if (state.data.clientType === 'agency') usageMult += 0.10;
         let compMult = pricingConfig.complexity[state.data.complexity] || 1;
+        let travelBuffer = state.data.location === 'outstation' ? 5000 : 0;
+        let totalWithBuffer = (base * durMult * usageMult * compMult + travelBuffer) * 1.08;
 
-        let subtotal = base * durMult * usageMult * compMult;
-        
-        let travelBuffer = (state.data.location === 'outstation') ? 5000 : 0;
-        
-        // 8% invisible operational buffer
-        let totalWithBuffer = (subtotal + travelBuffer) * 1.08;
+        state.data.breakdown = `Base:+₹${base.toLocaleString('en-IN')}\nClient:+x${state.data.clientType === 'agency' ? 1.1 : 1}\nDuration:+x${durMult}\nUsage:+x${usageMult.toFixed(2)}\nOp.+Buffer:++8%\nTarget:+₹${Math.round(totalWithBuffer).toLocaleString('en-IN')}`;
 
-        // Formulate Breakdown String for Google Sheets
-        let clientMult = state.data.clientType === 'agency' ? 1.1 : 1;
-        let baseUsageMult = pricingConfig.usage[state.data.usage] || 1;
-        state.data.breakdown = `Base:+₹${base.toLocaleString('en-IN')}\nClient:+x${clientMult}\nDuration:+x${durMult}\nUsage:+x${baseUsageMult}\nOp.+Buffer:++8%\nTarget:+₹${Math.round(totalWithBuffer).toLocaleString('en-IN')}`;
-
-        // Apply Addons
         let finalEst = totalWithBuffer;
         state.data.addons.forEach(addId => {
-            // Check universal
-            let a = pricingConfig.addons.universal.find(x=>x.id===addId) || 
-                    (pricingConfig.addons[state.data.service] || []).find(x=>x.id===addId);
-            if(a) {
-                if(a.est) finalEst += a.est;
-                if(a.mult) finalEst *= a.mult;
-            }
+            let a = pricingConfig.addons.universal.find(x => x.id === addId) ||
+                    (pricingConfig.addons[state.data.service] || []).find(x => x.id === addId);
+            if (a) { if (a.est) finalEst += a.est; if (a.mult) finalEst *= a.mult; }
         });
 
-        // Rounding to nearest 500
         let rounded = Math.round(finalEst / 500) * 500;
-        
-        // ±10% Range
-        let low = Math.round((rounded * 0.9) / 500) * 500;
-        let high = Math.round((rounded * 1.1) / 500) * 500;
-
-        return { low, high, tier: classifyTier(rounded), custom: false, outstation: travelBuffer > 0 };
+        return {
+            low: Math.round((rounded * 0.9) / 500) * 500,
+            high: Math.round((rounded * 1.1) / 500) * 500,
+            tier: rounded < 15000 ? "Focused Tier" : rounded < 35000 ? "Production Tier" : rounded < 75000 ? "Commercial Tier" : "Signature Tier",
+            custom: false,
+            outstation: travelBuffer > 0
+        };
     }
 
-    function classifyTier(amount) {
-        if(amount < 15000) return "Focused Tier";
-        if(amount >= 15000 && amount < 35000) return "Production Tier";
-        if(amount >= 35000 && amount < 75000) return "Commercial Tier";
-        return "Signature Tier";
-    }
+    function formatInr(n) { return "₹" + n.toLocaleString('en-IN'); }
 
-    function formatInr(num) {
-        return "₹" + num.toLocaleString('en-IN');
-    }
-
-
-    // --- Branching Logic Engine ---
+    // ── Flow Engine ──
     function advanceFlow(step, isReprompt = false) {
         state.step = step;
-        
-        switch(step) {
+        switch (step) {
+
             case 'welcome':
-                if(!isReprompt) appendMsg("We handle everything from intimate portrait sessions to large-scale brand campaigns. Let’s understand your project and place it correctly.", 'bot');
+                if (!isReprompt) appendMsg("We handle everything from intimate portrait sessions to large-scale brand campaigns. Let's understand your project and place it correctly.", 'bot');
                 appendButtons([
-                    { label: "Portrait", value: "portraits", saveTo: "service", next: "client_type" },
-                    { label: "Product", value: "product", saveTo: "service", next: "client_type" },
-                    { label: "Sports", value: "sports", saveTo: "service", next: "client_type" },
+                    { label: "Portrait",       value: "portraits", saveTo: "service", next: "client_type" },
+                    { label: "Product",        value: "product",   saveTo: "service", next: "client_type" },
+                    { label: "Sports",         value: "sports",    saveTo: "service", next: "client_type" },
                     { label: "Festival/Event", value: "festivals", saveTo: "service", next: "client_type" },
-                    { label: "Editorial", value: "editorial", saveTo: "service", next: "client_type" },
-                    { label: "Custom Project", value: "custom", saveTo: "service", next: "client_type" }
+                    { label: "Editorial",      value: "editorial", saveTo: "service", next: "client_type" },
+                    { label: "Custom Project", value: "custom",    saveTo: "service", next: "client_type" }
                 ]);
                 break;
 
             case 'client_type':
                 appendMsg("Is this project personally funded or brand-backed?", 'bot');
                 appendButtons([
-                    { label: "Personal", value: "personal", saveTo: "clientType", next: "branch_post_client" },
-                    { label: "Startup Brand", value: "startup", saveTo: "clientType", next: "branch_post_client" },
-                    { label: "Established Brand", value: "established", saveTo: "clientType", next: "branch_post_client" },
-                    { label: "Agency / Commercial", value: "agency", saveTo: "clientType", next: "branch_post_client" }
+                    { label: "Personal",             value: "personal",    saveTo: "clientType", next: "branch_post_client" },
+                    { label: "Startup Brand",        value: "startup",     saveTo: "clientType", next: "branch_post_client" },
+                    { label: "Established Brand",    value: "established", saveTo: "clientType", next: "branch_post_client" },
+                    { label: "Agency / Commercial",  value: "agency",      saveTo: "clientType", next: "branch_post_client" }
                 ]);
                 break;
-            
+
             case 'branch_post_client':
-                // Intelligent routing
-                if(state.data.service === 'custom') { advanceFlow('lead_name'); return; }
-                if(state.data.service === 'product') { advanceFlow('product_quantity'); return; }
-                if(state.data.service === 'festivals') { advanceFlow('location'); return; }
+                if (state.data.service === 'custom')    { advanceFlow('lead_name');        return; }
+                if (state.data.service === 'product')   { advanceFlow('product_quantity'); return; }
+                if (state.data.service === 'festivals') { advanceFlow('location');         return; }
                 advanceFlow('duration');
                 break;
 
@@ -1254,33 +1016,40 @@ const ShutterPhraseChatbot = (function() {
                 appendMsg("What is the expected duration of the shoot?", 'bot');
                 appendButtons([
                     { label: "Quick Session (1-2 Hrs)", value: "quick_session", saveTo: "duration", next: "usage" },
-                    { label: "Half Day", value: "half_day", saveTo: "duration", next: "usage" },
-                    { label: "Full Day", value: "full_day", saveTo: "duration", next: "usage" },
-                    { label: "Multi-Day", value: "multi_day", saveTo: "duration", next: "usage" }
+                    { label: "Half Day",                value: "half_day",      saveTo: "duration", next: "usage" },
+                    { label: "Full Day",                value: "full_day",      saveTo: "duration", next: "usage" },
+                    { label: "Multi-Day",               value: "multi_day",     saveTo: "duration", next: "usage" }
                 ]);
                 break;
 
             case 'usage':
-                appendMsg("How will these images primarily be used?", 'bot');
-                appendButtons([
-                    { label: "Personal", value: "personal", saveTo: "usage", next: "complexity" },
-                    { label: "Social Media Promo", value: "social_media", saveTo: "usage", next: "complexity" },
-                    { label: "Brand Marketing", value: "brand_marketing", saveTo: "usage", next: "complexity" },
-                    { label: "Paid Ads", value: "paid_ads", saveTo: "usage", next: "complexity" },
-                    { label: "Large Commercial Licensing", value: "commercial_licensing", saveTo: "usage", next: "complexity" }
-                ]);
+                appendMsg("How will these images primarily be used? <em style='font-size:0.8em;opacity:0.6;'>(Select all that apply)</em>", 'bot');
+                state.data.usage = [];
+                appendMultiSelect([
+                    { id: "personal",             name: "Personal Use" },
+                    { id: "social_media",         name: "Social Media Promo" },
+                    { id: "brand_marketing",      name: "Brand Marketing" },
+                    { id: "paid_ads",             name: "Paid Advertisements" },
+                    { id: "commercial_licensing", name: "Large Commercial Licensing" }
+                ], 'Confirm Usage', (selectedIds) => {
+                    if (selectedIds.length === 0) selectedIds.push('personal');
+                    state.data.usage = selectedIds;
+                    const usageItems = [
+                        { id: "personal", name: "Personal Use" }, { id: "social_media", name: "Social Media Promo" },
+                        { id: "brand_marketing", name: "Brand Marketing" }, { id: "paid_ads", name: "Paid Advertisements" },
+                        { id: "commercial_licensing", name: "Large Commercial Licensing" }
+                    ];
+                    appendMsg(usageItems.filter(i => selectedIds.includes(i.id)).map(i => i.name).join(', '), 'user');
+                    showTyping(() => advanceFlow('complexity'));
+                });
                 break;
 
             case 'complexity':
-                if(state.data.service === 'product') {
-                    appendMsg("What type of setup are we looking at?", 'bot');
-                } else {
-                    appendMsg("Is there a specific creative direction required?", 'bot');
-                }
+                appendMsg(state.data.service === 'product' ? "What type of setup are we looking at?" : "Is there a specific creative direction required?", 'bot');
                 appendButtons([
-                    { label: "Simple / Standard", value: "simple", saveTo: "complexity", next: "location" },
-                    { label: "Lifestyle Setup", value: "lifestyle", saveTo: "complexity", next: "location" },
-                    { label: "Creative Conceptual", value: "creative", saveTo: "complexity", next: "location" },
+                    { label: "Simple / Standard",       value: "simple",          saveTo: "complexity", next: "location" },
+                    { label: "Lifestyle Setup",         value: "lifestyle",       saveTo: "complexity", next: "location" },
+                    { label: "Creative Conceptual",     value: "creative",        saveTo: "complexity", next: "location" },
                     { label: "Multiple Complex Setups", value: "multiple_setups", saveTo: "complexity", next: "location" }
                 ]);
                 break;
@@ -1288,124 +1057,133 @@ const ShutterPhraseChatbot = (function() {
             case 'location':
                 appendMsg("Will this shoot be local (Mumbai/Pune area) or Outstation?", 'bot');
                 appendButtons([
-                    { label: "Local", value: "local", saveTo: "location", next: "estimate" },
+                    { label: "Local",      value: "local",      saveTo: "location", next: "estimate" },
                     { label: "Outstation", value: "outstation", saveTo: "location", next: "estimate" }
                 ]);
                 break;
 
-            case 'estimate':
+            case 'estimate': {
                 const est = calculateEstimate();
-                if(est.custom) {
-                    appendMsg("Because of the scale and specific requirements of this project, I'll need to prepare a custom manual quote for you.", 'bot');
+                if (est.custom) {
+                    appendMsg("Because of the scale of this project, I'll need to prepare a custom manual quote.", 'bot');
                     state.data.estimatedRange = "Custom Quote Required";
-                    setTimeout(() => advanceFlow('lead_name'), 1500);
+                    setTimeout(() => advanceFlow('upsell'), 1500);
                 } else {
                     state.data.estimatedRange = `${formatInr(est.low)} - ${formatInr(est.high)}`;
-                    let txt = `Based on your requirements, this project falls into our <strong>${est.tier}</strong>.<br><br>The estimate typically ranges between <strong>${formatInr(est.low)} – ${formatInr(est.high)}</strong>.`;
-                    if(est.outstation) txt += `<br><br><em>*Note: Travel & stay logistics are calculated separately.</em>`;
+                    let txt = `Based on your requirements, this falls into our <strong>${est.tier}</strong>.<br><br>Estimate: <strong>${formatInr(est.low)} – ${formatInr(est.high)}</strong>.`;
+                    if (est.outstation) txt += `<br><br><em>*Travel & stay calculated separately.</em>`;
                     appendMsg(txt, 'bot');
-                    
                     setTimeout(() => advanceFlow('upsell'), 2000);
                 }
                 break;
+            }
 
-            case 'upsell':
-                appendMsg("Most clients enhancing similar projects also add:", 'bot');
-                let upsellOpts = [];
-                if(state.data.service === 'product') {
-                    upsellOpts = [
-                        { label: "Add E-Comm Optimization", value: "amz_opt", saveTo: "addons", next: "lead_name" },
-                        { label: "Add Model Inclusion", value: "model_inc", saveTo: "addons", next: "lead_name" }
-                    ];
-                } else if(state.data.service === 'editorial' || state.data.clientType === 'agency' || state.data.clientType === 'established') {
-                    upsellOpts = [
-                        { label: "Add Concept Deck", value: "concept_deck", saveTo: "addons", next: "lead_name" },
-                        { label: "Add BTS Reel", value: "bts_reel", saveTo: "addons", next: "lead_name" }
-                    ];
-                } else {
-                    upsellOpts = [
-                        { label: "Add Advanced Retouching", value: "adv_retouch", saveTo: "addons", next: "lead_name" },
-                        { label: "Add BTS Reel", value: "bts_reel", saveTo: "addons", next: "lead_name" }
-                    ];
+            case 'upsell': {
+                appendMsg("Most clients add one or more of these: <em style='font-size:0.8em;opacity:0.6;'>(Select all that apply)</em>", 'bot');
+                state.data.addons = [];
+                let pool = [...pricingConfig.addons.universal];
+                if (state.data.service === 'product') pool = [...pool, ...pricingConfig.addons.product];
+                if (['editorial','agency','established'].includes(state.data.service) || ['agency','established'].includes(state.data.clientType)) {
+                    pool = [...pool, ...pricingConfig.addons.editorial];
                 }
-                upsellOpts.push({ label: "Skip Add-ons", value: "skip", saveTo: "addons", next: "lead_name" });
-                appendButtons(upsellOpts);
+                const seen = new Set();
+                pool = pool.filter(a => { if (seen.has(a.id)) return false; seen.add(a.id); return true; });
+
+                appendMultiSelect(pool, 'Confirm Add-ons (or skip)', (selectedIds) => {
+                    state.data.addons = selectedIds;
+                    appendMsg(selectedIds.length > 0 ? pool.filter(a => selectedIds.includes(a.id)).map(a => a.name).join(', ') : 'No add-ons', 'user');
+                    showTyping(() => advanceFlow('budget_prompt'));
+                });
+                break;
+            }
+
+            case 'budget_prompt':
+                appendMsg("Do you have a fixed budget in mind for this project?", 'bot');
+                appendButtons([
+                    { label: "I have a fixed budget", value: "yes", next: "fixed_budget_entry" },
+                    { label: "No, use the estimate",  value: "no",  next: "lead_name" }
+                ]);
+                break;
+
+            case 'fixed_budget_entry':
+                appendMsg("What is your budget range? <em style='font-size:0.8em;opacity:0.6;'>(e.g. ₹20,000 – ₹30,000)</em>", 'bot');
+                requireTextInput("Enter your budget range...");
                 break;
 
             case 'lead_name':
-                appendMsg("To generate your official proposal and have Abhishek review it, what is your Full Name?", 'bot');
+                appendMsg("To generate your official proposal — what is your <strong>Full Name</strong>?", 'bot');
                 requireTextInput("Enter your full name");
                 break;
 
             case 'lead_email':
-                appendMsg(`Thanks ${state.data.name.split(' ')[0]}! What is the best email to send the proposal to?`, 'bot');
+                appendMsg(`Thanks ${(state.data.name || '').split(' ')[0]}! Best <strong>email</strong> for the proposal?`, 'bot');
                 requireTextInput("Enter your email address");
                 break;
 
             case 'lead_phone':
-                appendMsg("Almost done. Could I get a contact number? (Optional, you can type 'skip')", 'bot');
+                appendMsg("And your <strong>phone number</strong>? (type 'skip' to continue)", 'bot');
                 requireTextInput("Enter phone number or type 'skip'");
                 break;
 
-            case 'complete':
-                if(state.data.phone.toLowerCase() === 'skip') state.data.phone = "Not provided";
-                
-                appendMsg("Perfect. I have recorded all your project requirements.", 'bot');
-                appendSysMsg("Generating internal dossier...");
-                
-                // Final structured payload ready for API
-                const payload = JSON.stringify(state.data, null, 2);
-                console.log("=== NEW QUOTE REQUEST ===");
-                console.log(payload);
-                
-                // Trigger backend API integration
+            case 'complete': {
+                if (state.data.phone && state.data.phone.toLowerCase() === 'skip') state.data.phone = "Not provided";
+                appendMsg("Perfect. Your project dossier is complete.", 'bot');
+                appendSysMsg("Transmitting to Abhishek's dashboard...");
+
+                // ── CRITICAL: Send via GET to doGet in Apps Script ──
                 sendQuoteRequest(state.data);
 
                 setTimeout(() => {
-                    appendMsg("Your request has been logged. Abhishek will review the details and reach out shortly!", 'bot');
-                    
-                    const waText = `Hey! I just submitted a quote request via the chatbot for a ${state.data.service} project.`;
-                    const waUrl = `https://wa.me/9867113855?text=${encodeURIComponent(waText)}`;
+                    appendMsg("Request logged ✓ Abhishek will review your dossier and reach out shortly.", 'bot');
+
+                    const usageLabel  = Array.isArray(state.data.usage)  ? state.data.usage.join(', ')  : (state.data.usage  || 'N/A');
+                    const addonsLabel = state.data.addons.length > 0     ? state.data.addons.join(', ') : 'None';
+                    const budgetLabel = state.data.fixedBudget
+                        ? `Fixed Budget: ${state.data.fixedBudget}`
+                        : `Estimate: ${state.data.estimatedRange || 'N/A'}`;
+
+                    const waText =
+                        `Hi Abhishek! I just submitted a quote via the ShutterPhrase website.\n\n` +
+                        `📁 *Project Dossier*\n` +
+                        `• Name: ${state.data.name || 'N/A'}\n` +
+                        `• Category: ${state.data.service || 'N/A'}\n` +
+                        `• Client Type: ${state.data.clientType || 'N/A'}\n` +
+                        `• Duration: ${state.data.duration || 'N/A'}\n` +
+                        `• Usage: ${usageLabel}\n` +
+                        `• Add-ons: ${addonsLabel}\n` +
+                        `• Location: ${state.data.location || 'N/A'}\n` +
+                        `• ${budgetLabel}\n\n` +
+                        `Looking forward to hearing from you!`;
 
                     appendButtons([
-                        { label: "Start Over", value: "reset", next: "reset" },
-                        { label: "Chat on WhatsApp", action: "link", url: waUrl }
+                        { label: "💬 Chat on WhatsApp", action: "link", url: `https://wa.me/9867113855?text=${encodeURIComponent(waText)}` },
+                        { label: "Start Over", value: "reset", next: "reset" }
                     ]);
                 }, 1500);
                 break;
+            }
 
             case 'reset':
                 chatBody.innerHTML = '';
-                state.data = { service: null, clientType: null, duration: null, quantity: null, usage: null, complexity: null, location: null, addons: [], name: null, email: null, phone: null, estimatedRange: null, breakdown: null };
+                state.data = { service: null, clientType: null, duration: null, quantity: null, usage: [], complexity: null, location: null, addons: [], name: null, email: null, phone: null, estimatedRange: null, breakdown: null, fixedBudget: null };
                 advanceFlow('welcome');
                 break;
         }
     }
 
-    // --- Backend API Integration ---
+    // ── ✅ GET-based transmission — works with doGet in Apps Script ──
     function sendQuoteRequest(data) {
-        // Updated with your new Google Apps Script Deployment URL
-        const GOOGLE_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwNFYgC5abQxC-91F12AltyjozV8veRiEVDJt9FSGZC3pQ87EuyiRQc4p2lHylc-vpu/exec";
+        const params = new URLSearchParams({ payload: JSON.stringify(data) });
+        const url = `${GOOGLE_WEBHOOK_URL}?${params.toString()}`;
 
-        // Wrap the data as standard URL-encoded Form Data to bypass Google's strict CORS blocks
-        const formData = new URLSearchParams();
-        formData.append('payload', JSON.stringify(data));
-
-        fetch(GOOGLE_WEBHOOK_URL, {
-            method: 'POST',
-            mode: 'no-cors', // ADDED: Bypasses strict browser cross-origin blocks
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: formData.toString()
-        })
-        .then(() => console.log("Lead successfully sent to Google Sheets!"))
-        .catch(err => console.error("Error sending lead:", err));
+        fetch(url, { method: "GET", mode: "no-cors" })
+            .then(() => console.log("✅ Lead sent to Google Sheets"))
+            .catch(err => console.error("❌ Transmission error:", err));
     }
 
-    // Auto-open greeting briefly on load to draw attention
+    // Pulse toggle after 5s to draw attention
     setTimeout(() => {
-        if(!chatWin.classList.contains('open') && state.step === 'welcome') {
+        if (!chatWin.classList.contains('open') && state.step === 'welcome') {
             toggleBtn.style.transform = 'scale(1.15)';
             setTimeout(() => toggleBtn.style.transform = '', 300);
         }
