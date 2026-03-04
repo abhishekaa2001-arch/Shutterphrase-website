@@ -13,6 +13,57 @@
 <link rel="icon" href="https://lh3.googleusercontent.com/d/1oBEoO4rF3oUw0M4DH6Z7QKmWl-JivlFG=s200" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
+<!-- ================= OPEN GRAPH / SOCIAL PREVIEW ================= -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="ShutterPhrase | Premium Photography — Mumbai, Pune, Lonavala & Alibaug">
+<meta property="og:description" content="Curated, narrative-driven photography for individuals, creators, founders, and brands. Portraits, editorial, product, sports and events.">
+<meta property="og:image" content="https://res.cloudinary.com/dbwqlw6pr/image/upload/v1772480262/portrait-3_djbmch.jpg">
+<meta property="og:url" content="https://shutterphrase.in">
+<meta property="og:site_name" content="ShutterPhrase">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ShutterPhrase | Premium Photography">
+<meta name="twitter:description" content="Curated photography for creators, founders, and brands across Mumbai, Pune, Lonavala & Alibaug.">
+<meta name="twitter:image" content="https://res.cloudinary.com/dbwqlw6pr/image/upload/v1772480262/portrait-3_djbmch.jpg">
+
+<!-- ================= STRUCTURED DATA (LOCAL BUSINESS + PHOTOGRAPHER) ================= -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": ["LocalBusiness", "ProfessionalService"],
+  "name": "ShutterPhrase",
+  "description": "Curated, narrative-driven photography for individuals, creators, founders, and brands. Specialising in portrait, editorial, product, sports, and event photography.",
+  "url": "https://shutterphrase.in",
+  "logo": "https://lh3.googleusercontent.com/d/1oBEoO4rF3oUw0M4DH6Z7QKmWl-JivlFG=s200",
+  "image": "https://res.cloudinary.com/dbwqlw6pr/image/upload/v1772480262/portrait-3_djbmch.jpg",
+  "telephone": "+919867113855",
+  "email": "abhishek@shutterphrase.in",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Mumbai",
+    "addressRegion": "Maharashtra",
+    "addressCountry": "IN"
+  },
+  "areaServed": [
+    { "@type": "City", "name": "Mumbai" },
+    { "@type": "City", "name": "Pune" },
+    { "@type": "City", "name": "Lonavala" },
+    { "@type": "City", "name": "Alibaug" }
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Photography Services",
+    "itemListElement": [
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Portrait Photography" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Product Photography" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Editorial Photography" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Sports Photography" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Event & Festival Photography" } }
+    ]
+  },
+  "sameAs": ["https://www.instagram.com/shutterphrase.in/"]
+}
+</script>
+
 <style>
 :root {
     --pad-x: 6%;
@@ -57,6 +108,25 @@ section { padding: var(--pad-y) var(--pad-x); max-width: 1800px; margin: 0 auto;
 
 h1, h2 { font-family: "Cormorant Garamond", serif; letter-spacing: .5px; line-height: 1.1; text-shadow: 0 0 40px rgba(255,255,255,0.15); }
 h2 { font-size: clamp(2rem, 5vw, 3.5rem); }
+
+/* ================= INTRO LOADER ================= */
+#sp-intro {
+    position: fixed; inset: 0; background: #050505; z-index: 99999;
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+#sp-intro.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+#sp-intro img {
+    height: 36px; opacity: 0;
+    animation: introFade 1.8s ease forwards;
+    filter: drop-shadow(0 0 20px rgba(245,166,35,0.3));
+}
+@keyframes introFade {
+    0%   { opacity: 0; transform: scale(0.95); filter: blur(6px) drop-shadow(0 0 20px rgba(245,166,35,0.1)); }
+    40%  { opacity: 1; transform: scale(1);    filter: blur(0px) drop-shadow(0 0 30px rgba(245,166,35,0.4)); }
+    75%  { opacity: 1; }
+    100% { opacity: 0; }
+}
 
 /* ================= CUSTOM VIEWFINDER CURSOR ================= */
 #cursor { display: none; }
@@ -221,10 +291,40 @@ nav a:hover { opacity: 1; color: #ffdf85; text-shadow: 0 0 15px rgba(245,166,35,
 #close { top: 15px; right: 15px; font-size: 40px; background: rgba(0,0,0,0.5); border-radius: 50%; width: 45px; height: 45px; border: 1px solid rgba(255,255,255,0.1); }
 @media (min-width: 768px) { #prev { left: 30px; transform: none; } #next { right: 30px; transform: none; } #close { top: 30px; right: 30px; font-size: 50px; background: transparent; border: none; } }
 
-/* ================= CHATBOT UI ================= */
+/* ================= CHATBOT TOGGLE BUTTON ================= */
 #sp-chat-widget { position: fixed; bottom: 30px; right: 30px; z-index: 9999; font-family: Inter, sans-serif; }
-#sp-chat-toggle { box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
+#sp-chat-toggle-wrap {
+    display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer;
+    padding-bottom: env(safe-area-inset-bottom);
+}
+#sp-chat-logo-btn {
+    position: relative; width: 58px; height: 58px; border-radius: 50%;
+    background: #0a0a0a; border: none; cursor: pointer; padding: 0;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+}
+#sp-chat-logo-btn img { width: 36px; height: 36px; border-radius: 50%; object-fit: contain; position: relative; z-index: 2; }
+.sp-pulse-ring {
+    position: absolute; inset: -6px; border-radius: 50%;
+    border: 1.5px solid rgba(245,166,35,0.6);
+    animation: goldPulse 2.2s ease-out infinite;
+}
+.sp-pulse-ring:nth-child(2) { animation-delay: 0.7s; inset: -12px; border-color: rgba(245,166,35,0.3); }
+@keyframes goldPulse {
+    0%   { transform: scale(1);    opacity: 0.8; }
+    70%  { transform: scale(1.15); opacity: 0;   }
+    100% { transform: scale(1.15); opacity: 0;   }
+}
+#sp-chat-label {
+    font-family: Inter, sans-serif; font-size: 0.7rem; letter-spacing: 1.5px;
+    text-transform: uppercase; color: rgba(255,255,255,0.7);
+    background: rgba(10,10,10,0.8); border: 1px solid rgba(245,166,35,0.25);
+    padding: 5px 12px; border-radius: 20px; backdrop-filter: blur(8px);
+    transition: color 0.3s, border-color 0.3s; white-space: nowrap;
+}
+#sp-chat-toggle-wrap:hover #sp-chat-label { color: #ffdf85; border-color: rgba(245,166,35,0.6); }
 
+/* ================= CHATBOT UI ================= */
 #sp-chat-window {
     position: absolute; bottom: 70px; right: 0; width: calc(100vw - 40px); max-width: 400px; height: 640px; max-height: calc(100vh - 120px);
     background: rgba(15,15,15,0.88); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
@@ -282,14 +382,58 @@ nav a:hover { opacity: 1; color: #ffdf85; text-shadow: 0 0 15px rgba(245,166,35,
 
 @media (max-width: 480px) {
     #sp-chat-widget { bottom: 20px; right: 20px; }
-    #sp-chat-window { position: fixed; bottom: 0; right: 0; width: 100vw; max-width: 100vw; height: 100dvh; max-height: 100dvh; border-radius: 0; border: none; }
+    #sp-chat-window { position: fixed; bottom: 0; right: 0; width: 100vw; max-width: 100vw; height: 100dvh; max-height: 100dvh; border-radius: 0; border: none; padding-bottom: env(safe-area-inset-bottom); }
 }
+
+/* ================= WHO WE WORK WITH ================= */
+.who-strip {
+    padding: 70px var(--pad-x); text-align: center; position: relative; z-index: 10;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.who-strip h3 { font-family: "Cormorant Garamond", serif; font-size: clamp(1.6rem,3.5vw,2.2rem); margin-bottom: 30px; color: #fff; }
+.who-clients {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; max-width: 700px; margin: 0 auto 30px;
+}
+.who-tag {
+    font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+    padding: 8px 18px; border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 30px; color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.03);
+    transition: 0.3s;
+}
+.who-tag:hover { border-color: rgba(245,166,35,0.4); color: #ffdf85; background: rgba(245,166,35,0.05); }
+.who-strip p { font-size: 0.85rem; opacity: 0.5; font-style: italic; max-width: 500px; margin: 0 auto; }
+
+/* ================= SOCIAL PROOF ================= */
+.social-proof { padding: 70px var(--pad-x); text-align: center; position: relative; z-index: 10; }
+.social-proof h3 { font-family: "Cormorant Garamond", serif; font-size: clamp(1.6rem,3.5vw,2.2rem); margin-bottom: 10px; }
+.social-proof .sp-sub { font-size: 0.85rem; opacity: 0.5; margin-bottom: 40px; font-style: italic; }
+.proof-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; max-width: 900px; margin: 0 auto; }
+.proof-card {
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px; padding: 28px 24px; text-align: left; transition: 0.3s;
+    position: relative; overflow: hidden;
+}
+.proof-card::before {
+    content: '"'; font-family: "Cormorant Garamond", serif; font-size: 5rem;
+    color: rgba(245,166,35,0.08); position: absolute; top: -10px; left: 16px; line-height: 1;
+}
+.proof-card:hover { border-color: rgba(245,166,35,0.2); background: rgba(245,166,35,0.03); }
+.proof-text { font-size: 0.9rem; line-height: 1.6; opacity: 0.7; margin-bottom: 16px; font-style: italic; }
+.proof-name { font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase; color: #ffdf85; opacity: 0.8; }
+.proof-role { font-size: 0.72rem; opacity: 0.4; margin-top: 3px; }
+.proof-coming { opacity: 0.3; font-size: 0.8rem; font-style: italic; text-align: center; padding: 20px 0; }
 
 footer { text-align: center; padding: 40px 20px 60px 20px; opacity: .4; letter-spacing: 2px; font-size: .75rem; position: relative; z-index: 10; }
 </style>
 </head>
 
 <body>
+
+<!-- ================= INTRO LOADER ================= -->
+<div id="sp-intro">
+    <img src="https://lh3.googleusercontent.com/d/1oBEoO4rF3oUw0M4DH6Z7QKmWl-JivlFG=s200" alt="ShutterPhrase">
+</div>
 
 <div class="ambient-glow"></div>
 <div id="cursor"></div>
@@ -359,7 +503,7 @@ footer { text-align: center; padding: 40px 20px 60px 20px; opacity: .4; letter-s
 <div id="portfolio-start" style="padding-top:100px; text-align:center; position:relative; z-index:10;" class="reveal">
     <h2>Browse our <span style="color:#ffdf85; font-style:italic; text-shadow:0 0 20px rgba(245,166,35,0.3);">work</span><br>here</h2>
     <p style="margin-top:16px; opacity:0.8; max-width:600px; margin-left:auto; margin-right:auto; font-size:clamp(0.9rem,2vw,1rem); text-shadow:0 0 15px rgba(255,255,255,0.1); padding:0 15px;">
-        Every session is pre-planned, directed, and intentionally edited — for individuals, creators, founders, and brands across Mumbai, Pune, Lonavala, and Alibaug.
+        Every session is pre-planned, directed, and intentionally edited — for individuals, creators, founders, and brands across Mumbai, Pune, Lonavala, and Alibaug.<br><span style="display:inline-block;margin-top:10px;font-size:0.85rem;opacity:0.6;letter-spacing:0.5px;">All sessions include short-form video content — reels and cinematic cuts delivered alongside your images.</span>
     </p>
 </div>
 
@@ -396,10 +540,46 @@ footer { text-align: center; padding: 40px 20px 60px 20px; opacity: .4; letter-s
     </div>
 </div>
 
+<!-- ================= WHO WE WORK WITH ================= -->
+<div class="who-strip reveal">
+    <h3>Who We Work With</h3>
+    <div class="who-clients">
+        <span class="who-tag">Individuals</span>
+        <span class="who-tag">Creators</span>
+        <span class="who-tag">Founders</span>
+        <span class="who-tag">Personal Brands</span>
+        <span class="who-tag">D2C Brands</span>
+        <span class="who-tag">Companies</span>
+        <span class="who-tag">Event Organisers</span>
+        <span class="who-tag">Sports Academies</span>
+        <span class="who-tag">Tournament Organisers</span>
+    </div>
+    <p>We don't shoot for volume. Every project is curated, narrative-driven, and purpose-led.</p>
+</div>
+
+<!-- ================= SOCIAL PROOF ================= -->
+<div class="social-proof reveal">
+    <h3>What Clients Say</h3>
+    <p class="sp-sub">Stories coming soon — this space is reserved for the voices that matter most.</p>
+    <div class="proof-grid">
+        <div class="proof-card">
+            <p class="proof-text">More client stories coming soon. Every project tells one.</p>
+            <p class="proof-name">—</p>
+            <p class="proof-role proof-coming">This space will be updated as we grow.</p>
+        </div>
+        <div class="proof-card">
+            <p class="proof-text">We shoot for identity, narrative, and impact — not volume.</p>
+            <p class="proof-name">Abhishek</p>
+            <p class="proof-role">Founder, ShutterPhrase</p>
+        </div>
+    </div>
+</div>
+
 <section id="contact" style="text-align:center;" class="reveal">
     <h2>Let's Build Something Impactful</h2>
+    <p style="margin-top:16px; opacity:0.5; font-size:0.9rem; font-style:italic;">Abhishek typically responds within 24 hours. Dates are not held without a confirmed booking.</p>
     <div style="margin-top:35px; display:flex; gap:15px; justify-content:center; flex-wrap:wrap;">
-        <a href="/cdn-cgi/l/email-protection#1372717b7a607b767853607b6667677661637b617260763d7a7d" class="cta-btn">Email Us</a>
+        <a href="mailto:abhishek@shutterphrase.in" class="cta-btn">Email Us</a>
         <a href="https://www.instagram.com/shutterphrase.in/" target="_blank" class="cta-btn">Instagram</a>
     </div>
 </section>
@@ -416,10 +596,14 @@ footer { text-align: center; padding: 40px 20px 60px 20px; opacity: .4; letter-s
 
 <!-- ================= CHATBOT HTML ================= -->
 <div id="sp-chat-widget">
-    <button id="sp-chat-toggle" class="cta-btn" style="gap:10px;" aria-label="Open Chatbot">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-        Chat With Us
-    </button>
+    <div id="sp-chat-toggle-wrap" role="button" aria-label="Build Your Project Brief" tabindex="0">
+        <button id="sp-chat-logo-btn" aria-label="Open project brief chatbot">
+            <span class="sp-pulse-ring"></span>
+            <span class="sp-pulse-ring"></span>
+            <img src="https://lh3.googleusercontent.com/d/1oBEoO4rF3oUw0M4DH6Z7QKmWl-JivlFG=s200" alt="ShutterPhrase">
+        </button>
+        <span id="sp-chat-label">Build Your Project Brief</span>
+    </div>
     <div id="sp-chat-window">
         <div class="sp-chat-header">
             <div>
@@ -440,6 +624,19 @@ footer { text-align: center; padding: 40px 20px 60px 20px; opacity: .4; letter-s
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 document.addEventListener('DOMContentLoaded', () => {
+
+    // ── Intro Loader ──
+    if (!sessionStorage.getItem('sp_intro_shown')) {
+        setTimeout(() => {
+            const intro = document.getElementById('sp-intro');
+            if (intro) intro.classList.add('hidden');
+            sessionStorage.setItem('sp_intro_shown', 'true');
+        }, 2200);
+    } else {
+        const intro = document.getElementById('sp-intro');
+        if (intro) { intro.style.transition = 'none'; intro.classList.add('hidden'); }
+    }
+
 
     let isScrolling = false;
     const heroSection          = document.getElementById('hero-scroll-section');
@@ -761,11 +958,12 @@ const ShutterPhraseChatbot = (function () {
         complexity: { simple: 1, lifestyle: 1.2, creative: 1.35, multiple_setups: 1.5 },
         addons: {
             universal: [
-                { id: "adv_retouch",    name: "Advanced Retouching (+₹2,500)", est: 2500  },
-                { id: "express",        name: "Express Delivery (+15%)",         mult: 1.15 },
-                { id: "bts_reel",       name: "BTS Reel (+₹2,500)",             est: 2500  },
-                { id: "creative_dir",   name: "Creative Direction (+₹1,500)",   est: 1500  },
-                { id: "custom_concept", name: "Custom Concept (+₹3,500)",       est: 3500  }
+                { id: "adv_retouch",    name: "Advanced Retouching (+₹2,500)",    est: 2500  },
+                { id: "express",        name: "Express Delivery (+15%)",            mult: 1.15 },
+                { id: "bts_reel",       name: "BTS Reel (+₹2,500)",                est: 2500  },
+                { id: "creative_dir",   name: "Creative Direction (+₹1,500)",      est: 1500  },
+                { id: "custom_concept", name: "Custom Concept (+₹3,500)",          est: 3500  },
+                { id: "raw_files",      name: "Raw Content Delivery (+20–35%)",    pct: 0.275 }
             ],
             product: [
                 { id: "amz_opt",   name: "E-Comm Optimization (+₹5,000)", est: 5000 },
@@ -790,8 +988,8 @@ const ShutterPhraseChatbot = (function () {
     const faqs = {
         wedding:      "We don't cover weddings or private social ceremonies. Our work is focused on individuals, creators, brands, and organised events. For wedding photography, we'd recommend finding a specialist team that works exclusively in that space.",
         birthday:     "We don't cover private parties or social gatherings. We selectively work on curated brand-led or community events.",
-        videography:  "Photography is our main offering. Videography may be available for select projects depending on scale — this would be discussed during your proposal.",
-        raw:          "We don't deliver raw files. You'll receive professionally curated and edited final selections that meet our quality standards.",
+        videography:  "All our packages include short-form video content — reels and cinematic mini videos delivered alongside your images. Dedicated video production is a separate service we offer but it is not bundled into photography packages. If you need full video production, just mention it in your brief and Abhishek will put together a separate proposal.",
+        raw:          "We don't deliver raw files as part of our standard scope. Every session includes professionally curated and edited final selections that meet our quality standards. That said, raw content is available as an add-on if you specifically need it — just let us know when submitting your brief and we'll include it in your proposal.",
         delivery:     "Delivery timelines depend on the session type. Portraits are typically a few working days. Products depend on quantity. Events depend on coverage scale. Exact timelines are always confirmed before the shoot.",
         travel:       "Yes, we travel for the right projects. We're based in Mumbai and regularly shoot in Pune, Lonavala, and Alibaug. Outstation travel is quoted separately and confirmed in your proposal.",
         booking:      "Here's how it works: you submit an inquiry here, we have a short discovery call if needed, then Abhishek sends you a proposal. A booking amount secures your date — dates are not blocked without confirmation.",
@@ -912,11 +1110,16 @@ const ShutterPhraseChatbot = (function () {
         return false;
     }
 
-    toggleBtn.addEventListener('click', openChat);
+    const toggleWrap = document.getElementById('sp-chat-toggle-wrap');
+    if (toggleWrap) {
+        toggleWrap.addEventListener('click', openChat);
+        toggleWrap.addEventListener('keypress', e => { if (e.key === 'Enter') openChat(); });
+    }
     closeBtn.addEventListener('click', closeChat);
     document.addEventListener('keydown', e => { if (e.key === 'Escape' && chatWin.classList.contains('open')) closeChat(); });
     document.addEventListener('mousedown', e => {
-        if (chatWin.classList.contains('open') && !chatWin.contains(e.target) && !toggleBtn.contains(e.target)) closeChat();
+        const tw = document.getElementById('sp-chat-toggle-wrap');
+        if (chatWin.classList.contains('open') && !chatWin.contains(e.target) && !(tw && tw.contains(e.target))) closeChat();
     });
     sendBtn.addEventListener('click', handleTextSubmit);
     textInput.addEventListener('keypress', e => { if (e.key === 'Enter') handleTextSubmit(); });
@@ -940,7 +1143,7 @@ const ShutterPhraseChatbot = (function () {
             }
             else if (state.step === 'fixed_budget_entry') {
                 state.data.fixedBudget = val;
-                appendMsg(`Got it — ₹${val} noted. Just a few more details to complete your dossier.`, 'bot');
+                appendMsg(`Got it — noted. That helps Abhishek tailor the proposal to your vision. Just a couple more details and your brief is complete.`, 'bot');
                 setTimeout(() => advanceFlow('lead_name'), 800);
             }
             else if (state.step === 'lead_name')  { state.data.name = val;  advanceFlow('lead_email'); }
@@ -990,9 +1193,14 @@ const ShutterPhraseChatbot = (function () {
 
         // ── Add-ons baked in (selected BEFORE estimate is shown) ──
         state.data.addons.forEach(addId => {
-            // Dynamic on-set assistant pricing
+            // Dynamic on-set assistant pricing by duration
             if (addId === 'onset_assist') {
                 finalEst += onsetAssistCost[state.data.duration] || 3500;
+                return;
+            }
+            // Raw files: percentage of running total
+            if (addId === 'raw_files') {
+                finalEst *= 1.275; // midpoint of 20–35%
                 return;
             }
             let a = pricingConfig.addons.universal.find(x => x.id === addId) ||
@@ -1021,20 +1229,44 @@ const ShutterPhraseChatbot = (function () {
         switch (step) {
 
             case 'welcome':
-                if (!isReprompt) appendMsg("Hey! Let's figure out the right session for you. What are we shooting?", 'bot');
-                appendButtons([
-                    { label: "Portraits",      value: "portraits", saveTo: "service", next: "client_type" },
-                    { label: "Product",        value: "product",   saveTo: "service", next: "client_type" },
-                    { label: "Sports",         value: "sports",    saveTo: "service", next: "client_type" },
-                    { label: "Event / Festival", value: "festivals", saveTo: "service", next: "client_type" },
-                    { label: "Editorial",      value: "editorial", saveTo: "service", next: "client_type" },
-                    { label: "Custom Project", value: "custom",    saveTo: "service", next: "client_type" },
-                    { label: "I have a question", value: "faq",   next: "faq_menu" }
-                ]);
+                if (!isReprompt) {
+                    appendMsg("Welcome. You're in the right place. Whether you have a full vision or just a starting point, I'll help you shape it into a complete project brief — so Abhishek can bring it to life exactly the way you imagined.", 'bot');
+                    setTimeout(() => {
+                        appendMsg("Let's start with the most exciting part — what are we creating together?", 'bot');
+                        const opts = document.createElement('div');
+                        opts.className = 'sp-chat-opts';
+                        [
+                            { label: "Portraits",           value: "portraits",  saveTo: "service", next: "client_type" },
+                            { label: "Product",             value: "product",    saveTo: "service", next: "client_type" },
+                            { label: "Sports",              value: "sports",     saveTo: "service", next: "client_type" },
+                            { label: "Event / Festival",    value: "festivals",  saveTo: "service", next: "client_type" },
+                            { label: "Editorial",           value: "editorial",  saveTo: "service", next: "client_type" },
+                            { label: "Custom Project",      value: "custom",     saveTo: "service", next: "client_type" },
+                            { label: "I have a question",   value: "faq",        next: "faq_menu"  }
+                        ].forEach(opt => {
+                            const btn = document.createElement('button');
+                            btn.className = 'sp-opt-btn'; btn.innerText = opt.label;
+                            btn.onclick = () => handleButtonSelect(opt);
+                            opts.appendChild(btn);
+                        });
+                        chatBody.appendChild(opts); scrollToBottom();
+                    }, 900);
+                } else {
+                    appendMsg("Let's start with the most exciting part — what are we creating together?", 'bot');
+                    appendButtons([
+                        { label: "Portraits",           value: "portraits",  saveTo: "service", next: "client_type" },
+                        { label: "Product",             value: "product",    saveTo: "service", next: "client_type" },
+                        { label: "Sports",              value: "sports",     saveTo: "service", next: "client_type" },
+                        { label: "Event / Festival",    value: "festivals",  saveTo: "service", next: "client_type" },
+                        { label: "Editorial",           value: "editorial",  saveTo: "service", next: "client_type" },
+                        { label: "Custom Project",      value: "custom",     saveTo: "service", next: "client_type" },
+                        { label: "I have a question",   value: "faq",        next: "faq_menu"  }
+                    ]);
+                }
                 break;
 
             case 'faq_menu':
-                appendMsg("Sure — what would you like to know?", 'bot');
+                appendMsg("Of course! I'm happy to help. What would you like to know?", 'bot');
                 appendButtons([
                     { label: "Do you cover weddings?",     value: "wedding",     next: "faq_answer_wedding" },
                     { label: "Do you deliver raw files?",  value: "raw",         next: "faq_answer_raw" },
@@ -1056,22 +1288,28 @@ const ShutterPhraseChatbot = (function () {
             case 'faq_answer_different':   appendMsg(faqs.different,   'bot'); setTimeout(() => advanceFlow('faq_followup'), 800); break;
 
             case 'faq_followup':
-                appendMsg("Do you have any more questions?", 'bot');
+                appendMsg("Happy to help with anything else — do you have more questions, or are you ready to start building your brief?", 'bot');
                 appendButtons([
                     { label: "Yes, another question",  value: "more", next: "faq_menu" },
                     { label: "No, let's book a session", value: "book", next: "welcome" }
                 ]);
                 break;
 
-            case 'client_type':
-                appendMsg("Who is this session for?", 'bot');
+            case 'client_type': {
+                const serviceNames = { portraits: "Portraits", product: "Product Photography", sports: "Sports Coverage", festivals: "Events & Festivals", editorial: "Editorial", custom: "a Custom Project" };
+                const sName = serviceNames[state.data.service] || "this session";
+                appendMsg(`${sName} — great choice. Let's build this out properly.`, 'bot');
+                setTimeout(() => appendMsg("Tell me a little about who this is for — that helps us shape the right brief.", 'bot'), 600);
+                setTimeout(() => {
                 appendButtons([
-                    { label: "Individual / Creator",    value: "personal",    saveTo: "clientType", next: "branch_post_client" },
-                    { label: "Founder / Personal Brand",value: "startup",     saveTo: "clientType", next: "branch_post_client" },
-                    { label: "Brand / D2C Company",     value: "established", saveTo: "clientType", next: "branch_post_client" },
-                    { label: "Agency / Organisation",   value: "agency",      saveTo: "clientType", next: "branch_post_client" }
-                ]);
+                        { label: "Individual / Creator",    value: "personal",    saveTo: "clientType", next: "branch_post_client" },
+                        { label: "Founder / Personal Brand",value: "startup",     saveTo: "clientType", next: "branch_post_client" },
+                        { label: "Brand / D2C Company",     value: "established", saveTo: "clientType", next: "branch_post_client" },
+                        { label: "Agency / Organisation",   value: "agency",      saveTo: "clientType", next: "branch_post_client" }
+                    ]);
+                }, 1200);
                 break;
+            }
 
             case 'branch_post_client':
                 if (state.data.service === 'custom')    { advanceFlow('lead_name');        return; }
@@ -1081,12 +1319,12 @@ const ShutterPhraseChatbot = (function () {
                 break;
 
             case 'product_quantity':
-                appendMsg("How many products need to be photographed?", 'bot');
+                appendMsg("Love it. How many products are we photographing? This helps us scope the session correctly.", 'bot');
                 requireTextInput("Enter a number (e.g. 15)");
                 break;
 
             case 'duration':
-                appendMsg("How long do you need the session to be?", 'bot');
+                appendMsg("How much time are we working with?", 'bot');
                 appendButtons([
                     { label: "Quick Session (1–2 hrs)", value: "quick_session", saveTo: "duration", next: "usage" },
                     { label: "Half Day",                value: "half_day",      saveTo: "duration", next: "usage" },
@@ -1096,7 +1334,7 @@ const ShutterPhraseChatbot = (function () {
                 break;
 
             case 'usage':
-                appendMsg("How will the images be used? <em style='font-size:0.8em;opacity:0.6;'>(Select all that apply)</em>", 'bot');
+                appendMsg("Where will these images live? Select everything that applies — this helps us get the pricing right. <em style='font-size:0.8em;opacity:0.6;'>(Select all that apply)</em>", 'bot');
                 state.data.usage = [];
                 appendMultiSelect([
                     { id: "personal",             name: "Personal Use" },
@@ -1114,7 +1352,7 @@ const ShutterPhraseChatbot = (function () {
                 break;
 
             case 'complexity':
-                appendMsg(state.data.service === 'product' ? "What kind of setup are you looking at?" : "What level of creative direction do you need?", 'bot');
+                appendMsg(state.data.service === 'product' ? "What kind of setup are we building?" : "How much creative direction are you looking for? We can keep it clean and simple, or go full concept.", 'bot');
                 appendButtons([
                     { label: "Simple / Standard",       value: "simple",          saveTo: "complexity", next: "location" },
                     { label: "Lifestyle Setup",         value: "lifestyle",       saveTo: "complexity", next: "location" },
@@ -1124,7 +1362,7 @@ const ShutterPhraseChatbot = (function () {
                 break;
 
             case 'location':
-                appendMsg("Where will the session take place?", 'bot');
+                appendMsg("Where are we shooting?", 'bot');
                 appendButtons([
                     { label: "Mumbai / Pune / Lonavala / Alibaug", value: "local",      saveTo: "location", next: "upsell" },
                     { label: "Outstation",                          value: "outstation", saveTo: "location", next: "upsell" }
@@ -1133,7 +1371,7 @@ const ShutterPhraseChatbot = (function () {
 
             // ── Add-ons BEFORE estimate so they're baked in ──
             case 'upsell': {
-                appendMsg("Want to add anything to your session? <em style='font-size:0.8em;opacity:0.6;'>(Select all that apply, or skip)</em>", 'bot');
+                appendMsg("Almost there — want to elevate the session with any of these? Every add-on gets baked into your estimate. <em style='font-size:0.8em;opacity:0.6;'>(Select all that apply, or skip)</em>", 'bot');
                 state.data.addons = [];
                 let pool = [...pricingConfig.addons.universal];
                 if (state.data.service === 'product') pool = [...pool, ...pricingConfig.addons.product];
@@ -1154,12 +1392,12 @@ const ShutterPhraseChatbot = (function () {
             case 'estimate': {
                 const est = calculateEstimate();
                 if (est.custom) {
-                    appendMsg("Given the scale of this project, Abhishek will put together a custom proposal for you.", 'bot');
+                    appendMsg("This project is exciting — and it deserves a custom proposal. Abhishek will put one together personally for you.", 'bot');
                     state.data.estimatedRange = "Custom Quote Required";
                     setTimeout(() => advanceFlow('budget_prompt'), 1500);
                 } else {
                     state.data.estimatedRange = `${formatInr(est.low)} - ${formatInr(est.high)}`;
-                    let txt = `Based on your brief, this session falls into our <strong>${est.tier}</strong>.<br><br>Your estimate — including all selected add-ons — is <strong>${formatInr(est.low)} – ${formatInr(est.high)}</strong>.`;
+                    let txt = `Here's where your project lands. Based on everything in your brief, this session sits in our <strong>${est.tier}</strong>.<br><br>Your estimate — built specifically around your vision, including all selected add-ons — is <strong>${formatInr(est.low)} – ${formatInr(est.high)}</strong>.`;
                     if (est.outstation) {
                         txt += `<br><br><em>A travel & accommodation estimate of ₹3,000–₹5,000 has been included. Final travel charges will be confirmed when Abhishek sends your proposal.</em>`;
                     }
@@ -1170,7 +1408,7 @@ const ShutterPhraseChatbot = (function () {
             }
 
             case 'budget_prompt':
-                appendMsg("Do you have a fixed budget in mind?", 'bot');
+                appendMsg("Almost done! Do you have a fixed budget in mind, or are you happy working with the estimate?", 'bot');
                 appendButtons([
                     { label: "I have a fixed budget", value: "yes", next: "fixed_budget_entry" },
                     { label: "No, the estimate works", value: "no", next: "lead_name" }
@@ -1183,27 +1421,27 @@ const ShutterPhraseChatbot = (function () {
                 break;
 
             case 'lead_name':
-                appendMsg("Let's put together your dossier. What's your full name?", 'bot');
+                appendMsg("You're almost there! Just a few details so Abhishek can put your proposal together personally. What's your full name?", 'bot');
                 requireTextInput("Enter your full name");
                 break;
 
             case 'lead_email':
-                appendMsg(`Got it, ${(state.data.name || '').split(' ')[0]}. Best email to send the proposal to?`, 'bot');
+                appendMsg(`Perfect, ${(state.data.name || '').split(' ')[0]}! What's the best email to send the proposal to?`, 'bot');
                 requireTextInput("Enter your email address");
                 break;
 
             case 'lead_phone':
-                appendMsg("And your phone number? (Type 'skip' if you'd prefer not to share.)", 'bot');
+                appendMsg("And the best number to reach you on? (Type 'skip' if you'd prefer not to share.)", 'bot');
                 requireTextInput("Enter phone number or type 'skip'");
                 break;
 
             case 'complete': {
                 if (state.data.phone && state.data.phone.toLowerCase() === 'skip') state.data.phone = "Not provided";
-                appendMsg("Your dossier is complete. Sending it to Abhishek now.", 'bot');
+                appendMsg("That's a wrap on your brief — and honestly, it looks like a great project. Sending your dossier to Abhishek now.", 'bot');
                 appendSysMsg("Transmitting your project brief...");
                 sendQuoteRequest(state.data);
                 setTimeout(() => {
-                    appendMsg("All done ✓ Abhishek will review your brief and reach out with a proposal shortly.", 'bot');
+                    appendMsg("All done ✓ Abhishek will personally review your dossier and reach out with a tailored proposal. We're excited to bring your vision to life.", 'bot');
                     const usageLabel  = Array.isArray(state.data.usage)  ? state.data.usage.join(', ')  : (state.data.usage  || 'N/A');
                     const addonsLabel = state.data.addons.length > 0     ? state.data.addons.join(', ') : 'None';
                     const budgetLabel = state.data.fixedBudget
@@ -1245,12 +1483,7 @@ const ShutterPhraseChatbot = (function () {
             .catch(err => console.error("❌ Transmission error:", err));
     }
 
-    setTimeout(() => {
-        if (!chatWin.classList.contains('open') && state.step === 'welcome') {
-            toggleBtn.style.transform = 'scale(1.15)';
-            setTimeout(() => toggleBtn.style.transform = '', 300);
-        }
-    }, 5000);
+    // pulse hint handled by CSS animation on .sp-pulse-ring
 
 })();
 </script>
