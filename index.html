@@ -399,7 +399,7 @@ footer { text-align: center; padding: 40px 20px 60px 20px; opacity: .4; letter-s
 <section id="contact" style="text-align:center;" class="reveal">
     <h2>Let's Build Something Impactful</h2>
     <div style="margin-top:35px; display:flex; gap:15px; justify-content:center; flex-wrap:wrap;">
-        <a href="mailto:abhishek@shutterphrase.in" class="cta-btn">Email Us</a>
+        <a href="/cdn-cgi/l/email-protection#1372717b7a607b767853607b6667677661637b617260763d7a7d" class="cta-btn">Email Us</a>
         <a href="https://www.instagram.com/shutterphrase.in/" target="_blank" class="cta-btn">Instagram</a>
     </div>
 </section>
@@ -438,7 +438,7 @@ footer { text-align: center; padding: 40px 20px 60px 20px; opacity: .4; letter-s
     </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 document.addEventListener('DOMContentLoaded', () => {
 
     let isScrolling = false;
@@ -1047,13 +1047,21 @@ const ShutterPhraseChatbot = (function () {
                 ]);
                 break;
 
-            case 'faq_answer_wedding':     appendMsg(faqs.wedding,     'bot'); setTimeout(() => advanceFlow('faq_menu'), 800); break;
-            case 'faq_answer_raw':         appendMsg(faqs.raw,         'bot'); setTimeout(() => advanceFlow('faq_menu'), 800); break;
-            case 'faq_answer_booking':     appendMsg(faqs.booking,     'bot'); setTimeout(() => advanceFlow('faq_menu'), 800); break;
-            case 'faq_answer_travel':      appendMsg(faqs.travel,      'bot'); setTimeout(() => advanceFlow('faq_menu'), 800); break;
-            case 'faq_answer_delivery':    appendMsg(faqs.delivery,    'bot'); setTimeout(() => advanceFlow('faq_menu'), 800); break;
-            case 'faq_answer_videography': appendMsg(faqs.videography, 'bot'); setTimeout(() => advanceFlow('faq_menu'), 800); break;
-            case 'faq_answer_different':   appendMsg(faqs.different,   'bot'); setTimeout(() => advanceFlow('faq_menu'), 800); break;
+            case 'faq_answer_wedding':     appendMsg(faqs.wedding,     'bot'); setTimeout(() => advanceFlow('faq_followup'), 800); break;
+            case 'faq_answer_raw':         appendMsg(faqs.raw,         'bot'); setTimeout(() => advanceFlow('faq_followup'), 800); break;
+            case 'faq_answer_booking':     appendMsg(faqs.booking,     'bot'); setTimeout(() => advanceFlow('faq_followup'), 800); break;
+            case 'faq_answer_travel':      appendMsg(faqs.travel,      'bot'); setTimeout(() => advanceFlow('faq_followup'), 800); break;
+            case 'faq_answer_delivery':    appendMsg(faqs.delivery,    'bot'); setTimeout(() => advanceFlow('faq_followup'), 800); break;
+            case 'faq_answer_videography': appendMsg(faqs.videography, 'bot'); setTimeout(() => advanceFlow('faq_followup'), 800); break;
+            case 'faq_answer_different':   appendMsg(faqs.different,   'bot'); setTimeout(() => advanceFlow('faq_followup'), 800); break;
+
+            case 'faq_followup':
+                appendMsg("Do you have any more questions?", 'bot');
+                appendButtons([
+                    { label: "Yes, another question",  value: "more", next: "faq_menu" },
+                    { label: "No, let's book a session", value: "book", next: "welcome" }
+                ]);
+                break;
 
             case 'client_type':
                 appendMsg("Who is this session for?", 'bot');
