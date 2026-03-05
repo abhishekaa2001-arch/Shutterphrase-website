@@ -945,6 +945,22 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // ── Auto-mute on fullscreen exit (button or Escape key) ──
+    const onFullscreenChange = () => {
+        if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+            document.querySelectorAll('.showreel-inner video').forEach(video => {
+                video.muted = true;
+                const mb = video.parentElement.querySelector('.mute-btn');
+                if (mb) {
+                    mb.querySelector('.icon-muted').style.display = 'block';
+                    mb.querySelector('.icon-unmuted').style.display = 'none';
+                }
+            });
+        }
+    };
+    document.addEventListener('fullscreenchange', onFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', onFullscreenChange);
 });
 </script>
 
