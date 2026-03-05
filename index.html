@@ -167,9 +167,15 @@ h2 { font-size: clamp(2rem, 5vw, 3.5rem); }
 
 /* ================= NAV ================= */
 nav {
-    position: absolute; top: 0; left: 0; right: 0; z-index: 100;
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     padding: 25px var(--pad-x); display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px;
+    background: linear-gradient(to bottom, rgba(5,5,5,0.85) 0%, transparent 100%);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    transform: translateY(0);
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.3s;
 }
+nav.nav-hidden { transform: translateY(-100%); }
+nav.nav-solid { background: rgba(5,5,5,0.95); }
 @media (min-width: 768px) { nav { flex-direction: row; justify-content: space-between; padding: 35px var(--pad-x); } }
 nav img { height: 24px; opacity: .9; transition: 0.3s; filter: drop-shadow(0px 2px 15px rgba(255,255,255,0.2)); }
 @media (min-width: 768px) { nav img { height: 28px; } }
@@ -757,12 +763,38 @@ footer { text-align: center; padding: 40px 20px 60px 20px; opacity: .4; letter-s
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ── Smooth scroll override for founders nav link (prevents bungee) ──
+    // ── Smart nav hide/show on scroll direction ──
+    const nav = document.getElementById('nav-top');
+    let lastScrollY = window.pageYOffset;
+    let navTicking = false;
+    window.addEventListener('scroll', () => {
+        if (!navTicking) {
+            requestAnimationFrame(() => {
+                const currentScrollY = window.pageYOffset;
+                const scrollingDown = currentScrollY > lastScrollY;
+                const pastThreshold = currentScrollY > 80;
+                if (scrollingDown && pastThreshold) {
+                    nav.classList.add('nav-hidden');
+                } else {
+                    nav.classList.remove('nav-hidden');
+                }
+                nav.classList.toggle('nav-solid', currentScrollY > 50);
+                lastScrollY = currentScrollY;
+                navTicking = false;
+            });
+            navTicking = true;
+        }
+    }, { passive: true });
+
+    // ── Smooth scroll override for founders nav link (bypasses sticky container) ──
     document.querySelectorAll('a[href="#founders-teaser"]').forEach(link => {
         link.addEventListener('click', e => {
             e.preventDefault();
             const target = document.getElementById('founders-teaser');
-            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (target) {
+                const top = target.getBoundingClientRect().top + window.pageYOffset - 80;
+                window.scrollTo({ top, behavior: 'smooth' });
+            }
         });
     });
 
