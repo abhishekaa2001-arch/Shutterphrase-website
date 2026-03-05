@@ -385,6 +385,114 @@ nav a:hover { opacity: 1; color: #ffdf85; text-shadow: 0 0 15px rgba(245,166,35,
     #sp-chat-window { position: fixed; bottom: 0; right: 0; width: 100vw; max-width: 100vw; height: 100dvh; max-height: 100dvh; border-radius: 0; border: none; padding-bottom: env(safe-area-inset-bottom); }
 }
 
+/* ================= FOUNDER'S PORTFOLIO TEASER ================= */
+.founders-teaser {
+    padding: 60px var(--pad-x);
+    position: relative; z-index: 10;
+}
+.founders-teaser-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid rgba(245,166,35,0.15);
+    border-radius: 20px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.02);
+    backdrop-filter: blur(10px);
+    transition: border-color 0.4s, box-shadow 0.4s, transform 0.4s cubic-bezier(0.2,0.8,0.2,1);
+    position: relative;
+}
+.founders-teaser-inner::before {
+    content: "";
+    position: absolute; top: 0; left: 0; bottom: 0; width: 3px;
+    background: linear-gradient(to bottom, transparent, rgba(245,166,35,0.6), transparent);
+    border-radius: 3px 0 0 3px;
+    transition: opacity 0.4s;
+}
+.founders-teaser-inner:hover {
+    border-color: rgba(245,166,35,0.4);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(245,166,35,0.08);
+    transform: translateY(-4px);
+}
+.founders-teaser-left {
+    padding: 50px 50px 50px 55px;
+    display: flex; flex-direction: column; justify-content: center;
+}
+.founders-eyebrow {
+    font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(245,166,35,0.8); margin-bottom: 20px; display: block;
+}
+.founders-headline {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    font-weight: 300; line-height: 1; color: #fff;
+    text-shadow: 0 0 40px rgba(255,255,255,0.1);
+    margin-bottom: 20px;
+}
+.founders-rule {
+    width: 40px; height: 1px;
+    background: linear-gradient(90deg, #f5a623, transparent);
+    margin-bottom: 20px;
+}
+.founders-desc {
+    font-size: 0.9rem; line-height: 1.7;
+    color: rgba(255,255,255,0.55);
+    max-width: 380px; margin-bottom: 35px;
+}
+.founders-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: linear-gradient(#050505, #050505) padding-box,
+                linear-gradient(135deg, #f5a623, #ffdf85, #d48300) border-box;
+    border: 1px solid transparent;
+    padding: 12px 28px; border-radius: 50px;
+    color: white; font-family: Inter, sans-serif;
+    font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+    text-decoration: none;
+    transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1), box-shadow 0.4s, color 0.4s;
+    box-shadow: 0 4px 20px rgba(245,166,35,0.1);
+    width: fit-content;
+}
+.founders-btn:hover { transform: scale(1.05); box-shadow: 0 8px 30px rgba(245,166,35,0.3); color: #ffdf85; }
+.founders-btn svg { transition: transform 0.3s; }
+.founders-btn:hover svg { transform: translateX(4px); }
+
+.founders-teaser-right {
+    position: relative; overflow: hidden; min-height: 380px;
+}
+.founders-video-wrap {
+    position: absolute; inset: 0;
+}
+.founders-video {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    opacity: 0.75;
+    transition: opacity 0.4s, transform 0.6s cubic-bezier(0.2,0.8,0.2,1);
+}
+.founders-teaser-inner:hover .founders-video {
+    opacity: 0.9; transform: scale(1.03);
+}
+.founders-video-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, rgba(5,5,5,0.6) 0%, rgba(5,5,5,0.1) 40%, transparent 100%);
+}
+.founders-video-tag {
+    position: absolute; bottom: 20px; right: 20px;
+    font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.08);
+    padding: 6px 14px; border-radius: 20px;
+    backdrop-filter: blur(8px);
+}
+
+@media (max-width: 768px) {
+    .founders-teaser-inner { grid-template-columns: 1fr; }
+    .founders-teaser-left { padding: 40px 30px; }
+    .founders-teaser-right { min-height: 240px; }
+    .founders-video-overlay {
+        background: linear-gradient(to bottom, rgba(5,5,5,0.5) 0%, rgba(5,5,5,0.1) 50%, transparent 100%);
+    }
+}
+
 /* ================= WHO WE WORK WITH ================= */
 .who-strip {
     padding: 70px var(--pad-x); text-align: center; position: relative; z-index: 10;
@@ -443,6 +551,7 @@ footer { text-align: center; padding: 40px 20px 60px 20px; opacity: .4; letter-s
     <h1 class="sr-only">Premium Photographer in Mumbai, Pune, Lonavala & Alibaug</h1>
     <div>
         <a href="#portfolio-start">WORK</a>
+        <a href="#founders-teaser">FOUNDER</a>
         <a href="#contact">CONTACT</a>
         <a href="https://www.instagram.com/shutterphrase.in/" target="_blank">INSTAGRAM</a>
     </div>
@@ -555,6 +664,29 @@ footer { text-align: center; padding: 40px 20px 60px 20px; opacity: .4; letter-s
         <span class="who-tag">Tournament Organisers</span>
     </div>
     <p>We don't shoot for volume. Every project is curated, narrative-driven, and purpose-led.</p>
+</div>
+
+<!-- ================= FOUNDER'S PORTFOLIO TEASER ================= -->
+<div class="founders-teaser reveal" id="founders-teaser">
+    <div class="founders-teaser-inner">
+        <div class="founders-teaser-left">
+            <span class="founders-eyebrow">Behind the Lens</span>
+            <h3 class="founders-headline">Abhishek<br>Ashok</h3>
+            <div class="founders-rule"></div>
+            <p class="founders-desc">The story behind ShutterPhrase — told one frame at a time. A cinematic journey into the vision, the craft, and the intention behind every session.</p>
+            <a href="founders-portfolio.html" class="founders-btn">
+                Enter the Experience
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+        </div>
+        <div class="founders-teaser-right">
+            <div class="founders-video-wrap">
+                <video src="https://res.cloudinary.com/dbwqlw6pr/video/upload/v1772743296/Cinematic_3d_transition_4_seconds_delpmaspu__sbjvob.mp4" autoplay loop muted playsinline class="founders-video"></video>
+                <div class="founders-video-overlay"></div>
+                <div class="founders-video-tag">Founder's Portfolio</div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- ================= SOCIAL PROOF ================= -->
