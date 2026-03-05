@@ -786,14 +786,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, { passive: true });
 
-    // ── Smooth scroll override for founders nav link (bypasses sticky container) ──
+    // ── Smooth scroll override for founders nav link ──
+    // Uses absolute offsetTop walk to bypass sticky container interference
     document.querySelectorAll('a[href="#founders-teaser"]').forEach(link => {
         link.addEventListener('click', e => {
             e.preventDefault();
             const target = document.getElementById('founders-teaser');
             if (target) {
-                const top = target.getBoundingClientRect().top + window.pageYOffset - 80;
-                window.scrollTo({ top, behavior: 'smooth' });
+                let top = 0;
+                let el = target;
+                while (el) { top += el.offsetTop; el = el.offsetParent; }
+                window.scrollTo({ top: top - 80, behavior: 'smooth' });
             }
         });
     });
