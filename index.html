@@ -757,6 +757,15 @@ footer { text-align: center; padding: 40px 20px 60px 20px; opacity: .4; letter-s
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 document.addEventListener('DOMContentLoaded', () => {
 
+    // ── Smooth scroll override for founders nav link (prevents bungee) ──
+    document.querySelectorAll('a[href="#founders-teaser"]').forEach(link => {
+        link.addEventListener('click', e => {
+            e.preventDefault();
+            const target = document.getElementById('founders-teaser');
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    });
+
     // ── Intro Loader ──
     if (!sessionStorage.getItem('sp_intro_shown')) {
         setTimeout(() => {
