@@ -391,7 +391,7 @@ footer {
         <video
             id="scroll-video"
             src="https://res.cloudinary.com/dbwqlw6pr/video/upload/v1772743296/Cinematic_3d_transition_4_seconds_delpmaspu__sbjvob.mp4"
-            muted playsinline preload="auto"
+            muted autoplay playsinline preload="auto"
             style="pointer-events:none;"
         ></video>
 
@@ -528,6 +528,13 @@ footer {
         hideLoader();
     });
 
+    // ── Unlock seeking: play briefly then pause immediately ──
+    // This bypasses browser autoplay restrictions on currentTime scrubbing
+    video.addEventListener('playing', () => {
+        video.pause();
+        video.currentTime = 0;
+    }, { once: true });
+
     // Fallback if canplaythrough doesn't fire
     setTimeout(() => {
         if (!videoReady) { videoReady = true; video.classList.add('ready'); hideLoader(); }
@@ -612,6 +619,19 @@ footer {
     }
 
     window.addEventListener('scroll', onScroll, { passive: true });
+
+    // ── Force unlock on first user interaction if video still locked ──
+    const unlockVideo = () => {
+        if (!videoReady) {
+            video.play().then(() => { video.pause(); video.currentTime = 0; }).catch(() => {});
+        }
+        window.removeEventListener('scroll', unlockVideo);
+        window.removeEventListener('touchstart', unlockVideo);
+        window.removeEventListener('click', unlockVideo);
+    };
+    window.addEventListener('scroll',     unlockVideo, { passive: true, once: true });
+    window.addEventListener('touchstart', unlockVideo, { passive: true, once: true });
+    window.addEventListener('click',      unlockVideo, { once: true });
 
     // Initial call
     setTimeout(update, 100);
