@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abhishek Ashok — Photographer | ShutterPhrase</title>
+<meta name="description" content="Abhishek Ashok. Not a photography service. A visual identity system. Precision in every frame.">
+<meta property="og:title" content="Abhishek Ashok — Photographer">
+<meta property="og:description" content="Not a photography service. A visual identity system.">
+<meta property="og:image" content="https://res.cloudinary.com/dbwqlw6pr/image/upload/v1772480262/portrait-3_djbmch.jpg">
+<link rel="icon" href="https://lh3.googleusercontent.com/d/1oBEoO4rF3oUw0M4DH6Z7QKmWl-JivlFG=s200" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --gold: #f5a623;
+    --gold-light: #ffdf85;
+    --gold-dim: rgba(245,166,35,0.15);
+    --bg: #080808;
+    --text: #f5f5f5;
+}
+
+html { scroll-behavior: auto; }
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: Inter, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    cursor: none;
+}
+
+/* ── Cursor ── */
+#cursor {
+    display: none;
+}
+@media (pointer: fine) {
+    body, a, button { cursor: none !important; }
+    #cursor {
+        position: fixed; top: 0; left: 0; width: 32px; height: 32px;
+        pointer-events: none; z-index: 99999;
+        border: 1px solid rgba(255,255,255,0.15);
+        display: block;
+        transition: width 0.3s cubic-bezier(0.23,1,0.32,1), height 0.3s cubic-bezier(0.23,1,0.32,1), border-color 0.3s;
+    }
+    #cursor::before, #cursor::after {
+        content: ""; position: absolute; width: 100%; height: 100%;
+        border: 1.5px solid rgba(255,223,133,0.9);
+    }
+    #cursor::before {
+        clip-path: polygon(0 0,10px 0,10px 1.5px,1.5px 1.5px,1.5px 10px,0 10px,0 0,100% 100%,100% calc(100% - 10px),calc(100% - 1.5px) calc(100% - 10px),calc(100% - 1.5px) calc(100% - 1.5px),calc(100% - 10px) calc(100% - 1.5px),calc(100% - 10px) 100%,100% 100%);
+    }
+    #cursor::after {
+        clip-path: polygon(100% 0,100% 10px,calc(100% - 1.5px) 10px,calc(100% - 1.5px) 1.5px,calc(100% - 10px) 1.5px,calc(100% - 10px) 0,100% 0,0 100%,10px 100%,10px calc(100% - 1.5px),1.5px calc(100% - 1.5px),1.5px calc(100% - 10px),0 calc(100% - 10px),0 100%);
+    }
+    #cursor.hovered { border-color: rgba(245,166,35,0.6); width: 48px; height: 48px; }
+}
+
+/* ── Nav ── */
+nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    padding: 28px 6%;
+    display: flex; justify-content: space-between; align-items: center;
+    background: linear-gradient(to bottom, rgba(8,8,8,0.9) 0%, transparent 100%);
+    backdrop-filter: blur(0px);
+}
+.nav-logo img {
+    height: 22px; opacity: 0.85;
+    filter: drop-shadow(0 0 12px rgba(255,255,255,0.15));
+    transition: opacity 0.3s;
+}
+.nav-logo img:hover { opacity: 1; }
+.nav-back {
+    font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(255,255,255,0.5); text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.1); padding: 8px 18px; border-radius: 30px;
+    transition: 0.3s; backdrop-filter: blur(8px);
+}
+.nav-back:hover { color: var(--gold-light); border-color: rgba(245,166,35,0.4); }
+
+/* ── Scroll Container ── */
+#scroll-container {
+    position: relative;
+    height: 350vh;
+}
+
+/* ── Sticky Canvas Wrapper ── */
+#sticky-wrap {
+    position: sticky;
+    top: 0;
+    height: 100dvh;
+    width: 100%;
+    overflow: hidden;
+    background: var(--bg);
+}
+
+/* ── Video ── */
+#scroll-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+#scroll-video.ready { opacity: 1; }
+
+/* ── Grain overlay ── */
+#sticky-wrap::after {
+    content: "";
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 2; opacity: 0.4;
+}
+
+/* ── Vignette ── */
+.vignette {
+    position: absolute; inset: 0; z-index: 3; pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 40%, rgba(8,8,8,0.7) 100%);
+}
+
+/* ── Overlay Sections ── */
+#overlay {
+    position: absolute; inset: 0; z-index: 10;
+    pointer-events: none;
+}
+
+.overlay-section {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: 0 8%;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.2,0.8,0.2,1), transform 0.8s cubic-bezier(0.2,0.8,0.2,1);
+    will-change: opacity, transform;
+}
+.overlay-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Section 1 — center */
+.sec-1 { align-items: center; text-align: center; }
+.sec-1 .title {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    font-weight: 300; line-height: 1;
+    letter-spacing: -1px;
+    text-shadow: 0 0 60px rgba(255,255,255,0.15);
+}
+.sec-1 .subtitle {
+    font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+    letter-spacing: 5px; text-transform: uppercase;
+    color: var(--gold); margin-top: 16px; opacity: 0.9;
+    text-shadow: 0 0 20px rgba(245,166,35,0.4);
+}
+.sec-1 .scroll-hint {
+    margin-top: 50px; font-size: 0.7rem; letter-spacing: 3px;
+    text-transform: uppercase; color: rgba(255,255,255,0.3);
+    display: flex; align-items: center; gap: 10px;
+}
+.scroll-hint-line {
+    width: 40px; height: 1px; background: rgba(255,255,255,0.2);
+    animation: lineBreath 2s ease-in-out infinite;
+}
+@keyframes lineBreath { 0%,100%{opacity:0.3;width:40px} 50%{opacity:1;width:60px} }
+
+/* Section 2 — left */
+.sec-2 { align-items: flex-start; padding-left: 8%; }
+.sec-2 .quote {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 300; font-style: italic;
+    line-height: 1.2; max-width: 600px;
+    text-shadow: 0 0 40px rgba(255,255,255,0.1);
+}
+.quote-line {
+    width: 50px; height: 1px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    margin-bottom: 20px;
+}
+
+/* Section 3 — right */
+.sec-3 { align-items: flex-end; padding-right: 8%; text-align: right; }
+.sec-3 .quote { max-width: 550px; }
+.sec-3 .quote-line {
+    background: linear-gradient(270deg, var(--gold), transparent);
+    margin-left: auto; margin-bottom: 20px;
+}
+
+/* Section 4 — center bottom */
+.sec-4 { align-items: center; text-align: center; justify-content: flex-end; padding-bottom: 15%; }
+.sec-4 .quote {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(1.5rem, 3.5vw, 2.8rem);
+    font-weight: 300; line-height: 1.3; max-width: 700px;
+    text-shadow: 0 0 40px rgba(255,255,255,0.1);
+}
+.sec-4 .tag {
+    margin-top: 16px; font-size: 0.72rem; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--gold); opacity: 0.8;
+}
+
+/* Section 5 — center */
+.sec-5 { align-items: center; text-align: center; }
+.sec-5 .quote {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(2.5rem, 7vw, 6rem);
+    font-weight: 300; font-style: italic; line-height: 1.1;
+    text-shadow: 0 0 60px rgba(255,255,255,0.15);
+}
+.sec-5 .rule {
+    width: 1px; height: 60px;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    margin: 30px auto;
+}
+
+/* ── Progress Bar ── */
+#progress-bar {
+    position: fixed; top: 0; left: 0; height: 2px; width: 0%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    z-index: 2000; transition: width 0.1s linear;
+    box-shadow: 0 0 8px rgba(245,166,35,0.5);
+}
+
+/* ── Section indicator dots ── */
+#dots {
+    position: fixed; right: 30px; top: 50%; transform: translateY(-50%);
+    z-index: 1000; display: flex; flex-direction: column; gap: 12px;
+}
+.dot {
+    width: 4px; height: 4px; border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    transition: 0.4s; position: relative;
+}
+.dot.active {
+    background: var(--gold);
+    box-shadow: 0 0 8px rgba(245,166,35,0.6);
+    transform: scale(1.5);
+}
+
+/* ── CTA Section (after scroll) ── */
+#cta-section {
+    position: relative; z-index: 10;
+    min-height: 100dvh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 80px 6%;
+    background: var(--bg);
+    overflow: hidden;
+}
+
+.cta-glow {
+    position: absolute; inset: 0; pointer-events: none;
+    background:
+        radial-gradient(ellipse at 30% 40%, rgba(245,166,35,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse at 70% 60%, rgba(255,255,255,0.04) 0%, transparent 50%);
+}
+
+.cta-eyebrow {
+    font-size: 0.72rem; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); opacity: 0.8; margin-bottom: 30px;
+}
+
+.cta-headline {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 300; line-height: 1.15;
+    max-width: 700px; margin: 0 auto 20px;
+    text-shadow: 0 0 40px rgba(255,255,255,0.1);
+}
+
+.cta-sub {
+    font-size: clamp(0.85rem, 1.5vw, 1rem);
+    opacity: 0.5; max-width: 450px; margin: 0 auto 50px;
+    line-height: 1.6;
+}
+
+.cta-btn {
+    position: relative;
+    background: linear-gradient(var(--bg), var(--bg)) padding-box,
+                linear-gradient(135deg, var(--gold), var(--gold-light), #d48300) border-box;
+    border: 1px solid transparent;
+    padding: 16px 40px; border-radius: 50px;
+    color: white; font-family: Inter, sans-serif;
+    font-size: 0.8rem; letter-spacing: 2.5px; text-transform: uppercase;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 10px;
+    transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1), box-shadow 0.4s, color 0.4s;
+    box-shadow: 0 4px 20px rgba(245,166,35,0.15);
+    pointer-events: auto;
+}
+.cta-btn:hover { transform: scale(1.05); box-shadow: 0 8px 30px rgba(245,166,35,0.35); color: var(--gold-light); }
+.cta-btn svg { transition: transform 0.3s; }
+.cta-btn:hover svg { transform: translateX(4px); }
+
+.cta-divider {
+    width: 1px; height: 80px;
+    background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.1), transparent);
+    margin: 60px auto;
+}
+
+.cta-info {
+    display: flex; gap: 60px; justify-content: center; flex-wrap: wrap;
+    margin-top: 10px;
+}
+.cta-info-item { text-align: center; }
+.cta-info-item .label {
+    font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(255,255,255,0.3); margin-bottom: 6px;
+}
+.cta-info-item .value {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.1rem; color: rgba(255,255,255,0.7);
+}
+
+/* ── Gold ambient line ── */
+.ambient-line {
+    position: absolute; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(245,166,35,0.2), transparent);
+}
+
+/* ── Footer ── */
+footer {
+    text-align: center; padding: 30px 20px 50px;
+    font-size: 0.7rem; letter-spacing: 2px;
+    text-transform: uppercase; opacity: 0.25;
+    position: relative; z-index: 10;
+    background: var(--bg);
+}
+
+/* ── Loading screen ── */
+#loader {
+    position: fixed; inset: 0; background: var(--bg);
+    z-index: 99999; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 24px;
+}
+.loader-logo { height: 32px; opacity: 0.8; animation: loaderPulse 1.5s ease-in-out infinite; }
+@keyframes loaderPulse { 0%,100%{opacity:0.4} 50%{opacity:0.9} }
+.loader-bar-wrap { width: 120px; height: 1px; background: rgba(255,255,255,0.1); }
+.loader-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--gold), var(--gold-light)); transition: width 0.1s linear; }
+.loader-text { font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+#loader.hidden { opacity: 0; pointer-events: none; transition: opacity 0.6s ease; }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .sec-2 { padding-left: 6%; }
+    .sec-3 { padding-right: 6%; }
+    #dots { display: none; }
+    .cta-info { gap: 30px; }
+}
+</style>
+</head>
+<body>
+
+<div id="loader">
+    <img class="loader-logo" src="https://lh3.googleusercontent.com/d/1oBEoO4rF3oUw0M4DH6Z7QKmWl-JivlFG=s200" alt="ShutterPhrase">
+    <div class="loader-bar-wrap"><div class="loader-bar" id="loader-bar"></div></div>
+    <span class="loader-text">Loading experience</span>
+</div>
+
+<div id="progress-bar"></div>
+<div id="cursor"></div>
+
+<nav>
+    <a class="nav-logo" href="https://shutterphrase.in">
+        <img src="https://lh3.googleusercontent.com/d/1oBEoO4rF3oUw0M4DH6Z7QKmWl-JivlFG=s200" alt="ShutterPhrase">
+    </a>
+    <a class="nav-back" href="https://shutterphrase.in">← Main Site</a>
+</nav>
+
+<!-- Section indicator dots -->
+<div id="dots">
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+</div>
+
+<!-- ── Scrollytelling Container ── -->
+<div id="scroll-container">
+    <div id="sticky-wrap">
+        <video
+            id="scroll-video"
+            src="https://res.cloudinary.com/dbwqlw6pr/video/upload/v1772743296/Cinematic_3d_transition_4_seconds_delpmaspu__sbjvob.mp4"
+            muted playsinline preload="auto"
+            style="pointer-events:none;"
+        ></video>
+
+        <div class="vignette"></div>
+
+        <!-- Overlay sections -->
+        <div id="overlay">
+
+            <!-- Section 1: Identity -->
+            <div class="overlay-section sec-1" data-section="0">
+                <h1 class="title">Abhishek<br>Ashok</h1>
+                <p class="subtitle">Photographer &nbsp;·&nbsp; ShutterPhrase</p>
+                <div class="scroll-hint">
+                    <div class="scroll-hint-line"></div>
+                    Scroll to explore
+                    <div class="scroll-hint-line"></div>
+                </div>
+            </div>
+
+            <!-- Section 2: Precision -->
+            <div class="overlay-section sec-2" data-section="1">
+                <div class="quote-line"></div>
+                <p class="quote">"Precision in<br>every frame."</p>
+            </div>
+
+            <!-- Section 3: Reframe -->
+            <div class="overlay-section sec-3" data-section="2">
+                <div class="quote-line"></div>
+                <p class="quote">"Not a photography service.<br>A visual identity system."</p>
+            </div>
+
+            <!-- Section 4: Who it's for -->
+            <div class="overlay-section sec-4" data-section="3">
+                <p class="quote">"Built for founders.<br>Designed for impact."</p>
+                <p class="tag">Mumbai · Pune · Lonavala · Alibaug</p>
+            </div>
+
+            <!-- Section 5: Closing -->
+            <div class="overlay-section sec-5" data-section="4">
+                <p class="quote">"Every frame<br>is a decision."</p>
+                <div class="rule"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ── CTA Section ── -->
+<section id="cta-section">
+    <div class="cta-glow"></div>
+    <div class="ambient-line" style="top:0;"></div>
+
+    <p class="cta-eyebrow">Ready to begin?</p>
+    <h2 class="cta-headline">Your vision deserves to be seen.</h2>
+    <p class="cta-sub">Every session is pre-planned, directed, and intentionally edited — built around your identity, not a template.</p>
+
+    <a href="https://shutterphrase.in" class="cta-btn">
+        Explore the Work
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+    </a>
+
+    <div class="cta-divider"></div>
+
+    <div class="cta-info">
+        <div class="cta-info-item">
+            <p class="label">Based in</p>
+            <p class="value">Mumbai, India</p>
+        </div>
+        <div class="cta-info-item">
+            <p class="label">Available in</p>
+            <p class="value">Mumbai · Pune · Lonavala · Alibaug</p>
+        </div>
+        <div class="cta-info-item">
+            <p class="label">Response time</p>
+            <p class="value">Within 24 hours</p>
+        </div>
+    </div>
+
+    <div class="ambient-line" style="bottom:0;"></div>
+</section>
+
+<footer>© 2026 ShutterPhrase &nbsp;·&nbsp; Abhishek Ashok</footer>
+
+<script>
+(function() {
+
+    // ── Elements ──
+    const video       = document.getElementById('scroll-video');
+    const overlay     = document.getElementById('overlay');
+    const sections    = document.querySelectorAll('.overlay-section');
+    const progressBar = document.getElementById('progress-bar');
+    const dots        = document.querySelectorAll('.dot');
+    const loader      = document.getElementById('loader');
+    const loaderBar   = document.getElementById('loader-bar');
+    const cursor      = document.getElementById('cursor');
+
+    // ── Cursor ──
+    if (window.matchMedia('(pointer: fine)').matches) {
+        let mx = 0, my = 0, cx = 0, cy = 0;
+        window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+        function animCursor() {
+            cx += (mx - cx) * 0.15; cy += (my - cy) * 0.15;
+            cursor.style.transform = `translate3d(${cx}px,${cy}px,0) translate(-50%,-50%)`;
+            requestAnimationFrame(animCursor);
+        }
+        animCursor();
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+        });
+    }
+
+    // ── Scroll timing config ──
+    // Each section occupies a band of scroll progress (0–1)
+    const sectionBands = [
+        { start: 0,    end: 0.15 },   // 1. Identity
+        { start: 0.15, end: 0.32 },   // 2. Precision
+        { start: 0.32, end: 0.52 },   // 3. Reframe
+        { start: 0.52, end: 0.72 },   // 4. Who it's for
+        { start: 0.72, end: 1.0  },   // 5. Every frame
+    ];
+
+    // ── Video scrub ──
+    let videoDuration = 0;
+    let videoReady = false;
+
+    video.addEventListener('loadedmetadata', () => {
+        videoDuration = video.duration;
+    });
+
+    video.addEventListener('canplaythrough', () => {
+        videoReady = true;
+        video.classList.add('ready');
+        hideLoader();
+    });
+
+    // Fallback if canplaythrough doesn't fire
+    setTimeout(() => {
+        if (!videoReady) { videoReady = true; video.classList.add('ready'); hideLoader(); }
+    }, 4000);
+
+    // ── Loader ──
+    let loaderProgress = 0;
+    const loaderInterval = setInterval(() => {
+        loaderProgress = Math.min(loaderProgress + Math.random() * 8, 90);
+        loaderBar.style.width = loaderProgress + '%';
+    }, 120);
+
+    function hideLoader() {
+        clearInterval(loaderInterval);
+        loaderBar.style.width = '100%';
+        setTimeout(() => { loader.classList.add('hidden'); }, 400);
+    }
+
+    // ── Scroll handler ──
+    let ticking = false;
+    let currentSection = -1;
+
+    function getScrollProgress() {
+        const container = document.getElementById('scroll-container');
+        const rect = container.getBoundingClientRect();
+        const scrollable = container.offsetHeight - window.innerHeight;
+        return Math.max(0, Math.min(1, -rect.top / scrollable));
+    }
+
+    function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(update);
+    }
+
+    function update() {
+        ticking = false;
+        const progress = getScrollProgress();
+
+        // Progress bar
+        progressBar.style.width = (progress * 100) + '%';
+
+        // Video scrub
+        if (videoReady && videoDuration > 0) {
+            const targetTime = progress * videoDuration;
+            // Only update if difference is meaningful (avoids micro-jitter)
+            if (Math.abs(video.currentTime - targetTime) > 0.01) {
+                video.currentTime = targetTime;
+            }
+        }
+
+        // Determine active section
+        let activeIdx = -1;
+        sectionBands.forEach((band, i) => {
+            if (progress >= band.start && progress < band.end) activeIdx = i;
+        });
+        if (progress >= 0.98) activeIdx = sectionBands.length - 1;
+
+        // Update overlays
+        if (activeIdx !== currentSection) {
+            currentSection = activeIdx;
+            sections.forEach((sec, i) => {
+                if (i === activeIdx) {
+                    sec.classList.add('visible');
+                } else {
+                    sec.classList.remove('visible');
+                }
+            });
+            // Update dots
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === activeIdx);
+            });
+        }
+
+        // Section 1 fade on scroll start
+        if (activeIdx === 0) {
+            const bandProgress = (progress - sectionBands[0].start) / (sectionBands[0].end - sectionBands[0].start);
+            const fadeOut = Math.max(0, 1 - bandProgress * 3);
+            const hint = document.querySelector('.scroll-hint');
+            if (hint) hint.style.opacity = fadeOut;
+        }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // Initial call
+    setTimeout(update, 100);
+
+    // ── Keyboard scroll support ──
+    document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowDown') window.scrollBy({ top: window.innerHeight * 0.3, behavior: 'smooth' });
+        if (e.key === 'ArrowUp')   window.scrollBy({ top: -window.innerHeight * 0.3, behavior: 'smooth' });
+    });
+
+})();
+</script>
+</body>
+</html>
