@@ -150,20 +150,21 @@ nav {
 .sec-1 .title {
     font-family: "Cormorant Garamond", serif;
     font-size: clamp(3.5rem, 10vw, 8rem);
-    font-weight: 300; line-height: 1;
+    font-weight: 400; line-height: 1;
     letter-spacing: -1px;
-    text-shadow: 0 0 60px rgba(255,255,255,0.15);
+    text-shadow: 0 0 40px rgba(255,255,255,0.3), 0 0 80px rgba(255,255,255,0.1);
 }
 .sec-1 .subtitle {
     font-size: clamp(0.7rem, 1.5vw, 0.9rem);
     letter-spacing: 5px; text-transform: uppercase;
-    color: var(--gold); margin-top: 16px; opacity: 0.9;
-    text-shadow: 0 0 20px rgba(245,166,35,0.4);
+    color: var(--gold); margin-top: 16px; opacity: 1;
+    text-shadow: 0 0 20px rgba(245,166,35,0.8), 0 0 40px rgba(245,166,35,0.4);
 }
 .sec-1 .scroll-hint {
     margin-top: 50px; font-size: 0.7rem; letter-spacing: 3px;
-    text-transform: uppercase; color: rgba(255,255,255,0.3);
+    text-transform: uppercase; color: rgba(255,255,255,0.5);
     display: flex; align-items: center; gap: 10px;
+    text-shadow: 0 0 10px rgba(255,255,255,0.2);
 }
 .scroll-hint-line {
     width: 40px; height: 1px; background: rgba(255,255,255,0.2);
@@ -176,19 +177,20 @@ nav {
 .sec-2 .quote {
     font-family: "Cormorant Garamond", serif;
     font-size: clamp(2rem, 5vw, 4rem);
-    font-weight: 300; font-style: italic;
+    font-weight: 400; font-style: italic;
     line-height: 1.2; max-width: 600px;
-    text-shadow: 0 0 40px rgba(255,255,255,0.1);
+    text-shadow: 0 0 30px rgba(255,255,255,0.4), 0 0 60px rgba(255,255,255,0.15);
 }
 .quote-line {
     width: 50px; height: 1px;
     background: linear-gradient(90deg, var(--gold), transparent);
     margin-bottom: 20px;
+    box-shadow: 0 0 8px rgba(245,166,35,0.6);
 }
 
 /* Section 3 — right */
 .sec-3 { align-items: flex-end; padding-right: 8%; text-align: right; }
-.sec-3 .quote { max-width: 550px; }
+.sec-3 .quote { max-width: 550px; text-shadow: 0 0 30px rgba(255,255,255,0.4), 0 0 60px rgba(255,255,255,0.15); font-weight: 400; }
 .sec-3 .quote-line {
     background: linear-gradient(270deg, var(--gold), transparent);
     margin-left: auto; margin-bottom: 20px;
@@ -199,12 +201,13 @@ nav {
 .sec-4 .quote {
     font-family: "Cormorant Garamond", serif;
     font-size: clamp(1.5rem, 3.5vw, 2.8rem);
-    font-weight: 300; line-height: 1.3; max-width: 700px;
-    text-shadow: 0 0 40px rgba(255,255,255,0.1);
+    font-weight: 400; line-height: 1.3; max-width: 700px;
+    text-shadow: 0 0 30px rgba(255,255,255,0.4), 0 0 60px rgba(255,255,255,0.15);
 }
 .sec-4 .tag {
     margin-top: 16px; font-size: 0.72rem; letter-spacing: 3px;
-    text-transform: uppercase; color: var(--gold); opacity: 0.8;
+    text-transform: uppercase; color: var(--gold); opacity: 1;
+    text-shadow: 0 0 20px rgba(245,166,35,0.8), 0 0 40px rgba(245,166,35,0.4);
 }
 
 /* Section 5 — center */
@@ -212,13 +215,14 @@ nav {
 .sec-5 .quote {
     font-family: "Cormorant Garamond", serif;
     font-size: clamp(2.5rem, 7vw, 6rem);
-    font-weight: 300; font-style: italic; line-height: 1.1;
-    text-shadow: 0 0 60px rgba(255,255,255,0.15);
+    font-weight: 400; font-style: italic; line-height: 1.1;
+    text-shadow: 0 0 40px rgba(255,255,255,0.4), 0 0 80px rgba(255,255,255,0.15);
 }
 .sec-5 .rule {
     width: 1px; height: 60px;
     background: linear-gradient(to bottom, transparent, var(--gold), transparent);
     margin: 30px auto;
+    box-shadow: 0 0 10px rgba(245,166,35,0.6);
 }
 
 /* ── Progress Bar ── */
@@ -556,6 +560,7 @@ footer {
     // ── Scroll handler ──
     let ticking = false;
     let currentSection = -1;
+    let autoScrolledToCTA = false;
 
     function getScrollProgress() {
         const container = document.getElementById('scroll-container');
@@ -615,6 +620,15 @@ footer {
             const fadeOut = Math.max(0, 1 - bandProgress * 3);
             const hint = document.querySelector('.scroll-hint');
             if (hint) hint.style.opacity = fadeOut;
+        }
+
+        // ── Auto-scroll to CTA when animation ends ──
+        if (progress >= 0.97 && !autoScrolledToCTA) {
+            autoScrolledToCTA = true;
+            setTimeout(() => {
+                const cta = document.getElementById('cta-section');
+                if (cta) cta.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 300);
         }
     }
 
