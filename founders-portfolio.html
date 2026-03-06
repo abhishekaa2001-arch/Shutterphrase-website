@@ -14,14 +14,7 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* Page content hidden until loader finishes */
-body.page-hidden > *:not(#loader) {
-    opacity: 0;
-    transition: opacity 0.8s ease;
-}
-body.page-ready > *:not(#loader) {
-    opacity: 1;
-}
+
 
 :root {
     --gold: #f5a623;
@@ -360,12 +353,30 @@ footer {
 
 /* ── Word Reveal Loader ── */
 #loader {
-    position: fixed; inset: 0; background: var(--bg);
-    z-index: 99999; display: flex; flex-direction: column;
+    position: fixed; inset: 0;
+    background: #080808;
+    z-index: 99999;
+    display: flex; flex-direction: column;
     align-items: center; justify-content: center; gap: 0;
     overflow: hidden;
+    /* Ensure it truly covers everything */
+    width: 100vw; height: 100vh;
 }
-#loader.hidden { opacity: 0; pointer-events: none; transition: opacity 0.8s ease; }
+#loader.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+    visibility: hidden;
+}
+
+/* Page content wrapper fades in after loader */
+#page-content {
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+#page-content.visible {
+    opacity: 1;
+}
 
 .word-reveal-wrap {
     display: flex; flex-direction: column; align-items: center;
@@ -416,7 +427,7 @@ footer {
 }
 </style>
 </head>
-<body style="overflow:hidden;">
+<body>
 
 <div id="loader">
     <div class="word-reveal-wrap">
@@ -434,6 +445,8 @@ footer {
 
 <div id="progress-bar"></div>
 <div id="cursor"></div>
+
+<div id="page-content">
 
 <nav>
     <a class="nav-logo" href="https://shutterphrase.in">
@@ -632,17 +645,18 @@ footer {
     }
 
     function hideLoader() {
-        if (loader) loader.classList.add('hidden');
-        // Reveal page content
-        document.body.style.overflow = '';
-        document.body.classList.remove('page-hidden');
-        document.body.classList.add('page-ready');
+        const pageContent = document.getElementById('page-content');
+        // First reveal page content
+        if (pageContent) pageContent.classList.add('visible');
+        // Then fade loader out
+        setTimeout(() => {
+            if (loader) loader.classList.add('hidden');
+        }, 100);
         videoReady = true;
         video.classList.add('ready');
     }
 
-    // Hide page content behind loader, start word reveal
-    document.body.classList.add('page-hidden');
+    // Start word reveal
     setTimeout(showNextWord, 300);
 
     // ── Scroll handler ──
@@ -746,5 +760,7 @@ footer {
 
 })();
 </script>
+</div><!-- end page-content -->
+</div><!-- /page-content -->
 </body>
 </html>
