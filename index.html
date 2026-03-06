@@ -183,7 +183,7 @@ h2 { font-size: clamp(2rem, 5vw, 3.5rem); }
 /* ================= CUSTOM VIEWFINDER CURSOR ================= */
 #cursor { display: none; }
 @media (pointer: fine) {
-    body, a, button, .gallery-img, iframe, input, textarea { cursor: none !important; }
+    *, *::before, *::after, body, a, button, input, textarea, select, iframe, video, img, div, span, section, nav, footer { cursor: none !important; }
     #cursor {
         position: fixed; top: 0; left: 0; width: 32px; height: 32px;
         background: transparent; border: 1px solid rgba(255,255,255,0.15);
