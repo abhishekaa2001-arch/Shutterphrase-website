@@ -40,7 +40,7 @@ body {
     display: none;
 }
 @media (pointer: fine) {
-    body, a, button { cursor: none !important; }
+    *, *::before, *::after, body, a, button, input, textarea, select, iframe, video, img, div, span, section, nav, footer { cursor: none !important; }
     #cursor {
         position: fixed; top: 0; left: 0; width: 32px; height: 32px;
         pointer-events: none; z-index: 99999;
