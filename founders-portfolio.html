@@ -86,7 +86,7 @@ nav {
 /* ── Scroll Container ── */
 #scroll-container {
     position: relative;
-    height: 350vh;
+    height: 280vh;
 }
 
 /* ── Sticky Canvas Wrapper ── */
@@ -573,12 +573,30 @@ footer {
     let currentSection = -1;
     let autoScrolledToCTA = false;
 
+    // Smooth scrub — lerp current time toward target
+    let targetTime   = 0;
+    let smoothTime   = 0;
+    const LERP_SPEED = 0.08; // lower = smoother/slower, higher = snappier
+
     function getScrollProgress() {
         const container = document.getElementById('scroll-container');
         const rect = container.getBoundingClientRect();
         const scrollable = container.offsetHeight - window.innerHeight;
         return Math.max(0, Math.min(1, -rect.top / scrollable));
     }
+
+    // Separate rAF loop for smooth video lerp — runs independently of scroll events
+    function smoothScrubLoop() {
+        if (videoReady && videoDuration > 0) {
+            const diff = targetTime - smoothTime;
+            if (Math.abs(diff) > 0.001) {
+                smoothTime += diff * LERP_SPEED;
+                video.currentTime = smoothTime;
+            }
+        }
+        requestAnimationFrame(smoothScrubLoop);
+    }
+    requestAnimationFrame(smoothScrubLoop);
 
     function onScroll() {
         if (ticking) return;
@@ -593,13 +611,9 @@ footer {
         // Progress bar
         progressBar.style.width = (progress * 100) + '%';
 
-        // Video scrub
+        // Set target time — smoothScrubLoop handles the actual lerp
         if (videoReady && videoDuration > 0) {
-            const targetTime = progress * videoDuration;
-            // Only update if difference is meaningful (avoids micro-jitter)
-            if (Math.abs(video.currentTime - targetTime) > 0.01) {
-                video.currentTime = targetTime;
-            }
+            targetTime = progress * videoDuration;
         }
 
         // Determine active section
