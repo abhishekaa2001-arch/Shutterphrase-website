@@ -109,23 +109,75 @@ section { padding: var(--pad-y) var(--pad-x); max-width: 1800px; margin: 0 auto;
 h1, h2 { font-family: "Cormorant Garamond", serif; letter-spacing: .5px; line-height: 1.1; text-shadow: 0 0 40px rgba(255,255,255,0.15); }
 h2 { font-size: clamp(2rem, 5vw, 3.5rem); }
 
-/* ================= INTRO LOADER ================= */
+/* ================= APERTURE LOADER ================= */
 #sp-intro {
     position: fixed; inset: 0; background: #050505; z-index: 99999;
     display: flex; align-items: center; justify-content: center;
-    transition: opacity 0.8s ease, visibility 0.8s ease;
+    transition: opacity 1s ease;
 }
-#sp-intro.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-#sp-intro img {
-    height: 64px; opacity: 0;
-    animation: introFade 1.8s ease forwards;
-    filter: drop-shadow(0 0 30px rgba(245,166,35,0.4));
+#sp-intro.hidden { opacity: 0; pointer-events: none; }
+
+#aperture {
+    position: relative; width: 320px; height: 320px;
 }
-@keyframes introFade {
-    0%   { opacity: 0; transform: scale(0.95); filter: blur(6px) drop-shadow(0 0 20px rgba(245,166,35,0.1)); }
-    40%  { opacity: 1; transform: scale(1);    filter: blur(0px) drop-shadow(0 0 30px rgba(245,166,35,0.4)); }
-    75%  { opacity: 1; }
-    100% { opacity: 0; }
+
+#aperture-svg {
+    width: 100%; height: 100%;
+    filter: drop-shadow(0 0 30px rgba(0,0,0,0.8));
+}
+
+/* Outer ring */
+.ap-outer-ring {
+    fill: #0a0a0a;
+    stroke: rgba(245,166,35,0.2);
+    stroke-width: 1;
+}
+
+/* Each blade — dark metallic with subtle sheen */
+.ap-blade {
+    fill: url(#bladeGrad);
+    stroke: rgba(30,30,30,0.8);
+    stroke-width: 0.3;
+    transition: transform 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Progress ring */
+#ap-progress-ring {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+}
+#ap-track { fill: none; stroke: rgba(245,166,35,0.08); stroke-width: 2; }
+#ap-fill  {
+    fill: none; stroke: rgba(245,166,35,0.75); stroke-width: 2;
+    stroke-linecap: round;
+    stroke-dasharray: 880; stroke-dashoffset: 880;
+    transform: rotate(-90deg); transform-origin: center;
+    filter: drop-shadow(0 0 5px rgba(245,166,35,0.5));
+}
+
+/* Center hole — reveals as blades open */
+#ap-hole {
+    fill: #050505;
+    transition: r 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Logo */
+#aperture-logo {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    height: 44px; z-index: 20; opacity: 0;
+    filter: drop-shadow(0 0 16px rgba(245,166,35,0.6));
+    transition: opacity 0.8s ease 0.2s;
+    pointer-events: none;
+}
+#aperture-logo.visible { opacity: 1; }
+
+/* Grain texture overlay on loader */
+#sp-intro::after {
+    content: "";
+    position: absolute; inset: 0; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.5;
 }
 
 /* ================= CUSTOM VIEWFINDER CURSOR ================= */
@@ -544,9 +596,103 @@ footer { text-align: center; padding: 40px 20px 60px 20px; opacity: .4; letter-s
 
 <body>
 
-<!-- ================= INTRO LOADER ================= -->
+<!-- ================= APERTURE LOADER ================= -->
 <div id="sp-intro">
-    <img src="https://lh3.googleusercontent.com/d/1oBEoO4rF3oUw0M4DH6Z7QKmWl-JivlFG=s200" alt="ShutterPhrase">
+    <div id="aperture">
+        <!-- Main aperture SVG with real curved blade shapes -->
+        <svg id="aperture-svg" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <!-- Metallic blade gradient — dark steel look -->
+                <radialGradient id="bladeGrad" cx="40%" cy="35%" r="70%">
+                    <stop offset="0%"   stop-color="#2a2a2a"/>
+                    <stop offset="40%"  stop-color="#1a1a1a"/>
+                    <stop offset="100%" stop-color="#0a0a0a"/>
+                </radialGradient>
+                <!-- Sheen gradient for top blades -->
+                <linearGradient id="sheenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%"   stop-color="#333" stop-opacity="1"/>
+                    <stop offset="50%"  stop-color="#1c1c1c" stop-opacity="1"/>
+                    <stop offset="100%" stop-color="#0d0d0d" stop-opacity="1"/>
+                </linearGradient>
+                <!-- Clip circle -->
+                <clipPath id="circleClip">
+                    <circle cx="160" cy="160" r="148"/>
+                </clipPath>
+            </defs>
+
+            <!-- Outer bezel ring -->
+            <circle cx="160" cy="160" r="158" fill="#080808" stroke="rgba(245,166,35,0.15)" stroke-width="1"/>
+            <circle cx="160" cy="160" r="148" fill="#0d0d0d"/>
+
+            <!-- 9 curved aperture blades — each is a curved scythe shape -->
+            <!-- Blade shape: sweeps from near-center outward with curved leading/trailing edges -->
+            <!-- All clipped to the main circle -->
+            <g clip-path="url(#circleClip)" id="ap-blades-group">
+
+                <!-- Blade 1 -->
+                <path class="ap-blade" id="ap-b1"
+                    d="M160,160 C155,110 175,72 195,58 C215,44 245,52 252,80 C258,105 240,130 215,148 C195,162 170,168 160,160 Z"
+                    style="transform-origin:160px 160px; transform:rotate(0deg)"/>
+
+                <!-- Blade 2 -->
+                <path class="ap-blade" id="ap-b2"
+                    d="M160,160 C155,110 175,72 195,58 C215,44 245,52 252,80 C258,105 240,130 215,148 C195,162 170,168 160,160 Z"
+                    style="transform-origin:160px 160px; transform:rotate(40deg)"/>
+
+                <!-- Blade 3 -->
+                <path class="ap-blade" id="ap-b3"
+                    d="M160,160 C155,110 175,72 195,58 C215,44 245,52 252,80 C258,105 240,130 215,148 C195,162 170,168 160,160 Z"
+                    style="transform-origin:160px 160px; transform:rotate(80deg)"/>
+
+                <!-- Blade 4 -->
+                <path class="ap-blade" id="ap-b4"
+                    d="M160,160 C155,110 175,72 195,58 C215,44 245,52 252,80 C258,105 240,130 215,148 C195,162 170,168 160,160 Z"
+                    style="transform-origin:160px 160px; transform:rotate(120deg)"/>
+
+                <!-- Blade 5 -->
+                <path class="ap-blade" id="ap-b5"
+                    d="M160,160 C155,110 175,72 195,58 C215,44 245,52 252,80 C258,105 240,130 215,148 C195,162 170,168 160,160 Z"
+                    style="transform-origin:160px 160px; transform:rotate(160deg)"/>
+
+                <!-- Blade 6 -->
+                <path class="ap-blade" id="ap-b6"
+                    d="M160,160 C155,110 175,72 195,58 C215,44 245,52 252,80 C258,105 240,130 215,148 C195,162 170,168 160,160 Z"
+                    style="transform-origin:160px 160px; transform:rotate(200deg)"/>
+
+                <!-- Blade 7 -->
+                <path class="ap-blade" id="ap-b7"
+                    d="M160,160 C155,110 175,72 195,58 C215,44 245,52 252,80 C258,105 240,130 215,148 C195,162 170,168 160,160 Z"
+                    style="transform-origin:160px 160px; transform:rotate(240deg)"/>
+
+                <!-- Blade 8 -->
+                <path class="ap-blade" id="ap-b8"
+                    d="M160,160 C155,110 175,72 195,58 C215,44 245,52 252,80 C258,105 240,130 215,148 C195,162 170,168 160,160 Z"
+                    style="transform-origin:160px 160px; transform:rotate(280deg)"/>
+
+                <!-- Blade 9 -->
+                <path class="ap-blade" id="ap-b9"
+                    d="M160,160 C155,110 175,72 195,58 C215,44 245,52 252,80 C258,105 240,130 215,148 C195,162 170,168 160,160 Z"
+                    style="transform-origin:160px 160px; transform:rotate(320deg)"/>
+
+            </g>
+
+            <!-- Center hole — dark circle that grows as blades open -->
+            <circle id="ap-hole" cx="160" cy="160" r="8" fill="#050505"/>
+
+            <!-- Inner edge ring — subtle definition -->
+            <circle cx="160" cy="160" r="148" fill="none" stroke="rgba(0,0,0,0.6)" stroke-width="2"/>
+
+        </svg>
+
+        <!-- Progress ring overlay -->
+        <svg id="ap-progress-ring" viewBox="0 0 320 320">
+            <circle id="ap-track"  cx="160" cy="160" r="140"/>
+            <circle id="ap-fill"   cx="160" cy="160" r="140"/>
+        </svg>
+
+        <!-- Logo -->
+        <img id="aperture-logo" src="https://lh3.googleusercontent.com/d/1oBEoO4rF3oUw0M4DH6Z7QKmWl-JivlFG=s200" alt="ShutterPhrase">
+    </div>
 </div>
 
 <div class="ambient-glow"></div>
@@ -802,17 +948,84 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ── Intro Loader ──
-    if (!sessionStorage.getItem('sp_intro_shown')) {
-        setTimeout(() => {
-            const intro = document.getElementById('sp-intro');
-            if (intro) intro.classList.add('hidden');
-            sessionStorage.setItem('sp_intro_shown', 'true');
-        }, 2200);
-    } else {
-        const intro = document.getElementById('sp-intro');
-        if (intro) { intro.style.transition = 'none'; intro.classList.add('hidden'); }
-    }
+    // ── Aperture Loader (runs every visit) ──
+    (function() {
+        const intro      = document.getElementById('sp-intro');
+        const logo       = document.getElementById('aperture-logo');
+        const apFill     = document.getElementById('ap-fill');
+        const apHole     = document.getElementById('ap-hole');
+        const circumference = 879.6; // 2 * PI * 140
+
+        // 9 blades with their base rotation angles
+        const bladeData = [
+            { id: 'ap-b1', base: 0   },
+            { id: 'ap-b2', base: 40  },
+            { id: 'ap-b3', base: 80  },
+            { id: 'ap-b4', base: 120 },
+            { id: 'ap-b5', base: 160 },
+            { id: 'ap-b6', base: 200 },
+            { id: 'ap-b7', base: 240 },
+            { id: 'ap-b8', base: 280 },
+            { id: 'ap-b9', base: 320 },
+        ];
+        const bladeEls = bladeData.map(d => ({
+            el: document.getElementById(d.id),
+            base: d.base
+        }));
+
+        // Show logo early
+        setTimeout(() => { if (logo) logo.classList.add('visible'); }, 400);
+
+        const totalDuration = 3200;
+        const startTime = performance.now();
+
+        function easeInOut(t) {
+            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        }
+
+        function updateAperture(p) {
+            const eased = easeInOut(p);
+
+            // Progress arc
+            if (apFill) {
+                apFill.style.strokeDashoffset = circumference * (1 - eased);
+            }
+
+            // Blades rotate — each blade sweeps counter-clockwise as iris opens
+            // At p=0: tightly closed (spiral). At p=1: fully open (octagon hole)
+            const sweepAngle = eased * 38; // degrees each blade rotates open
+            bladeEls.forEach(({ el, base }) => {
+                if (el) {
+                    // Blades rotate in alternating directions to create the spiral swirl
+                    el.style.transform = `rotate(${base - sweepAngle}deg)`;
+                }
+            });
+
+            // Center hole grows from 8px to 55px radius as it opens
+            if (apHole) {
+                const holeR = 8 + eased * 47;
+                apHole.setAttribute('r', holeR.toString());
+            }
+        }
+
+        function animateLoader(timestamp) {
+            const elapsed = timestamp - startTime;
+            const raw = Math.min(elapsed / totalDuration, 1);
+            updateAperture(raw);
+
+            if (raw < 1) {
+                requestAnimationFrame(animateLoader);
+            } else {
+                // Hold open briefly then fade out
+                setTimeout(() => {
+                    if (intro) intro.classList.add('hidden');
+                    window._apertureLoaderDone = true;
+                }, 500);
+            }
+        }
+
+        requestAnimationFrame(animateLoader);
+    })();
 
 
     let isScrolling = false;
@@ -855,10 +1068,15 @@ document.addEventListener('DOMContentLoaded', () => {
             window.scrollTo(0, targetScroll * ease);
             if (progress < 1) requestAnimationFrame(autoScrollStep); else stopAutoScroll();
         }
-        // Wait for intro loader to finish (2200ms) + small buffer before starting scroll
-        const introAlreadyShown = sessionStorage.getItem('sp_intro_shown');
-        const scrollDelay = introAlreadyShown ? 400 : 2500;
-        setTimeout(() => { if (!isInterrupted) requestAnimationFrame(autoScrollStep); }, scrollDelay);
+        // Wait for aperture loader to finish before starting scroll
+        function waitForAperture() {
+            if (window._apertureLoaderDone) {
+                setTimeout(() => { if (!isInterrupted) requestAnimationFrame(autoScrollStep); }, 300);
+            } else {
+                setTimeout(waitForAperture, 100);
+            }
+        }
+        waitForAperture();
     }
 
     // ── Gallery Auto-Scroll ──
