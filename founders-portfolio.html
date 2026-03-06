@@ -349,18 +349,54 @@ footer {
     background: var(--bg);
 }
 
-/* ── Loading screen ── */
+/* ── Word Reveal Loader ── */
 #loader {
     position: fixed; inset: 0; background: var(--bg);
     z-index: 99999; display: flex; flex-direction: column;
-    align-items: center; justify-content: center; gap: 24px;
+    align-items: center; justify-content: center; gap: 0;
+    overflow: hidden;
 }
-.loader-logo { height: 32px; opacity: 0.8; animation: loaderPulse 1.5s ease-in-out infinite; }
-@keyframes loaderPulse { 0%,100%{opacity:0.4} 50%{opacity:0.9} }
-.loader-bar-wrap { width: 120px; height: 1px; background: rgba(255,255,255,0.1); }
-.loader-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--gold), var(--gold-light)); transition: width 0.1s linear; }
-.loader-text { font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.3); }
-#loader.hidden { opacity: 0; pointer-events: none; transition: opacity 0.6s ease; }
+#loader.hidden { opacity: 0; pointer-events: none; transition: opacity 0.8s ease; }
+
+.word-reveal-wrap {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 0; margin-bottom: 50px;
+}
+.reveal-word {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(2.5rem, 8vw, 6rem);
+    font-weight: 300; font-style: italic; line-height: 1.15;
+    color: #fff; letter-spacing: 1px;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.2,0.8,0.2,1);
+    text-shadow: 0 0 40px rgba(255,255,255,0.15);
+}
+.reveal-word.gold {
+    color: var(--gold);
+    text-shadow: 0 0 30px rgba(245,166,35,0.5);
+}
+.reveal-word.show { opacity: 1; transform: translateY(0); }
+.reveal-word.hide { opacity: 0; transform: translateY(-15px); }
+
+.loader-logo-wrap {
+    opacity: 0; transform: translateY(10px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    margin-top: 20px;
+}
+.loader-logo-wrap.show { opacity: 1; transform: translateY(0); }
+.loader-logo-wrap img { height: 28px; filter: drop-shadow(0 0 15px rgba(245,166,35,0.3)); }
+.loader-logo-wrap span {
+    display: block; text-align: center;
+    font-size: 0.65rem; letter-spacing: 4px; text-transform: uppercase;
+    color: rgba(255,255,255,0.3); margin-top: 10px;
+}
+
+/* Ambient loader glow */
+#loader::before {
+    content: "";
+    position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse at center, rgba(245,166,35,0.04) 0%, transparent 70%);
+}
 
 /* ── Responsive ── */
 @media (max-width: 768px) {
@@ -374,9 +410,17 @@ footer {
 <body>
 
 <div id="loader">
-    <img class="loader-logo" src="https://lh3.googleusercontent.com/d/1oBEoO4rF3oUw0M4DH6Z7QKmWl-JivlFG=s200" alt="ShutterPhrase">
-    <div class="loader-bar-wrap"><div class="loader-bar" id="loader-bar"></div></div>
-    <span class="loader-text">Loading experience</span>
+    <div class="word-reveal-wrap">
+        <span class="reveal-word" id="w1">Every.</span>
+        <span class="reveal-word gold" id="w2">Frame.</span>
+        <span class="reveal-word" id="w3">Is.</span>
+        <span class="reveal-word gold" id="w4">A.</span>
+        <span class="reveal-word" id="w5">Decision.</span>
+    </div>
+    <div class="loader-logo-wrap" id="loader-logo-wrap">
+        <img src="https://lh3.googleusercontent.com/d/1oBEoO4rF3oUw0M4DH6Z7QKmWl-JivlFG=s200" alt="ShutterPhrase">
+        <span>ShutterPhrase</span>
+    </div>
 </div>
 
 <div id="progress-bar"></div>
@@ -497,9 +541,8 @@ footer {
     const sections    = document.querySelectorAll('.overlay-section');
     const progressBar = document.getElementById('progress-bar');
     const dots        = document.querySelectorAll('.dot');
-    const loader      = document.getElementById('loader');
-    const loaderBar   = document.getElementById('loader-bar');
-    const cursor      = document.getElementById('cursor');
+    const loader  = document.getElementById('loader');
+    const cursor  = document.getElementById('cursor');
 
     // ── Cursor ──
     if (window.matchMedia('(pointer: fine)').matches) {
@@ -553,18 +596,40 @@ footer {
         if (!videoReady) { videoReady = true; video.classList.add('ready'); hideLoader(); }
     }, 4000);
 
-    // ── Loader ──
-    let loaderProgress = 0;
-    const loaderInterval = setInterval(() => {
-        loaderProgress = Math.min(loaderProgress + Math.random() * 8, 90);
-        loaderBar.style.width = loaderProgress + '%';
-    }, 120);
+    // ── Word Reveal Loader ──
+    const words = ['w1','w2','w3','w4','w5'];
+    const logoWrap = document.getElementById('loader-logo-wrap');
+    let wordIdx = 0;
+
+    function showNextWord() {
+        if (wordIdx < words.length) {
+            const el = document.getElementById(words[wordIdx]);
+            if (el) el.classList.add('show');
+            wordIdx++;
+            setTimeout(showNextWord, 320);
+        } else {
+            // All words shown — fade them out and show logo
+            setTimeout(() => {
+                words.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) { el.classList.remove('show'); el.classList.add('hide'); }
+                });
+                setTimeout(() => {
+                    if (logoWrap) logoWrap.classList.add('show');
+                    setTimeout(() => hideLoader(), 900);
+                }, 400);
+            }, 600);
+        }
+    }
 
     function hideLoader() {
-        clearInterval(loaderInterval);
-        loaderBar.style.width = '100%';
-        setTimeout(() => { loader.classList.add('hidden'); }, 400);
+        if (loader) loader.classList.add('hidden');
+        videoReady = true;
+        video.classList.add('ready');
     }
+
+    // Start word reveal after brief pause
+    setTimeout(showNextWord, 300);
 
     // ── Scroll handler ──
     let ticking = false;
