@@ -14,6 +14,15 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+/* Page content hidden until loader finishes */
+body.page-hidden > *:not(#loader) {
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+body.page-ready > *:not(#loader) {
+    opacity: 1;
+}
+
 :root {
     --gold: #f5a623;
     --gold-light: #ffdf85;
@@ -407,7 +416,7 @@ footer {
 }
 </style>
 </head>
-<body>
+<body style="overflow:hidden;">
 
 <div id="loader">
     <div class="word-reveal-wrap">
@@ -624,11 +633,16 @@ footer {
 
     function hideLoader() {
         if (loader) loader.classList.add('hidden');
+        // Reveal page content
+        document.body.style.overflow = '';
+        document.body.classList.remove('page-hidden');
+        document.body.classList.add('page-ready');
         videoReady = true;
         video.classList.add('ready');
     }
 
-    // Start word reveal after brief pause
+    // Hide page content behind loader, start word reveal
+    document.body.classList.add('page-hidden');
     setTimeout(showNextWord, 300);
 
     // ── Scroll handler ──
