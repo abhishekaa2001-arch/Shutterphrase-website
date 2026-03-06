@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — ShutterPhrase</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="https://lh3.googleusercontent.com/d/1oBEoO4rF3oUw0M4DH6Z7QKmWl-JivlFG=s200" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --gold: #f5a623;
+    --gold-light: #ffdf85;
+    --bg: #050505;
+}
+
+body {
+    background: var(--bg);
+    color: #f5f5f5;
+    font-family: Inter, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+    height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: none;
+}
+
+/* ── Cursor ── */
+#cursor { display: none; }
+@media (pointer: fine) {
+    *, *::before, *::after { cursor: none !important; }
+    #cursor {
+        position: fixed; top: 0; left: 0; width: 32px; height: 32px;
+        pointer-events: none; z-index: 99999;
+        border: 1px solid rgba(255,255,255,0.15);
+        display: block;
+        transition: width 0.3s cubic-bezier(0.23,1,0.32,1), height 0.3s cubic-bezier(0.23,1,0.32,1), border-color 0.3s;
+    }
+    #cursor::before, #cursor::after {
+        content: ""; position: absolute; width: 100%; height: 100%;
+        border: 1.5px solid rgba(255,223,133,0.9);
+    }
+    #cursor::before {
+        clip-path: polygon(0 0,10px 0,10px 1.5px,1.5px 1.5px,1.5px 10px,0 10px,0 0,100% 100%,100% calc(100% - 10px),calc(100% - 1.5px) calc(100% - 10px),calc(100% - 1.5px) calc(100% - 1.5px),calc(100% - 10px) calc(100% - 1.5px),calc(100% - 10px) 100%,100% 100%);
+    }
+    #cursor::after {
+        clip-path: polygon(100% 0,100% 10px,calc(100% - 1.5px) 10px,calc(100% - 1.5px) 1.5px,calc(100% - 10px) 1.5px,calc(100% - 10px) 0,100% 0,0 100%,10px 100%,10px calc(100% - 1.5px),1.5px calc(100% - 1.5px),1.5px calc(100% - 10px),0 calc(100% - 10px),0 100%);
+    }
+    #cursor.hovered { border-color: rgba(245,166,35,0.5); width: 48px; height: 48px; }
+}
+
+/* ── Ambient glow ── */
+.ambient {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background:
+        radial-gradient(ellipse at 30% 40%, rgba(245,166,35,0.05) 0%, transparent 55%),
+        radial-gradient(ellipse at 70% 60%, rgba(255,255,255,0.03) 0%, transparent 50%);
+    filter: blur(40px);
+}
+
+/* ── Main container ── */
+.container {
+    position: relative; z-index: 10;
+    text-align: center;
+    padding: 40px 6%;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 0;
+    animation: fadeUp 1.2s cubic-bezier(0.2,0.8,0.2,1) forwards;
+    opacity: 0;
+}
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── 404 number ── */
+.four-o-four {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(7rem, 20vw, 14rem);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -4px;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255,255,255,0.08);
+    position: relative;
+    user-select: none;
+    margin-bottom: -20px;
+}
+.four-o-four::after {
+    content: "404";
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(245,166,35,0.15), rgba(255,255,255,0.05), rgba(245,166,35,0.1));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ── Shutter icon ── */
+.shutter-icon {
+    width: 48px; height: 48px; margin: 10px auto 30px;
+    opacity: 0.3;
+    animation: slowSpin 12s linear infinite;
+}
+@keyframes slowSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+/* ── Divider line ── */
+.divider {
+    width: 1px; height: 50px;
+    background: linear-gradient(to bottom, transparent, rgba(245,166,35,0.4), transparent);
+    margin: 0 auto 35px;
+}
+
+/* ── Headline ── */
+.headline {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 300;
+    line-height: 1.2;
+    max-width: 520px;
+    margin-bottom: 16px;
+    text-shadow: 0 0 40px rgba(255,255,255,0.1);
+}
+.headline em {
+    font-style: italic;
+    color: var(--gold);
+    text-shadow: 0 0 20px rgba(245,166,35,0.3);
+}
+
+/* ── Subline ── */
+.subline {
+    font-size: 0.85rem;
+    opacity: 0.4;
+    letter-spacing: 0.5px;
+    line-height: 1.6;
+    margin-bottom: 45px;
+    max-width: 360px;
+}
+
+/* ── CTA Button ── */
+.back-btn {
+    position: relative;
+    background: linear-gradient(var(--bg), var(--bg)) padding-box,
+                linear-gradient(135deg, var(--gold), var(--gold-light), #d48300) border-box;
+    border: 1px solid transparent;
+    padding: 14px 36px; border-radius: 50px;
+    color: white; font-family: Inter, sans-serif;
+    font-size: 0.78rem; letter-spacing: 2.5px; text-transform: uppercase;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 10px;
+    transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1), box-shadow 0.4s, color 0.4s;
+    box-shadow: 0 4px 20px rgba(245,166,35,0.12);
+    margin-bottom: 50px;
+}
+.back-btn:hover { transform: scale(1.05); box-shadow: 0 8px 30px rgba(245,166,35,0.3); color: var(--gold-light); }
+.back-btn svg { transition: transform 0.3s; }
+.back-btn:hover svg { transform: translateX(4px); }
+
+/* ── Logo ── */
+.logo {
+    height: 20px; opacity: 0.3;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.1));
+    transition: opacity 0.3s;
+}
+.logo:hover { opacity: 0.6; }
+
+/* ── Corner frame decorations ── */
+.frame {
+    position: fixed;
+    width: 40px; height: 40px;
+    pointer-events: none; z-index: 5;
+}
+.frame::before, .frame::after {
+    content: ""; position: absolute;
+    background: rgba(245,166,35,0.2);
+}
+.frame::before { width: 100%; height: 1px; top: 0; left: 0; }
+.frame::after  { width: 1px; height: 100%; top: 0; left: 0; }
+.frame.tl { top: 24px; left: 24px; }
+.frame.tr { top: 24px; right: 24px; transform: scaleX(-1); }
+.frame.bl { bottom: 24px; left: 24px; transform: scaleY(-1); }
+.frame.br { bottom: 24px; right: 24px; transform: scale(-1); }
+
+/* ── Film strip dots ── */
+.film-strip {
+    position: fixed; left: 0; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 8px; padding: 0 12px;
+    opacity: 0.15; pointer-events: none;
+}
+.film-dot {
+    width: 4px; height: 8px; background: rgba(255,255,255,0.5); border-radius: 1px;
+}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div class="ambient"></div>
+
+<!-- Corner frame decorations -->
+<div class="frame tl"></div>
+<div class="frame tr"></div>
+<div class="frame bl"></div>
+<div class="frame br"></div>
+
+<!-- Film strip -->
+<div class="film-strip">
+    <div class="film-dot"></div>
+    <div class="film-dot"></div>
+    <div class="film-dot"></div>
+    <div class="film-dot"></div>
+    <div class="film-dot"></div>
+    <div class="film-dot"></div>
+    <div class="film-dot"></div>
+</div>
+
+<div class="container">
+
+    <div class="four-o-four">404</div>
+
+    <!-- Rotating aperture icon -->
+    <svg class="shutter-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="24" cy="24" r="22" stroke="rgba(245,166,35,0.4)" stroke-width="1"/>
+        <circle cx="24" cy="24" r="6" fill="rgba(245,166,35,0.2)" stroke="rgba(245,166,35,0.5)" stroke-width="0.5"/>
+        <path d="M24,2 C24,2 28,12 24,18" stroke="rgba(245,166,35,0.35)" stroke-width="1" stroke-linecap="round"/>
+        <path d="M24,2 C24,2 28,12 24,18" stroke="rgba(245,166,35,0.35)" stroke-width="1" stroke-linecap="round" transform="rotate(60 24 24)"/>
+        <path d="M24,2 C24,2 28,12 24,18" stroke="rgba(245,166,35,0.35)" stroke-width="1" stroke-linecap="round" transform="rotate(120 24 24)"/>
+        <path d="M24,2 C24,2 28,12 24,18" stroke="rgba(245,166,35,0.35)" stroke-width="1" stroke-linecap="round" transform="rotate(180 24 24)"/>
+        <path d="M24,2 C24,2 28,12 24,18" stroke="rgba(245,166,35,0.35)" stroke-width="1" stroke-linecap="round" transform="rotate(240 24 24)"/>
+        <path d="M24,2 C24,2 28,12 24,18" stroke="rgba(245,166,35,0.35)" stroke-width="1" stroke-linecap="round" transform="rotate(300 24 24)"/>
+    </svg>
+
+    <div class="divider"></div>
+
+    <h1 class="headline">This frame doesn't exist.<br>But the <em>right one</em> does.</h1>
+    <p class="subline">The page you're looking for has been moved, deleted, or never existed. Let's get you back to the work.</p>
+
+    <a href="https://shutterphrase.in" class="back-btn">
+        Back to ShutterPhrase
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+    </a>
+
+    <a href="https://shutterphrase.in">
+        <img class="logo" src="https://lh3.googleusercontent.com/d/1oBEoO4rF3oUw0M4DH6Z7QKmWl-JivlFG=s200" alt="ShutterPhrase">
+    </a>
+
+</div>
+
+<script>
+(function() {
+    // ── Cursor ──
+    if (window.matchMedia('(pointer: fine)').matches) {
+        const cursor = document.getElementById('cursor');
+        let mx = 0, my = 0, cx = 0, cy = 0;
+        window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+        (function animCursor() {
+            cx += (mx - cx) * 0.15; cy += (my - cy) * 0.15;
+            cursor.style.transform = `translate3d(${cx}px,${cy}px,0) translate(-50%,-50%)`;
+            requestAnimationFrame(animCursor);
+        })();
+        document.querySelectorAll('a').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+        });
+    }
+
+    // ── Auto redirect after 12 seconds ──
+    setTimeout(() => {
+        window.location.href = 'https://shutterphrase.in';
+    }, 12000);
+})();
+</script>
+
+</body>
+</html>
