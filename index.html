@@ -1601,7 +1601,25 @@ const ShutterPhraseChatbot = (function () {
 
         let totalWithBuffer = (base * durMult * usageMult * compMult + travelBuffer) * 1.08;
 
-        state.data.breakdown = `Base:+₹${base.toLocaleString('en-IN')}\nDuration:+x${durMult}\nUsage:+x${usageMult.toFixed(2)}\nComplexity:+x${compMult}\nTravel:+₹${travelBuffer.toLocaleString('en-IN')}\nOp.Buffer:++8%\nTarget:+₹${Math.round(totalWithBuffer).toLocaleString('en-IN')}`;
+        // Build add-on breakdown lines
+        let addonBreakdownLines = '';
+        state.data.addons.forEach(addId => {
+            if (addId === 'onset_assist') {
+                const cost = onsetAssistCost[state.data.duration] || 3500;
+                addonBreakdownLines += `\nOn-set Assistant:+₹${cost.toLocaleString('en-IN')}`;
+            } else if (addId === 'raw_files') {
+                addonBreakdownLines += `\nRaw Content Delivery:++27.5%`;
+            } else {
+                const a = pricingConfig.addons.universal.find(x => x.id === addId) ||
+                          (pricingConfig.addons[state.data.service] || []).find(x => x.id === addId);
+                if (a) {
+                    if (a.est)  addonBreakdownLines += `\n${a.name.split(' (+')[0]}:+₹${a.est.toLocaleString('en-IN')}`;
+                    if (a.mult) addonBreakdownLines += `\n${a.name.split(' (+')[0]}:+x${a.mult}`;
+                }
+            }
+        });
+
+        state.data.breakdown = `Base:+₹${base.toLocaleString('en-IN')}\nDuration:+x${durMult}\nUsage:+x${usageMult.toFixed(2)}\nComplexity:+x${compMult}\nTravel:+₹${travelBuffer.toLocaleString('en-IN')}\nOp.Buffer:++8%${addonBreakdownLines}\nFinal Target:+₹${Math.round(totalWithBuffer).toLocaleString('en-IN')}`;
 
         let finalEst = totalWithBuffer;
 
@@ -1822,10 +1840,10 @@ const ShutterPhraseChatbot = (function () {
             }
 
             case 'budget_prompt':
-                appendMsg("Almost done! Do you have a fixed budget in mind, or are you happy working with the estimate?", 'bot');
+                appendMsg("Can we move ahead with this?", 'bot');
                 appendButtons([
-                    { label: "I have a fixed budget", value: "yes", next: "fixed_budget_entry" },
-                    { label: "No, the estimate works", value: "no", next: "lead_name" }
+                    { label: "Yes, let's go!", value: "no", next: "lead_name" },
+                    { label: "No, I have a fixed budget", value: "yes", next: "fixed_budget_entry" }
                 ]);
                 break;
 
