@@ -452,10 +452,10 @@ nav a:hover { opacity: 1; color: #ffdf85; text-shadow: 0 0 15px rgba(245,166,35,
 .sp-confirm-btn { background: linear-gradient(135deg, #f5a623, #d48300); border: none; border-radius: 20px; color: #000; font-family: Inter, sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; padding: 11px 22px; cursor: pointer; transition: 0.3s; margin-top: 4px; align-self: flex-start; }
 .sp-confirm-btn:hover { opacity: 0.85; transform: scale(1.03); }
 
-.sp-chat-input-area { padding: 15px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; gap: 10px; background: rgba(0,0,0,0.2); }
-.sp-chat-input-area input { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 12px; color: white; font-family: Inter, sans-serif; font-size: 0.9rem; outline: none; transition: 0.3s; }
+.sp-chat-input-area { padding: 15px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; gap: 8px; background: rgba(0,0,0,0.2); box-sizing: border-box; width: 100%; overflow: hidden; }
+.sp-chat-input-area input { flex: 1; min-width: 0; max-width: calc(100% - 60px); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 12px; color: white; font-family: Inter, sans-serif; font-size: 0.9rem; outline: none; transition: 0.3s; }
 .sp-chat-input-area input:focus { border-color: rgba(245,166,35,0.5); }
-.sp-chat-send { background: linear-gradient(135deg, #f5a623, #d48300); border: none; border-radius: 10px; width: 45px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; }
+.sp-chat-send { background: linear-gradient(135deg, #f5a623, #d48300); border: none; border-radius: 10px; width: 45px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; }
 .sp-chat-send:hover { opacity: 0.8; }
 .sp-chat-send svg { width: 18px; height: 18px; fill: #000; }
 
