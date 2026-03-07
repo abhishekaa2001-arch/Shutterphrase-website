@@ -102,13 +102,19 @@ nav {
 /* ── Video ── */
 #scroll-video {
     position: absolute;
-    inset: 0;
+    top: 0; left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
+    object-position: center center;
     opacity: 0;
     transition: opacity 0.6s ease;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    will-change: transform;
+    /* iOS fix — prevent video from jumping out of container */
+    max-width: 100%;
+    display: block;
 }
 #scroll-video.ready { opacity: 1; }
 
@@ -367,9 +373,28 @@ footer {
 /* ── Responsive ── */
 @media (max-width: 768px) {
     .sec-2 { padding-left: 6%; }
-    .sec-3 { padding-right: 6%; }
+    .sec-3 { padding-right: 6%; text-align: left; align-items: flex-start; }
+    .sec-3 .quote-line { margin-left: 0; background: linear-gradient(90deg, var(--gold), transparent); }
     #dots { display: none; }
     .cta-info { gap: 30px; }
+
+    /* Prevent text overflow on small screens */
+    .sec-1 .title { font-size: clamp(2.8rem, 14vw, 5rem); }
+    .sec-2 .quote, .sec-3 .quote { font-size: clamp(1.6rem, 6vw, 3rem); }
+    .sec-4 .quote { font-size: clamp(1.3rem, 5vw, 2.2rem); }
+    .sec-5 .quote { font-size: clamp(2rem, 9vw, 4rem); }
+
+    /* Video fills sticky container on mobile */
+    #scroll-video {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover;
+        object-position: center center;
+    }
+
+    /* CTA section mobile padding */
+    #cta-section { padding: 60px 6% 80px; }
+    .cta-headline { font-size: clamp(2rem, 8vw, 3.5rem); }
 }
 </style>
 </head>
@@ -405,8 +430,11 @@ footer {
     <div id="sticky-wrap">
         <video
             id="scroll-video"
-            src="https://res.cloudinary.com/dbwqlw6pr/video/upload/c_crop,g_north,h_0.92/v1772788348/Animation_qnexgw.mp4"
+            src="https://res.cloudinary.com/dbwqlw6pr/video/upload/c_crop,g_north,h_0.92/v1772882459/Animation_2_wwmr2m.mp4"
             muted autoplay playsinline preload="auto"
+            webkit-playsinline
+            x-webkit-airplay="deny"
+            disableRemotePlayback
             style="pointer-events:none;"
         ></video>
 
@@ -573,10 +601,15 @@ footer {
     let currentSection = -1;
     let autoScrolledToCTA = false;
 
-    // Smooth scrub — lerp current time toward target
-    let targetTime   = 0;
-    let smoothTime   = 0;
-    const LERP_SPEED = 0.08; // lower = smoother/slower, higher = snappier
+    // Device detection
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+                  (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    const isMobile = isIOS || /Android/.test(navigator.userAgent);
+
+    // Scrub state
+    let targetTime = 0;
+    let smoothTime = 0;
+    let lastScrubTS = 0;
 
     function getScrollProgress() {
         const container = document.getElementById('scroll-container');
@@ -585,18 +618,32 @@ footer {
         return Math.max(0, Math.min(1, -rect.top / scrollable));
     }
 
-    // Separate rAF loop for smooth video lerp — runs independently of scroll events
-    function smoothScrubLoop() {
-        if (videoReady && videoDuration > 0) {
+    function smoothScrubLoop(ts) {
+        requestAnimationFrame(smoothScrubLoop);
+        if (!videoReady || videoDuration <= 0) return;
+
+        if (isMobile) {
+            // On mobile: skip lerp, just throttle direct seeks to every 80ms
+            if (ts - lastScrubTS >= 80) {
+                const diff = targetTime - video.currentTime;
+                if (Math.abs(diff) > 0.04) {
+                    video.currentTime = targetTime;
+                    lastScrubTS = ts;
+                }
+            }
+        } else {
+            // Desktop: smooth lerp
             const diff = targetTime - smoothTime;
             if (Math.abs(diff) > 0.001) {
-                smoothTime += diff * LERP_SPEED;
+                smoothTime += diff * 0.08;
                 video.currentTime = smoothTime;
             }
         }
-        requestAnimationFrame(smoothScrubLoop);
     }
     requestAnimationFrame(smoothScrubLoop);
+
+    // Keep video paused during scrub on all devices
+    video.addEventListener('play', () => { if (videoReady) video.pause(); });
 
     function onScroll() {
         if (ticking) return;
@@ -611,7 +658,7 @@ footer {
         // Progress bar
         progressBar.style.width = (progress * 100) + '%';
 
-        // Set target time — smoothScrubLoop handles the actual lerp
+        // Set target time — smoothScrubLoop handles the lerp
         if (videoReady && videoDuration > 0) {
             targetTime = progress * videoDuration;
         }
